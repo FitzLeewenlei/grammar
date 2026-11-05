@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f6f7f3"><meta name="description" content="把英语语法慢慢连起来：按 Grammar in Use 教材主题整理的互动思维导图，配有中文分步讲解、双语例句和150道即时练习。"><title>语法漫游 · Grammar Atlas</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%23396b54'/%3E%3Cpath d='M12 12v16m0-8h16M22 12v16' stroke='%23f4f6ed' stroke-width='3' fill='none'/%3E%3C/svg%3E"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="responsive.css?v=2">
+</head>
+<body>
+<header class="topbar">
+ <div class="brand-area"><button class="icon-button mobile-menu" data-action="menu" data-icon="menu" aria-label="展开目录" aria-expanded="false" aria-controls="sidebar"></button><a class="brand" href="#map" aria-label="语法漫游首页"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M12 11v18m0-9h16M23 11v18"/><circle cx="12" cy="11" r="2"/><circle cx="28" cy="20" r="2"/><circle cx="23" cy="29" r="2"/></svg></span><span><strong>语法漫游</strong><small>GRAMMAR ATLAS</small></span></a></div>
+ <nav class="topnav" aria-label="主导航"><button data-route="map" class="active">知识地图</button><button data-route="path">学习路径</button><button data-route="practice">练习中心</button></nav>
+ <div class="header-actions"><button class="search-launch" data-action="search" aria-label="搜索知识点"><span data-icon="search"></span><span class="search-text">搜索知识点</span><kbd>⌘ K</kbd></button><button class="icon-button" data-action="notebook" aria-label="打开收藏与笔记" title="我的收藏与笔记" data-icon="bookmark"></button><button class="avatar" data-action="progress" aria-label="查看学习进度">F</button></div>
+</header>
+<div class="app-body">
+ <aside class="sidebar" id="sidebar" aria-label="语法目录"><div class="sidebar-intro"><span class="eyebrow">YOUR LEARNING SPACE</span><h2>把语法，<br>慢慢连起来。</h2><button class="source-link" data-action="sources"><span data-icon="book"></span> 跟着 Grammar in Use 学 <span data-icon="arrow-up-right"></span></button></div><div class="syllabus-head"><span>全部主题</span><span>10</span></div><nav id="category-nav" aria-label="主题目录"></nav><div class="sidebar-tools"><button data-action="notebook"><span data-icon="bookmark"></span>我的小本子</button><button data-action="progress"><span data-icon="target"></span>学习进度</button></div><div class="sidebar-bottom"><div class="progress-orbit" id="sidebar-orbit"><span data-icon="sprout"></span></div><div><strong id="sidebar-count">从一个知识点开始</strong><small id="sidebar-sub">每一次理解，都算进步。</small></div><button class="icon-button" data-action="progress" aria-label="进度详情" data-icon="chevron-right"></button></div></aside>
+ <main id="main">
+  <section id="map-page" class="page active">
+   <div class="page-heading"><div><div class="eyebrow"><span class="live-dot"></span> EXPLORE · CONNECT · UNDERSTAND</div><h1>从一句话，读懂语法。</h1><p>先看见联系，再一步一步理解。</p></div><div class="heading-stats"><span><b>50</b> 个知识点</span><i></i><span><b>150</b> 道练习</span></div></div>
+   <div class="mobile-category" id="mobile-category"></div>
+   <div class="study-workspace">
+    <section class="map-card" id="map-card" aria-label="可交互的语法思维导图">
+     <div class="map-toolbar"><div class="map-breadcrumb" id="map-breadcrumb"></div><div class="map-toolbar-actions"><button class="resume-lesson" data-action="resume-lesson" aria-label="打开当前知识点讲解"><span data-icon="book"></span><span>继续学习</span></button><button class="icon-button" data-action="map-help" aria-label="导图操作说明" title="操作说明" data-icon="help"></button><button class="icon-button" data-action="view-settings" aria-label="调整导图比例" title="调整导图比例" data-icon="sliders"></button><button class="icon-button" data-action="fullscreen" aria-label="放大导图" title="专注导图" data-icon="expand"></button></div></div>
+     <div class="canvas-wrap" id="canvas-wrap"><svg id="mindmap" aria-label="英语语法知识关系图，可拖动及缩放" tabindex="0"><g id="map-transform"></g></svg><div class="canvas-caption"><span id="map-hint">点击主题，展开你的语法地图</span><span class="canvas-hint">拖动平移 · 滚轮缩放</span></div><button id="minimap-button" class="minimap" aria-label="点击缩略图定位视野"><svg id="minimap" aria-hidden="true"></svg><span>全局视野</span></button><div class="zoom-controls"><button data-action="zoom-out" aria-label="缩小" data-icon="minus"></button><span id="zoom-label">100%</span><button data-action="zoom-in" aria-label="放大" data-icon="plus"></button><i></i><button data-action="fit" aria-label="适应画布" title="适应画布" data-icon="scan"></button></div><div class="view-settings" id="view-settings" hidden><h3>舒服的阅读比例</h3><label>节点大小 <output id="size-value">100%</output><input id="node-size" type="range" min="90" max="115" step="5" value="100"></label><label>分支间距 <output id="space-value">100%</output><input id="branch-space" type="range" min="85" max="130" step="5" value="100"></label><label class="line-select">连线形式<select id="line-style"><option value="curve">柔和曲线</option><option value="straight">简洁直线</option></select></label><button class="subtle-button" data-action="reset-view">恢复舒适比例</button></div></div>
+     <div class="map-bottom"><div class="legend"><span><i class="dot unstarted"></i>未开始</span><span><i class="dot learning"></i>学习中</span><span><i class="dot mastered"></i>已掌握</span></div><button class="text-button" data-action="overview">返回全景 <span data-icon="arrow-up-right"></span></button></div>
+    </section>
+    <aside class="lesson-panel" id="lesson-panel" aria-label="知识点学习区" tabindex="-1"></aside>
+   </div>
+   <div class="map-footnote"><span data-icon="layers"></span>从初级到进阶，按教材主题重组 <span class="footnote-dot">·</span> <button data-action="sources">查看教材索引与内容说明</button></div>
+  </section>
+  <section id="path-page" class="page"></section><section id="practice-page" class="page"></section>
+ </main>
+</div>
+<div id="panel-scrim" class="panel-scrim" hidden data-action="close-panel"></div>
+<nav class="bottom-nav" aria-label="手机导航"><button data-route="map" class="active"><span data-icon="branch"></span><span>知识地图</span></button><button data-route="path"><span data-icon="route"></span><span>学习路径</span></button><button data-route="practice"><span data-icon="target"></span><span>练习中心</span></button><button data-action="notebook"><span data-icon="bookmark"></span><span>我的笔记</span></button></nav>
+<div id="modal-root"></div><div id="toast" role="status" aria-live="polite"></div>
+<script src="content.js"></script><script src="app.js?v=2"></script>
+</body></html>
