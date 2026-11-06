@@ -116,22 +116,24 @@
   function renderCard(keepScroll=false){
     const key=state.cardKey,n=A.get(key);if(!n)return;
     const scroll=keepScroll?$('.card-body')?.scrollTop||0:0,storage=A.storageKey(key),l=n.lesson;
+    const source=l?(l.source.includes('英语语法知识体系详解')?l.source:'参考《英语语法知识体系详解》；原课程索引：'+l.source):'';
     const children=n.children.map(k=>A.get(k)),examples=A.examplesFor(key);
     const next=children.find(c=>!learned(c.key)),scopePool=questionPool(key),inPractice=state.page==='practice'&&state.session&&!state.session.done;
     const crumbs=state.cardTrail.slice(0,-1).map((k,i)=>`<button data-card-ancestor="${esc(k)}" data-trail-index="${i}">${esc(A.get(k).title)}</button>`).join('<i>/</i>');
-    const useBlocks=l?l.steps.slice(1).map(s=>`<div class="usage-block"><h3>${esc(s.h)}</h3><p>${esc(s.t)}</p></div>`).join(''):n.usage.map(t=>`<div class="usage-block"><p>${esc(t)}</p></div>`).join('');
-    const errors=n.pitfalls.map(p=>typeof p==='string'?`<div class="pitfall"><p>${esc(p)}</p></div>`:`<div class="pitfall"><strong>${esc(p.title)}</strong><p>${esc(p.text)}</p></div>`).join('');
+    const useBlocks=n.usage.map(s=>typeof s==='string'?`<div class="usage-block"><p>${esc(s)}</p></div>`:`<div class="usage-block"><h3>${esc(s.h)}</h3><p>${esc(s.t)}</p></div>`).join('');
+    const errors=n.pitfalls.map(p=>typeof p==='string'?`<div class="pitfall"><p>${esc(p)}</p></div>`:`<div class="pitfall"><strong>${esc(p.title)}</strong>${p.wrong&&p.right?`<div class="correction-pair"><p class="correction-wrong"><span>原句</span><span lang="en">${esc(p.wrong)}</span></p><p class="correction-right"><span>改写</span><span lang="en">${esc(p.right)}</span></p></div>`:''}<p>${esc(p.text)}</p></div>`).join('');
+    const table=n.referenceTable,reference=table?`<details class="grammar-reference"><summary>时态结构对照 · 16种教学组合</summary><div class="grammar-table-wrap" tabindex="0" role="region" aria-label="时态结构对照，可横向滚动"><table><caption>${esc(table.caption)}</caption><thead><tr>${table.headers.map(h=>`<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${table.rows.map(row=>`<tr>${row.map((cell,i)=>i?`<td lang="en">${esc(cell)}</td>`:`<th scope="row">${esc(cell)}</th>`).join('')}</tr>`).join('')}</tbody></table></div><p>${esc(table.note)}</p></details>`:'';
     const nextMarkup=children.length?`<section class="card-section" id="card-next"><h2>下一级知识点</h2><div class="next-points">${children.map(c=>`<button class="next-point ${learned(c.key)?'is-lit':''}" data-next-key="${esc(c.key)}"><span>${esc(c.title)}</span>${icon(learned(c.key)?'check':'arrow')}</button>`).join('')}</div></section>`:'';
     const related=!children.length&&l?.related.length?`<section class="card-section"><h2>相关知识点</h2><div class="next-points">${l.related.map(id=>A.get('lesson:'+id)).filter(Boolean).slice(0,4).map(c=>`<button class="next-point" data-open-card="${esc(c.key)}">${esc(c.title)}${icon('arrow')}</button>`).join('')}</div></section>`:'';
     $('#knowledge-card').innerHTML=`<header class="card-header"><div class="card-topline"><div class="card-breadcrumb"><button data-action="card-root">总地图</button>${crumbs?'<i>/</i>'+crumbs:''}</div><div class="card-tools"><button class="icon-button" data-action="bookmark" data-active="${data.bookmarks.includes(storage)}" aria-label="${data.bookmarks.includes(storage)?'取消收藏':'收藏知识点'}">${icon('bookmark')}</button><button class="icon-button" data-action="note" aria-label="写学习笔记">${icon('note')}</button><button class="icon-button" data-action="close-card" aria-label="关闭知识卡片">${icon('close')}</button></div></div><h1 id="card-title" tabindex="-1">${esc(n.title)}</h1><p class="card-en">${esc(n.en)}</p></header>
       <nav class="card-anchors" aria-label="知识卡片内容">${[['definition','定义'],['classes','分类'],['examples','例句'],['usage','用法'],['pitfalls','易错点']].map(([id,title])=>`<button data-jump="${id}" class="${state.activeAnchor===id?'active':''}">${title}</button>`).join('')}</nav>
       <div class="card-body"><section class="card-section" id="card-definition"><h2>${n.id==='nouns'?'名词是什么':'定义'}</h2><p>${esc(n.definition)}</p>${l?`<div class="formula-box">${esc(l.formula)}</div>`:''}</section>
-      <section class="card-section" id="card-classes"><h2>${n.id==='nouns'?'名词的分类':'分类与结构'}</h2><div class="class-tags">${n.classification.map(c=>`<span>${esc(c)}</span>`).join('')}</div></section>
+      <section class="card-section" id="card-classes"><h2>${n.id==='nouns'?'名词的分类':'分类与结构'}</h2><div class="class-tags">${n.classification.map(c=>`<span>${esc(c)}</span>`).join('')}</div>${reference}</section>
       <section class="card-section" id="card-examples"><h2>例句</h2>${examples.map((e,i)=>`<article class="card-example"><button class="icon-button" data-speak="${i}" aria-label="朗读第${i+1}个例句">${icon('sound')}</button><strong>${esc(e.en)}</strong><p>${esc(e.zh)}</p><small>${esc(e.note)}</small></article>`).join('')}</section>
       <section class="card-section" id="card-usage"><h2>${n.id==='nouns'?'用法与常见考点':'用法'}</h2>${useBlocks}</section>
       <section class="card-section" id="card-pitfalls"><h2>易错点</h2>${errors}</section>${nextMarkup}${related}
       ${scopePool.length?`<section class="card-section" id="card-practice"><h2>小练习</h2><div class="mini-practice"><p>${esc(scopePool[0].q.prompt)}</p><button data-practice-scope="${esc(key)}" data-practice-count="3">练习「${esc(n.title)}」 ${icon('arrow')}</button></div></section>`:''}
-      ${l?`<div class="source-note">教材 / 知识索引：${esc(l.source)}</div>`:''}</div>
+      ${l?`<div class="source-note">${esc(source)}</div>`:''}</div>
       <footer class="card-footer"><button class="learn-button ${learned(key)?'is-lit':''}" data-action="mark-learned" aria-pressed="${learned(key)}">${icon('stars')}${learned(key)?'星星已点亮':'已学会，点亮星星'}</button>${inPractice?`<button class="primary-button" data-action="close-card">继续当前练习${icon('arrow')}</button>`:next?`<button class="primary-button" data-next-key="${esc(next.key)}">继续：${esc(next.title)}${icon('arrow')}</button>`:`<button class="primary-button" data-practice-scope="${esc(key)}" data-practice-count="3">进入练习${icon('arrow')}</button>`}</footer>`;
     syncUI();if(keepScroll)$('.card-body').scrollTop=scroll;
   }
@@ -258,7 +260,7 @@
   async function importProgress(file){
     if(!file)return;try{if(file.size>5e6)throw Error('Large file');const backup=JSON.parse(await file.text());data=P.merge(data,backup);save();if(state.cardKey)renderCard(true);if(state.page==='practice')renderPractice();else if(state.page==='games')Games.render();else renderActiveGraph(false);closeModal();toast('备份已合并，学习星图已更新');}catch{toast('这不是有效的语法漫游进度备份。');}
   }
-  function showHelp(){modal('图谱操作',`<div class="help-item"><strong>逐层探索</strong><p>点击总地图的模块进入子地图，点击知识点打开卡片；卡片中的“下一级知识点”可继续深入，最后进入对应练习。点击地图中心可返回上一级。</p></div><div class="help-item"><strong>点亮星星</strong><p>阅读后点击“已学会，点亮星星”，或答对该知识点全部练习，对应星星就会点亮。学习星图中可展开模块星座，再点击星星继续学习。</p></div><div class="help-item"><strong>移动与缩放</strong><p>拖动空白处平移，滚轮或双指手势缩放。左侧边栏中的“适应画面”可恢复总览。键盘 + / − 缩放，方向键平移，0 适应画面；Esc 关闭卡片或返回上一级。</p></div><div class="help-item"><strong>词性积木</strong><p>侧边栏中进入“游戏”，选择词性积木和关卡。拖拽积木或先点词性再点空格，同类可重复使用；放好后检查答案。50 关从短句逐步进入从句与长句，通关星级自动保存。</p></div><div class="help-item"><strong>搜索与备份</strong><p>Ctrl / ⌘ + K 搜索。收藏、笔记和记录备份都在侧边栏中。</p></div><div class="source-note">知识框架参考 Grammar in Use 系列主题；中文讲解与练习为学习用途重新编写，补充内容按常见英语语法归纳。</div>`);}
+  function showHelp(){modal('图谱操作',`<div class="help-item"><strong>逐层探索</strong><p>点击总地图的模块进入子地图，点击知识点打开卡片；卡片中的“下一级知识点”可继续深入，最后进入对应练习。点击地图中心可返回上一级。</p></div><div class="help-item"><strong>点亮星星</strong><p>阅读后点击“已学会，点亮星星”，或答对该知识点全部练习，对应星星就会点亮。学习星图中可展开模块星座，再点击星星继续学习。</p></div><div class="help-item"><strong>移动与缩放</strong><p>拖动空白处平移，滚轮或双指手势缩放。左侧边栏中的“适应画面”可恢复总览。键盘 + / − 缩放，方向键平移，0 适应画面；Esc 关闭卡片或返回上一级。</p></div><div class="help-item"><strong>词性积木</strong><p>侧边栏中进入“游戏”，选择词性积木和关卡。拖拽积木或先点词性再点空格，同类可重复使用；放好后检查答案。50 关从短句逐步进入从句与长句，通关星级自动保存。</p></div><div class="help-item"><strong>搜索与备份</strong><p>Ctrl / ⌘ + K 搜索。收藏、笔记和记录备份都在侧边栏中。</p></div><div class="source-note">知识框架参考《英语语法知识体系详解》，并结合原课程索引补充整理。</div>`);}
   function speakExample(index){const e=A.examplesFor(state.cardKey)[index];if(!e)return;if(!('speechSynthesis'in window)){toast('当前设备未提供语音朗读。');return;}speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(e.en);utterance.lang='en-GB';utterance.rate=.85;const voice=speechSynthesis.getVoices().find(v=>v.lang==='en-GB')||speechSynthesis.getVoices().find(v=>v.lang.startsWith('en'));if(voice)utterance.voice=voice;utterance.onerror=()=>toast('当前设备暂时没有可用英语语音。');speechSynthesis.speak(utterance);}
   const actions={
     'toggle-nav':toggleNav,'close-sidebar':()=>closeNav(true),'close-card':()=>closeCard(),'close-modal':()=>closeModal(),
@@ -338,7 +340,12 @@
     if(parts[0]==='practice'){restoreView({page:'practice',context:'root'});return;}
     if(parts[0]==='games'){restoreView({page:'games',context:'root',gameRoute:parts.slice(1).join('/')});return;}
     const trail=[];let choices=A.modules;
-    for(const slug of parts.slice(1)){const n=choices.find(n=>n.id===slug);if(!n)break;trail.push(n.key);choices=n.children.map(k=>A.get(k));}
+    for(const slug of parts.slice(1)){
+      let n=choices.find(n=>n.id===slug);
+      if(n)trail.push(n.key);
+      else{n=A.descendants(trail.at(-1)||'root').map(k=>A.get(k)).find(n=>n.id===slug);if(!n)break;trail.splice(0,trail.length,...A.path(n.key));}
+      choices=n.children.map(k=>A.get(k));
+    }
     const last=A.get(trail.at(-1));
     restoreView({page:'map',context:last?.kind==='lesson'?(trail.at(-2)||'root'):(last?.key||'root'),contextTrail:last?.kind==='lesson'?trail.slice(0,-1):trail,cardKey:last&&last.kind!=='module'?last.key:null,cardTrail:trail});
   }

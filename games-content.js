@@ -1,16 +1,16 @@
 /* Word-class game adapted from the user-supplied grammar-drag-game prototype. */
 (() => {
   const types={
-    noun:{label:'名词',en:'Noun',shape:'square',color:'#7897ad',description:'表示人、事物、地点或抽象概念。'},
-    verb:{label:'动词',en:'Verb',shape:'triangle',color:'#7c8fa6',description:'表示动作或状态；助动词、情态动词也归入动词。'},
-    pronoun:{label:'代词',en:'Pronoun',shape:'oval',color:'#899eac',description:'代替名词或名词短语，也包括本游戏中的关系代词。'},
-    article:{label:'冠词',en:'Article',shape:'diamond',color:'#a59aae',description:'a、an、the，放在名词短语前表示泛指或特指。'},
-    adjective:{label:'形容词',en:'Adjective',shape:'circle',color:'#8fa59a',description:'描述名词的性质，或在系动词后说明主语的状态。'},
-    adverb:{label:'副词',en:'Adverb',shape:'star',color:'#b1a17e',description:'修饰动词、形容词、副词或整句；也包括连接副词 why。'},
-    preposition:{label:'介词',en:'Preposition',shape:'hexagon',color:'#92a8a4',description:'与名词性成分组成短语，表示地点、时间、方式等关系。'},
-    conjunction:{label:'连词',en:'Conjunction',shape:'link',color:'#ad98a2',description:'连接词、短语或分句，如 and、because、although。'},
-    numeral:{label:'数词',en:'Numeral',shape:'bars',color:'#9fa691',description:'表示数量或顺序，包括基数词与序数词。'},
-    interjection:{label:'感叹词',en:'Interjection',shape:'burst',color:'#b29b87',description:'独立表达惊讶、疼痛等情绪，如 wow、oh、ouch。'}
+    noun:{label:'名词',en:'Noun',shape:'square',color:'#4878ab',description:'表示人、事物、地点或抽象概念。'},
+    verb:{label:'动词',en:'Verb',shape:'triangle',color:'#315f96',description:'表示动作或状态；助动词、情态动词也归入动词。'},
+    pronoun:{label:'代词',en:'Pronoun',shape:'oval',color:'#577f99',description:'代替名词或名词短语，也包括本游戏中的关系代词。'},
+    article:{label:'冠词',en:'Article',shape:'diamond',color:'#7e6e9b',description:'a、an、the，放在名词短语前表示泛指或特指。'},
+    adjective:{label:'形容词',en:'Adjective',shape:'circle',color:'#537d6e',description:'描述名词的性质，或在系动词后说明主语的状态。'},
+    adverb:{label:'副词',en:'Adverb',shape:'star',color:'#97742f',description:'修饰动词、形容词、副词或整句；也包括连接副词 why。'},
+    preposition:{label:'介词',en:'Preposition',shape:'hexagon',color:'#4d7b7d',description:'与名词性成分组成短语，表示地点、时间、方式等关系。'},
+    conjunction:{label:'连词',en:'Conjunction',shape:'link',color:'#946d83',description:'连接词、短语或分句，如 and、because、although。'},
+    numeral:{label:'数词',en:'Numeral',shape:'bars',color:'#70804a',description:'表示数量或顺序，包括基数词与序数词。'},
+    interjection:{label:'感叹词',en:'Interjection',shape:'burst',color:'#9b7050',description:'独立表达惊讶、疼痛等情绪，如 wow、oh、ouch。'}
   };
   const codes={n:'noun',v:'verb',pro:'pronoun',art:'article',adj:'adjective',adv:'adverb',prep:'preposition',conj:'conjunction',num:'numeral',int:'interjection'};
   const stages=[

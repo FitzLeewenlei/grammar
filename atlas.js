@@ -70,7 +70,7 @@
     ['先判断假设所指时间，再决定从句和主句的动词形式。','主从句可能指向不同时间，不能只靠一个时间词机械配对。'],
     ['if 后的过去形式不一定表示过去时间。','过去反事实常用 had done 与 would have done。','真实条件句不能直接照搬非真实条件的形式。'],['unreal']);
   const errorTopic=(id,title,definition,wrong,right,note,children,extra=[])=>topic(id,'writing',title,'Writing checkpoint',definition,
-    ['识别错误','还原结构','改写并核对'],[note,...extra],['先检查完整句法结构，再处理词形和标点。',`易错写法：${wrong}`],children,[{en:right,zh:'改写后的表达',note}]);
+    ['识别错误','还原结构','改写并核对'],[note,...extra],[{title:'表达对照',wrong,right,text:note}],children,[{en:right,zh:({'fragments':'因为累了，我回家了。','runons':'我累了，所以回家了。','article-errors':'她是一名教师。','pronoun-errors':'安娜遇见莉莉时很担心。','tense-errors':'昨天我去学校，遇见了汤姆。','wordform-errors':'她喜欢阅读。','agreement-errors':'这份名单很长。'})[id],note}]);
   errorTopic('fragments','句子成分残缺','正式写作中的完整句通常需要独立主句，不能只留下一个依附成分。','Because I was tired.','I went home because I was tired.','because 从句依附主句；补上主句后表达完整。',['skeleton']);
   errorTopic('runons','逗号拼接与粘连句','两个独立分句需要合适的连接方式，通常不能仅靠一个逗号拼接。','I was tired, I went home.','I was tired, so I went home.','可以用句号、分号或合适的并列连词明确分句关系。',['coordination']);
   errorTopic('article-errors','冠词遗漏与误用','冠词错误常源于忽略单数可数名词、发音或特指语境。','She is teacher.','She is a teacher.','单数可数名词 teacher 在这里需要限定词 a。',['articles']);
@@ -79,17 +79,58 @@
   errorTopic('wordform-errors','非谓语形式误用','动词后的形式由搭配和句法功能共同决定，不能随意在原形、to do 和 doing 之间替换。','She enjoys to read.','She enjoys reading.','enjoy 后通常接动名词，而不是 to do。',['verb-choice','gerund','participles']);
   errorTopic('agreement-errors','写作中的主谓搭配','写长主语时，需要找到真正的主语中心，而不是让谓语跟随最近的名词。','The list of names are long.','The list of names is long.','中心词 list 为单数，of names 是修饰语，所以用 is。',['agreement','agreement-nearest']);
 
+  topic('constituents','syntax','短语与句子成分','Phrases & constituents','先按词组划分结构，再判断每个整体在句中作什么成分。词性、短语类型与句子成分是三个不同的分析层次。',
+    ['词性与成分','五类常见短语','主谓宾表定状补与同位语'],
+    ['以中心词判断短语类型，以在句中的任务判断成分。','先划出主干，再把修饰和补充结构挂回对应位置。'],
+    ['介词短语既可能作定语，也可能作状语或表语，不能看到介词就一律判作状语。'],['phrase-types','sentence-elements']);
+  topic('basic-patterns','syntax','基本句型','Basic sentence patterns','根据谓语动词需要的成分识别基本句型。区分宾语、表语、补足语与必需的位置成分，比机械数单词更可靠。',
+    ['主谓','主系表','主谓宾','主谓双宾','主谓宾补','含必需状语的结构'],
+    ['She gave him a book. 中两个宾语是不同对象；They made him captain. 中 him 与 captain 建立说明关系。','put 之类动词还需要交代位置，不能把所有介词短语都当作可以删掉的附加信息。'],
+    ['句型由动词在当前语境中的用法决定，同一动词可能进入不同句型。'],['skeleton','double-object','required-adverbials']);
+  topic('sentence-kinds','syntax','句子的种类与否定','Sentence functions & negation','句子可按交际目的分为陈述、疑问、祈使和感叹；按结构又可分为简单句、并列句和主从复合句，两个维度不能混用。',
+    ['陈述与疑问','祈使与感叹','完全否定与部分否定'],
+    ['先确定要陈述、提问、要求还是感叹，再检查语序和动词形式。','否定词的位置会影响其作用范围，not all 并不等于 none。'],
+    ['感叹词是词类，感叹句是句子类型；祈使句也可带明确主语表示强调。'],['questions','imperatives','exclamations','negation']);
+  topic('special-syntax','syntax','特殊结构与省略','Special constructions','存在句、强调、形式 it 和省略用于安排信息、突出重点或避免重复，理解时先还原基本关系。',
+    ['there be','it 强调句与形式 it','可恢复的省略'],
+    ['It is clear that he left. 用形式主语 it；It was Tom that left. 是强调结构。','省略必须有可恢复的信息和语法许可，不能把残缺句当作简洁表达。'],
+    ['去掉 it is ... that 框架后要把突出成分放回原位，再判断能否还原成正常陈述。'],['there-be','emphasis','formal-it','ellipsis']);
+  topic('simple-tenses','tenses','一般时','Simple forms','一般形式把事件或状态作为整体呈现；现在、过去、将来及过去视角中的将来，要结合参照点和上下文判断。',
+    ['一般现在时','一般过去时','一般将来时','过去将来时'],
+    ['一般现在时可以说习惯、事实与时刻表；一般过去时强调过去时间内的情况。','will 与 would 等将来表达还带有预测、意愿等情态意义，不能只凭中文“会”套公式。'],
+    ['时态的过去形式也可能表达假设或礼貌，不能见过去式就断定事情发生在过去。'],['present','past','future','future-in-past']);
+  topic('progressive-tenses','tenses','进行时','Progressive forms','进行体从某个参照时刻观察活动的展开过程，也能表示暂时性和安排；不是只表示“正在说话这一秒”。',
+    ['现在进行','过去进行','将来进行'],
+    ['核心形式为相应的 be + doing，时间关系由 be 及其助动结构体现。','状态动词要按具体词义判断能否用进行形式，think 表示思考时可以进行。'],
+    ['没有 be 的 She studying 不能独立作完整谓语；be + done 则通常属于被动结构。'],['continuous','past-cont','future-continuous']);
+  topic('perfect-tenses','tenses','完成时','Perfect forms','完成体把较早的事件与一个参照时间联系起来；参照点可以是现在、过去或将来，并不等同于动作已经结束。',
+    ['现在完成','过去完成','将来完成'],
+    ['have / has / had / will have + done 显示相对于参照点的先后和关联。','I have lived here for years. 可以表示现在仍然居住，完成形式本身不能一律译作结束了。'],
+    ['明确结束的过去时间通常与一般过去时配合；过去完成时需要过去参照点。'],['perfect','past-perfect','future-perfect']);
+  topic('perfect-progressive','tenses','完成进行时','Perfect progressive forms','完成进行体把活动从更早时段延伸到参照点，强调持续过程、近期活动或留下的影响；活动可能继续，也可能刚停止。',
+    ['现在完成进行','过去完成进行','将来完成进行'],
+    ['结构为 have / had / will have + been + doing。','优先判断时间参照点，再判断是否要突出过程；表达次数或完成成果时常选完成式。'],
+    ['完成进行时不保证动作仍在继续；状态含义的动词通常用完成式而非完成进行式。'],['perf-cont','past-perfect-continuous','future-perfect-continuous']);
+  const extraChildren={nouns:['noun-phrase'],articles:['determiners'],adjectives:['word-formation'],verbs:['verb-forms','modal-perfect'],adverbial:['place-manner-clauses','comparison-clauses']};
+  for(const [id,ids] of Object.entries(extraChildren))topics.find(t=>t.id===id).children.push(...ids.map(lesson));
+  topics.find(t=>t.id==='simple-tenses').referenceTable={caption:'四种时间参照与四种体貌的教学对照',headers:['参照时间','一般','进行','完成','完成进行'],rows:[
+    ['现在','do / does','am/is/are doing','have/has done','have/has been doing'],
+    ['过去','did','was/were doing','had done','had been doing'],
+    ['将来','will do','will be doing','will have done','will have been doing'],
+    ['过去视角的将来','would do','would be doing','would have done','would have been doing']
+  ],note:'这是常见教学归纳，并不表示16种形式同样常用。would have done 等既可表示过去视角中的将来完成，也可用于反事实假设，须按上下文判断；do 在表中代表普通实义动词。'};
+
   const modules = [
-    {id:'lexis',title:'词法',en:'Lexis',color:'#839caf',children:['nouns','pronouns','articles','adjectives','adverbs','prepositions','conjunctions','verbs','numerals','interjections'].map(topicKey)},
-    {id:'syntax',title:'句法',en:'Syntax',color:'#8c9fb4',children:[lesson('skeleton'),topicKey('sentence-structure'),lesson('questions'),lesson('there-be'),lesson('reported'),lesson('emphasis')]},
-    {id:'tenses',title:'时态',en:'Tenses',color:'#7896aa',children:['present','continuous','past','past-cont','perfect','perf-cont','past-perfect','future'].map(lesson)},
-    {id:'voice',title:'语态',en:'Voice',color:'#9ba6af',children:['active-voice','passive'].map(lesson)},
-    {id:'clauses',title:'从句',en:'Clauses',color:'#9d9bb4',children:['adverbial','relative','nominal'].map(topicKey)},
-    {id:'nonfinite',title:'非谓语',en:'Non-finite verbs',color:'#8fa69f',children:['infinitive','gerund','verb-choice','object-complement','prep-to','participles'].map(lesson)},
-    {id:'agreement',title:'主谓一致',en:'Agreement',color:'#a49aab',children:['agreement','agreement-meaning','agreement-nearest'].map(lesson)},
-    {id:'inversion',title:'倒装',en:'Inversion',color:'#8da0ae',children:['inversion-full','inversion-partial','inversion-conditional','inversion'].map(lesson)},
-    {id:'subjunctive',title:'虚拟语气',en:'Subjunctive',color:'#b0a18f',children:[topicKey('conditionals'),lesson('wish'),lesson('subjunctive-suggestions')]},
-    {id:'writing',title:'写作常见错误',en:'Writing checkpoints',color:'#ae969f',children:['fragments','runons','article-errors','pronoun-errors','tense-errors','wordform-errors','agreement-errors'].map(topicKey).concat(lesson('parallelism'))}
+    {id:'lexis',title:'词法',en:'Lexis',color:'#477bac',children:['nouns','pronouns','articles','adjectives','adverbs','prepositions','conjunctions','verbs','numerals','interjections'].map(topicKey)},
+    {id:'syntax',title:'句法',en:'Syntax',color:'#537fb6',children:['constituents','basic-patterns','sentence-kinds','sentence-structure','special-syntax'].map(topicKey).concat(lesson('reported'))},
+    {id:'tenses',title:'时态',en:'Tenses',color:'#3c75ab',children:['simple-tenses','progressive-tenses','perfect-tenses','perfect-progressive'].map(topicKey)},
+    {id:'voice',title:'语态',en:'Voice',color:'#5b7b9b',children:['active-voice','passive','passive-special'].map(lesson)},
+    {id:'clauses',title:'从句',en:'Clauses',color:'#6d78ab',children:[lesson('clause-basics'),...['adverbial','relative','nominal'].map(topicKey)]},
+    {id:'nonfinite',title:'非谓语',en:'Non-finite verbs',color:'#557e77',children:['infinitive','gerund','verb-choice','object-complement','prep-to','participles','absolute-with'].map(lesson)},
+    {id:'agreement',title:'主谓一致',en:'Agreement',color:'#736a98',children:['agreement','agreement-meaning','agreement-nearest'].map(lesson)},
+    {id:'inversion',title:'倒装',en:'Inversion',color:'#4b7c9f',children:['inversion-full','inversion-partial','inversion-conditional','inversion'].map(lesson)},
+    {id:'subjunctive',title:'虚拟语气',en:'Subjunctive',color:'#927b51',children:[topicKey('conditionals'),lesson('wish'),lesson('subjunctive-suggestions')]},
+    {id:'writing',title:'写作常见错误',en:'Writing checkpoints',color:'#8d637a',children:['fragments','runons','article-errors','pronoun-errors','tense-errors','wordform-errors','agreement-errors'].map(topicKey).concat(['parallelism','punctuation-analysis'].map(lesson))}
   ].map(m=>({...m,key:`module:${m.id}`,kind:'module'}));
 
   const classification = {
@@ -106,9 +147,15 @@
   topics.forEach(t=>nodes.set(t.key,t));
   window.GRAMMAR.lessons.forEach(l=>nodes.set(lesson(l.id),{
     key:lesson(l.id),kind:'lesson',id:l.id,title:l.title,en:l.en,children:[],lesson:l,
-    definition:l.steps[0].t,classification:classification[l.id]||[],usage:l.steps.slice(1).map(s=>`${s.h}：${s.t}`),
-    pitfalls:l.quiz.map(q=>({title:q.prompt,text:q.why})),examples:l.examples
+    definition:l.steps[0].t,classification:classification[l.id]||l.steps.map(s=>s.h),usage:l.steps.slice(1),
+    pitfalls:l.quiz.map(q=>({title:q.prompt,text:q.why})),examples:l.examples,...window.LESSON_DETAILS?.[l.id]
   }));
+  for(const t of topics){
+    const childNodes=t.children.map(k=>nodes.get(k));
+    t.usage=[...t.usage,...childNodes.slice(0,6).map(n=>({h:n.title,t:n.usage[0]?.t||n.usage[0]}))];
+    const pairs=childNodes.flatMap(n=>n.pitfalls.filter(p=>p.wrong&&p.right)).slice(0,3);
+    t.pitfalls=[...t.pitfalls,...pairs];
+  }
   const parent = new Map(), owner = new Map();
   function visit(key, mod, ancestry=new Set()) {
     if(ancestry.has(key))throw Error(`Cycle in atlas: ${key}`);
