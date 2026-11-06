@@ -4,7 +4,7 @@ import {resolve} from 'node:path';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 const root=fileURLToPath(new URL('../',import.meta.url));
-const scripts=['content.js','content-additions.js','lesson-details-lexis.js','lesson-details-verbs.js','content-detail-nouns.js','content-detail-lexis.js','content-detail-clauses.js','atlas.js','graph.js','games-content.js','progress.js'];
+const scripts=['content.js','content-additions.js','lesson-details-lexis.js','lesson-details-verbs.js','content-detail-nouns.js','content-detail-lexis.js','content-detail-clauses.js','beginner-guide.js','atlas.js','graph.js','games-content.js','progress.js'];
 const context=vm.createContext({window:{}});
 for(const file of scripts)vm.runInContext(readFileSync(resolve(root,file),'utf8'),context,{filename:file});
 const {GRAMMAR:d,ATLAS:a,GrammarGraph:g,GrammarProgress:p,GRAMMAR_GAMES_DATA:games}=context.window;
@@ -21,9 +21,10 @@ for(const n of a.nodes.values()){
  for(const [label,target] of Object.entries(n.classificationLinks||{})){assert(n.classification.includes(label));assert(a.get(target));assert(a.route(n.key,target),`Unreachable classification ${n.key}/${target}`);}
  if(n.kind!=='module'){
   assert(n.definition.length>10&&n.classification.length&&n.usage.length&&n.pitfalls.length,`Incomplete card ${n.key}`);
-  const examples=a.examplesFor(n.key);assert(examples.length);for(const e of examples)assert(e.en&&e.zh&&e.note,`Incomplete example ${n.key}`);
+  const examples=a.examplesFor(n.key);assert(examples.length);for(const e of examples){assert(e.en&&e.zh&&e.note,`Incomplete example ${n.key}`);assert((e.en.match(/[a-z]+(?:['’-][a-z]+)*/gi)||[]).length<=12,`Example too long for beginners: ${n.key}`);}
   for(const u of n.usage)assert(typeof u==='string'?u.length>5:u.h&&u.t?.length>10,`Incomplete usage ${n.key}`);
-  if(n.kind==='lesson')assert(n.pitfalls.some(p=>p.wrong&&p.right&&p.text?.length>10),`Missing explained correction pair ${n.key}`);
+  assert(n.usage.filter(u=>!u.advanced).length>=2,`Missing basic steps ${n.key}`);
+  if(n.kind==='lesson')assert(n.pitfalls.length>=2&&n.pitfalls.every(p=>!Array.isArray(p)&&p.title&&p.wrong&&p.right&&p.text?.trim().length>=4),`Missing explained correction pair ${n.key}`);
  }
 }
 const qids=new Set(),prompts=new Set();let questions=0;
@@ -34,6 +35,8 @@ for(const l of d.lessons){
 }
 assert.equal(questions,405);
 assert.equal(Object.keys(context.window.LESSON_DETAILS).length,135);
+assert.equal(Object.keys(context.window.TOPIC_BEGINNER).length,31);
+assert(Object.keys(context.window.GRAMMAR_TERMS).length>=40);
 assert.deepEqual(Array.from(a.get('lesson:noun-types').children),['lesson:noun-proper','lesson:noun-common','topic:noun-semantic']);
 assert.deepEqual(Array.from(a.get('lesson:noun-common').children),['lesson:noun-individual','lesson:noun-collective','lesson:noun-material','lesson:noun-abstract']);
 assert.deepEqual(Array.from(a.route('topic:nouns','lesson:noun-collective')),['topic:nouns','lesson:noun-types','lesson:noun-common','lesson:noun-collective']);
@@ -96,4 +99,5 @@ assert(!/(?:libfile_|appgprj_|art_v2_|chatgpt\.com\/library)/.test(app+html),'Ho
 console.log(`Passed: 10 modules, 31 topic cards, 135 detailed lessons, ${questions} unique questions, 166 progress stars.`);
 console.log(`Passed: ${layouts} non-overlapping map layouts, constellation coverage, legacy progress migration and idempotent backup merge.`);
 console.log(`Passed: 50 unique game levels, 10 progressively introduced word classes, answer checking and game backup merge.`);
+console.log('Passed: beginner example length, basic steps, structured corrections,31overview cards and43term explanations.');
 console.log('Passed: JavaScript syntax and portable relative assets.');

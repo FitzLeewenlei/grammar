@@ -1,6 +1,6 @@
 {
   "name": "grammar-atlas",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "private": true,
   "type": "module",
   "description": "包含分层语法图谱、知识卡片、学习星图、练习和50关词性积木游戏的英语学习应用。",

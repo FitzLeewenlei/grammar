@@ -4,46 +4,46 @@
   {
     "g": "adverbial",
     "id": "clause-adverbial-time",
-    "title": "时间状语从句：先后、过程与边界",
+    "title": "时间状语从句：什么时候发生",
     "en": "Time clauses",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 状语从句与虚拟语气；细分讲解与练习",
-    "formula": "when / while / as；before / after；until / since",
-    "take": "先确定事件先后和持续边界，再选择连接词与动词形式。",
+    "formula": "I will call you when I get home.",
+    "take": "用一小句说明一件事在什么时候发生。",
     "steps": [
       [
-        "从句整体回答什么时候",
-        "时间状语从句给主句事件设定时间背景，可以放在主句前或后。When the lesson ended, we left. 中 ended 是离开的时间边界；前置从句后常用逗号。I remember when we left. 则是 remember 的内容宾语，不能只看 when 判为状语从句。"
+        "先知道它在说什么",
+        "从句就是放在较长句子里的一小句。时间状语从句用来说明“什么时候”：I will call you when I get home. 意思是“我到家时会给你打电话”。"
       ],
       [
-        "区分时间点、持续背景和同步变化",
-        "when 可以引出时间点或一段时间；while 常强调延续背景或两个活动重叠；as 可突出同步变化。The bell rang while I was reading. 用 rang 表进入背景的事件，reading 表展开中的活动，但连接词不强迫所有句子都用一套固定时态。"
+        "先记住 when 和 while",
+        "when 常表示“当……时”，while 常表示“在……期间”。I was reading when Tom came in. 的意思是“汤姆进来时，我正在看书”。"
       ],
       [
-        "按含义选择 before、after、until、since",
-        "before/after 明确先后时，两件过去的事常可都用一般过去时，并非先发生就必须过去完成。肯定的 until 常配持续情况；not ... until 表示到边界才发生。since 给出起点，主句是否用完成时要看是否在说延续到参照点。"
+        "用 before、after、until 说明顺序",
+        "before 是“在……之前”，after 是“在……之后”。I waited until Tom came. 表示“我一直等到汤姆来”。not ... until 则常表示“直到……才……”。"
       ],
       [
-        "将来时间从句保留现在形式",
-        "主句指向将来时，时间从句通常用一般现在形式，强调先完成也可用现在完成，如 I will wait until you finish/have finished.。这条规则不套用于 I wonder when he will return. 中表示内容的宾语从句，也不能据此禁止 will 表意愿的独立用法。"
+        "说将来的时间，也常用现在形式",
+        "I will call you when I get home. 说的是以后到家，但 when 后用 get，不写 will get。先记住这个常见搭配；不要把它套到所有带 when 的句子里。"
       ]
     ],
     "examples": [
       [
-        "The lights went out while we were discussing the plan.",
-        "我们正在讨论计划时，灯灭了。",
-        "while 从句提供持续背景，went out 叙述背景中发生的事件。"
+        "I was reading when Tom came in.",
+        "汤姆进来时，我正在看书。",
+        "I was reading 说我当时在做什么；when Tom came in 说这个动作发生的时间。"
       ],
       [
-        "I will send the report as soon as I have checked the figures.",
-        "我核对完数字就会发送报告。",
-        "as soon as 从句用现在完成形式突出先核对完，再执行将来的发送。"
+        "I will call you when I get home.",
+        "我到家时会给你打电话。",
+        "call 是打电话，get home 是到家。说将来的时间，when 后仍用 get。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "“铃声响起时，我正在读书”：The bell rang ____ I was reading. 选出突出“在读书期间”的连接词。",
+        "prompt": "“汤姆来时，我正在读书”：Tom came ____ I was reading. 哪个词表示“在读书期间”？",
         "options": [
           "while",
           "because",
@@ -51,98 +51,116 @@
           "although"
         ],
         "answer": 0,
-        "why": "while 突出读书过程构成的时间背景；其他选项分别改变为原因、条件、让步关系。"
+        "why": "while 在这里表示“在……期间”。I was reading 说当时正在做的事。"
       },
       {
         "type": "fill",
-        "prompt": "I will call you when she ____ (arrive) tomorrow.（请用一般现在时）",
+        "prompt": "I will call you when Tom ____ (come) home.（请用一般现在时）",
         "answer": [
-          "arrives"
+          "comes"
         ],
-        "why": "将来时间状语从句按要求用一般现在时，she 对应第三人称单数 arrives。"
+        "why": "when 后在这里说将来的时间，用一般现在时；Tom 是一个人，所以用 comes。"
       },
       {
         "type": "mc",
-        "prompt": "I locked the door before the rain started. 中两件事的先后是：",
+        "prompt": "I ate before Tom came.（汤姆来之前我吃了饭。）哪件事先发生？",
         "options": [
-          "先下雨，后锁门",
-          "先锁门，后下雨",
-          "两个动作一定同时发生",
-          "必须把 locked 改为 had locked 才能判断"
+          "先汤姆来，后吃饭",
+          "先吃饭，后汤姆来",
+          "两件事一定同时发生",
+          "只有把 ate 改成 had eaten 才知道顺序"
         ],
         "answer": 1,
-        "why": "before 已说明锁门早于下雨，一般过去时也可以清楚表达这种先后。"
+        "why": "before 是“在……之前”。这里已说清吃饭在前，不一定要改用 had eaten。"
       }
     ],
     "classification": [
-      "时间点与时间背景",
-      "先后关系",
-      "持续到边界",
-      "从某时以来",
-      "将来时间的现在形式"
+      "什么时候",
+      "先做哪件事",
+      "一直到什么时候",
+      "自从什么时候"
     ],
     "pitfalls": [
-      {
-        "title": "进行背景不能把过去式放在 was 后",
-        "wrong": "While I was walk home, it started to rain.",
-        "right": "While I was walking home, it started to rain.",
-        "text": "was 后用 walking 构成过去进行式；walked 不能与这里的 was 构成想表达的主动过程。"
-      },
-      {
-        "title": "普通将来时间从句不用重复将来标记",
-        "wrong": "I will call you when I will arrive tomorrow.",
-        "right": "I will call you when I arrive tomorrow.",
-        "text": "在这里单纯表示明天到达的时间，when 从句用现在形式 arrive；不是表示意愿或其他独立情态意义。"
-      }
+      [
+        "was 后要用 -ing 形式",
+        "While I was walk home, it rained.",
+        "While I was walking home, it rained.",
+        "这里想说“我正在走回家”。用 was walking，不能把 walk 原形直接放在 was 后。"
+      ],
+      [
+        "这里的 when 后不再加 will",
+        "I will call you when I will get home.",
+        "I will call you when I get home.",
+        "这里 when 只是说明将来到家的时间。前面已有 will call，后面用 get home。"
+      ]
     ],
     "related": [
       "future-time",
       "time-connectors"
+    ],
+    "usage": [
+      {
+        "h": "先记住 when 和 while",
+        "t": "when 常表示“当……时”，while 常表示“在……期间”。I was reading when Tom came in. 的意思是“汤姆进来时，我正在看书”。"
+      },
+      {
+        "h": "用 before、after、until 说明顺序",
+        "t": "before 是“在……之前”，after 是“在……之后”。I waited until Tom came. 表示“我一直等到汤姆来”。not ... until 则常表示“直到……才……”。"
+      },
+      {
+        "h": "说将来的时间，也常用现在形式",
+        "t": "I will call you when I get home. 说的是以后到家，但 when 后用 get，不写 will get。先记住这个常见搭配；不要把它套到所有带 when 的句子里。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "I do not know when he will come. 是“我不知道他什么时候来”，when 后说的是“不知道的内容”，不是给前面动作说明时间。因此这里可以有 will。若要强调先做完，也可说 I will wait until you have finished.。",
+        "advanced": true
+      }
     ]
   },
   {
     "g": "adverbial",
     "id": "clause-adverbial-reason",
-    "title": "原因状语从句：直接原因与背景理由",
+    "title": "原因状语从句：为什么会这样",
     "en": "Reason clauses",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 状语从句与虚拟语气；细分讲解与练习",
-    "formula": "because + 从句；because of + 名词性成分",
-    "take": "先核对因果逻辑，再区分连接从句和连接名词短语。",
+    "formula": "I stayed home because I was ill.",
+    "take": "用 because 说明为什么会做一件事。",
     "steps": [
       [
-        "because 直接说明原因",
-        "because 从句常回答 why，并把原因作为需要突出的信息，如 We stayed because the bridge was closed.。原因可以是事实，也可以是说话者给出的解释，不能只靠中文词序选择连接词。"
+        "先知道它在说什么",
+        "原因就是“为什么”。I stayed home because I was ill. 表示“我待在家里，因为我病了”。because 后的一小句说出了原因。"
       ],
       [
-        "since、as、now that 常把理由作为背景",
-        "since 作原因连词常表示既然；as 可以引出背景理由；now that 强调新情况提供理由。它们与 because 的差别涉及话语重点，不是固定的强弱等级。since 还可能表示自从，as 还可表示时间或方式，须结合逻辑判断。"
+        "because 后面说一件完整的事",
+        "because I was ill 有 I“我”和 was ill“生病了”。这是一小句。先学会把“做了什么”和“为什么”用 because 连起来。"
       ],
       [
-        "检查 because 与 because of 后面的结构",
-        "because 后可接有主语和限定谓语的分句，如 because it rained；because of 后接名词性成分，如 because of the rain。名词短语里也可含较复杂修饰，因此不能仅按后面单词多少判断有没有从句。"
+        "because of 后常接一个词或词组",
+        "because of the rain 表示“因为下雨”，the rain 是“这场雨”。对比：because it rained 后是一小句；because of the rain 后是一个名词词组。"
       ],
       [
-        "避免在同一层重复标记因果",
-        "标准书面教学中，同一对直接对应的分句通常选择 because 从属结构，或 so 并列结果结构，而不机械写 because ... so ...。for 作并列连词可追加解释性理由，位置和语用与 because 不完全相同，不能处处原位替换。"
+        "because 和 so 选一种连法",
+        "因为病了，我待在家：Because I was ill, I stayed home. 也可说 I was ill, so I stayed home.，即“我病了，所以待在家”。学标准书面表达时，不把 because 和 so 同时用在这两部分之间。"
       ]
     ],
     "examples": [
       [
-        "We took the longer route because the bridge was closed.",
-        "因为大桥封闭，我们走了较远的路线。",
-        "because 后有主语 the bridge 和谓语 was closed，构成原因分句。"
+        "I stayed home because I was ill.",
+        "我待在家里，因为我病了。",
+        "because 是因为；后面的 I was ill 说明待在家的原因。"
       ],
       [
-        "Now that the repairs are complete, the museum can reopen.",
-        "既然修缮已经完成，博物馆就可以重新开放了。",
-        "now that 把修缮完成这一新情况作为重新开放的背景理由。"
+        "It is cold, so I need a coat.",
+        "天气很冷，所以我需要一件外套。",
+        "so 是所以。前面说原因，后面说由此产生的需要。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "“由于暴风雨，比赛取消了”：The match was canceled ____ the storm. 哪种结构合适？",
+        "prompt": "“因为下雨，我待在家”：I stayed home ____ the rain. 选哪一个？",
         "options": [
           "because",
           "although",
@@ -150,293 +168,347 @@
           "now that"
         ],
         "answer": 2,
-        "why": "the storm 是名词短语，需要 because of；because、although、now that 通常引出分句。"
+        "why": "the rain 是一个名词词组，前面用 because of；because 后通常要接一小句。"
       },
       {
         "type": "fill",
-        "prompt": "The flight was delayed because ____ the thick fog.（补全表示原因的介词短语）",
+        "prompt": "I stayed home because ____ the rain.（补全“因为下雨”）",
         "answer": [
           "of"
         ],
-        "why": "because of 后接名词短语 the thick fog，表示航班延误的原因。"
+        "why": "because of 是“因为”。后面接 the rain 这个名词词组，需要保留 of。"
       },
       {
         "type": "mc",
-        "prompt": "标准书面表达中，哪一句清楚表达“因为路被淹，所以改走另一条路”？",
+        "prompt": "在标准书面英语里，哪一句正确表达“因为我病了，所以待在家”？",
         "options": [
-          "Because the road was flooded, so we took another route.",
-          "Because of the road was flooded, we took another route.",
-          "The road because flooded, we took another route.",
-          "Because the road was flooded, we took another route."
+          "Because I was ill, so I stayed home.",
+          "Because of I was ill, I stayed home.",
+          "I because ill, stayed home.",
+          "Because I was ill, I stayed home."
         ],
         "answer": 3,
-        "why": "because 已把前一分句标为原因，不再为同一直接对应关系加 so；because of 后也不能直接放这个限定分句。"
+        "why": "这两部分之间用 because 就能说明原因。标准书面表达中，不再重复加 so。"
       }
     ],
     "classification": [
-      "直接说明原因",
-      "已知或背景理由",
-      "新情况作理由",
-      "because 与 because of"
+      "because：因为",
+      "because of：因为某件事或东西",
+      "so：所以"
     ],
     "pitfalls": [
-      {
-        "title": "because of 后不能直接接这种限定分句",
-        "wrong": "We stayed indoors because of it was raining.",
-        "right": "We stayed indoors because it was raining.",
-        "text": "it was raining 是有主谓的分句，用 because；若用 because of，可改为 because of the rain。"
-      },
-      {
-        "title": "同一对因果分句避免 because 与 so 重复",
-        "wrong": "Because the road was flooded, so we took another route.",
-        "right": "Because the road was flooded, we took another route.",
-        "text": "在标准书面表达中，这里保留 because 从句即可；也可改为 The road was flooded, so we took another route.。"
-      }
+      [
+        "because of 后不直接放这一小句",
+        "I stayed home because of I was ill.",
+        "I stayed home because I was ill.",
+        "I was ill 已经是一小句，这里用 because。because of 后可接 the rain 这样的词组。"
+      ],
+      [
+        "不要在这两部分之间重复用 because 和 so",
+        "Because I was ill, so I stayed home.",
+        "Because I was ill, I stayed home.",
+        "标准书面表达中，这里保留 because 就够了。也可删掉 because，改用 so 连接。"
+      ]
     ],
     "related": [
       "contrast",
       "conjunction-types"
+    ],
+    "usage": [
+      {
+        "h": "because 后面说一件完整的事",
+        "t": "because I was ill 有 I“我”和 was ill“生病了”。这是一小句。先学会把“做了什么”和“为什么”用 because 连起来。"
+      },
+      {
+        "h": "because of 后常接一个词或词组",
+        "t": "because of the rain 表示“因为下雨”，the rain 是“这场雨”。对比：because it rained 后是一小句；because of the rain 后是一个名词词组。"
+      },
+      {
+        "h": "because 和 so 选一种连法",
+        "t": "因为病了，我待在家：Because I was ill, I stayed home. 也可说 I was ill, so I stayed home.，即“我病了，所以待在家”。学标准书面表达时，不把 because 和 so 同时用在这两部分之间。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "since 和 as 有时也表示“因为、既然”，常把理由当作大家已经知道的背景。它们还可能有别的意思，例如 since 可表示“自从”。刚开始先把 because 的基本用法学稳。",
+        "advanced": true
+      }
     ]
   },
   {
     "g": "adverbial",
     "id": "clause-adverbial-concession",
-    "title": "让步状语从句：虽然、即使与无论",
+    "title": "让步状语从句：虽然、即使、无论",
     "en": "Concession clauses",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 状语从句与虚拟语气；细分讲解与练习",
-    "formula": "although / though；even though / even if；no matter + 疑问词",
-    "take": "让步承认阻碍，主句说明结论仍成立；区分事实与假设。",
+    "formula": "Although it is cold, I will go.",
+    "take": "说明有一个困难或条件，后面的事情仍然成立。",
     "steps": [
       [
-        "让步不是把两个分句都设成并列",
-        "Although the task was difficult, we finished it. 先承认难度，仍断言完成。although/though 引入从属背景，but 连接并列对比；同一对直接对应分句通常不同时使用 although 与 but。though 还可在句末作副词表示不过。"
+        "先知道“让步”是什么意思",
+        "“让步”这个名字不用急着背。先看：Although it is cold, I will go.，意思是“虽然很冷，我还是会去”。前面有困难，后面的决定仍不变。"
       ],
       [
-        "用语境区分 even though 与 even if",
-        "even though 常把所述情况视为事实，表示尽管；even if 常突出即使某个假设成立，结论仍不变。Even if it rains tomorrow, we will go. 不保证明天一定下雨，不能把连接词当作事实证据。"
+        "although 和 though 都可表示虽然",
+        "Although I am tired, I can help. 表示“虽然我累了，我还是能帮忙”。在这两部分之间，用 although 后通常不再加 but。"
       ],
       [
-        "无论结构与普通名词性成分不同",
-        "No matter what happens, stay calm. 中整体是让步条件；whatever 也能引出让步，但还可构成名词性内容，如 Take whatever you need.。不能把 no matter what 直接替换进 take 的普通宾语位置。whether ... or ... 也可表示无论某两种情况中的哪种。"
+        "even if 说的是一种假设",
+        "Even if it rains, we will go. 表示“即使下雨，我们也会去”。这不一定是在说已经下雨，而是在说：就算下雨，决定也不变。"
       ],
       [
-        "前置结构要单独分析",
-        "Tired as she was, she continued. 把表语前置表达让步；这不同于把助动词移到主语前的部分倒装。Child as he is 这类单数可数名词前置时常省冠词，不能因此推广为普通名词一律不用冠词。"
+        "no matter 表示无论怎样",
+        "No matter how cold it is, I will go. 表示“无论多冷，我都会去”。how cold 是“有多冷”；no matter how ... 表示这一点不会改变后面的决定。"
       ]
     ],
     "examples": [
       [
-        "Although the instructions were clear, several students asked for another example.",
-        "尽管说明很清楚，仍有几个学生要求再举一个例子。",
-        "前半承认说明清楚，后半给出与通常预期不同的结果。"
+        "Although it is cold, I will go.",
+        "虽然天气很冷，我还是会去。",
+        "although 引出“天气冷”这个情况；I will go 是仍然要做的事。"
       ],
       [
-        "Even if the train is late, we will wait for you.",
-        "即使火车晚点，我们也会等你。",
-        "even if 提出假设，不是在断言火车已晚点；is 表将来条件。"
+        "Even if it rains, we will go.",
+        "即使下雨，我们也会去。",
+        "even if 是即使。它提出一种可能的情况，不是说现在一定在下雨。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "尚不知道明天会不会下雨，但想表达“即使下雨也去”：哪一句最贴切？",
+        "prompt": "还不知道明天会不会下雨。要说“即使下雨，我们也去”，选哪一句？",
         "options": [
-          "Even if it rains tomorrow, we will go.",
-          "Because it rains tomorrow, we will go.",
-          "Until it rains tomorrow, we will go.",
-          "As soon as it rains tomorrow, we will go."
+          "Even if it rains, we will go.",
+          "Because it rains, we will go.",
+          "Until it rains, we will go.",
+          "As soon as it rains, we will go."
         ],
         "answer": 0,
-        "why": "Even if 把下雨当作假设阻碍，并说明决定不受其影响；其他句子改变为原因或时间关系。"
+        "why": "even if 是“即使”。它说就算出现下雨的情况，去的决定也不改变。"
       },
       {
         "type": "fill",
-        "prompt": "Take ____ you need from the shelf.（用 what 的 -ever 形式，整体作 take 的宾语）",
+        "prompt": "Take ____ you need.（用 what 的 -ever 形式，表示“你需要的任何东西”）",
         "answer": [
           "whatever"
         ],
-        "why": "whatever you need 在这里是名词性宾语，不能把 no matter what 直接放进这个位置。"
+        "why": "whatever you need 表示“你需要的任何东西”，整个组合就是 take“拿”的对象。"
       },
       {
         "type": "mc",
-        "prompt": "No matter how difficult it becomes, we will keep trying. 中前半的作用是：",
+        "prompt": "No matter how cold it is, I will go. 前半部分是什么意思？",
         "options": [
-          "作 trying 的直接宾语",
-          "表示无论难到何种程度的让步背景",
-          "修饰一个名词的定语从句",
-          "证明困难已经不存在"
+          "我不去的原因",
+          "无论天气有多冷",
+          "天气已经不冷了",
+          "我不知道冷是什么意思"
         ],
         "answer": 1,
-        "why": "no matter how 引入让步，强调困难程度无论如何变化，仍会继续努力。"
+        "why": "no matter how cold 表示“无论多冷”。后面是在说去的决定不会改变。"
       }
     ],
     "classification": [
-      "承认事实的让步",
-      "提出假设的让步",
-      "无论结构",
-      "as / though 前置让步"
+      "although / though：虽然",
+      "even if：即使",
+      "no matter：无论"
     ],
     "pitfalls": [
-      {
-        "title": "标准书面表达避免 although 与 but 重复标记同一关系",
-        "wrong": "Although the task was difficult, but we finished it.",
-        "right": "Although the task was difficult, we finished it.",
-        "text": "保留 although 从属结构即可；若改用 but，可写 The task was difficult, but we finished it.。"
-      },
-      {
-        "title": "普通宾语位置用 whatever，而非 no matter what",
-        "wrong": "Take no matter what you need.",
-        "right": "Take whatever you need.",
-        "text": "这里需要一个整体作 take 的宾语；no matter what 通常引出让步状语，不能这样直接充当宾语。"
-      }
+      [
+        "这里用 although 后不再加 but",
+        "Although I am tired, but I can help.",
+        "Although I am tired, I can help.",
+        "这两部分之间已有 although 表示“虽然”。标准书面表达里，不需要再加 but。"
+      ],
+      [
+        "表示“你需要的任何东西”用 whatever",
+        "Take no matter what you need.",
+        "Take whatever you need.",
+        "Take whatever you need. 是“拿你需要的任何东西”。no matter what 通常用来补充“无论什么情况”，不能在这里直接代替 whatever。"
+      ]
     ],
     "related": [
       "contrast",
       "inversion"
+    ],
+    "usage": [
+      {
+        "h": "although 和 though 都可表示虽然",
+        "t": "Although I am tired, I can help. 表示“虽然我累了，我还是能帮忙”。在这两部分之间，用 although 后通常不再加 but。"
+      },
+      {
+        "h": "even if 说的是一种假设",
+        "t": "Even if it rains, we will go. 表示“即使下雨，我们也会去”。这不一定是在说已经下雨，而是在说：就算下雨，决定也不变。"
+      },
+      {
+        "h": "no matter 表示无论怎样",
+        "t": "No matter how cold it is, I will go. 表示“无论多冷，我都会去”。how cold 是“有多冷”；no matter how ... 表示这一点不会改变后面的决定。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "whatever 可以表示“……的任何东西”，也可在另一种句子里表示“无论什么”。不要看到 -ever 就只背一个中文意思，先看它是在说一个东西，还是补充一种不改变结果的情况。",
+        "advanced": true
+      }
     ]
   },
   {
     "g": "adverbial",
     "id": "clause-adverbial-purpose",
-    "title": "目的状语从句：意图、情态与主体",
+    "title": "目的状语从句：为了做什么",
     "en": "Purpose clauses",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 状语从句与虚拟语气；细分讲解与练习",
-    "formula": "so that / in order that + 主语 + can/could 等",
-    "take": "目的回答为了什么，不保证目标已经实现。",
+    "formula": "I speak slowly so that you can understand.",
+    "take": "用 so that 说明这样做是为了什么。",
     "steps": [
       [
-        "目的从句表达想达到的目标",
-        "She spoke slowly so that the visitors could follow her. 说明慢说的意图，并不单凭这个从句保证访客最后一定听懂。目的从句通常具有自己的主语和限定谓语，不能只剩一个动作原形。"
+        "先知道它在说什么",
+        "目的就是“想达到什么”。I speak slowly so that you can understand. 表示“我说得慢，是为了让你听懂”。后面一小句说明我这样做的用意。"
       ],
       [
-        "so that 与 in order that",
-        "so that 常见于日常表达，in order that 较正式、目的色彩更明确。can/could、may/might、will/would 等取决于时间、可实现性和表达习惯，不是见 so that 就固定填 can；过去目的常用 could 或 would 配合。"
+        "so that 后说清楚谁做什么",
+        "I speak slowly 说“我说得慢”。so that you can understand 说“为了让你能听懂”。前后做事的人可以不同，要把 you 这样的“谁”写清楚。"
       ],
       [
-        "与不定式转换时核对动作主体",
-        "同一主体的目的可常用 to do 或 in order to do，如 She left early to catch the bus.。若目标动作由另一个主体执行，如 The teacher raised her voice so that the students could hear，直接删掉 students 可能改变是谁听见的关系。"
+        "同一个人做事时，也常用 to",
+        "I got up early to catch the bus. 是“我早起，为了赶上公交车”。也可用 in order to catch the bus；in order to 后接动词原形 catch。"
       ],
       [
-        "预防性目的与结果要区分",
-        "in case 常表示以防，说明提前采取准备，不等于 only if 条件。目的 so that 说明意图；so ... that ... 常说明达到某种程度而实际产生的结果。判断依赖句意，不能只看是否出现情态词。"
+        "in case 表示提前做准备",
+        "Take a coat in case it gets cold. 表示“带件外套，以防变冷”。现在先带外套，不是等变冷以后才决定要不要带。"
       ]
     ],
     "examples": [
       [
-        "The guide spoke slowly so that we could understand the safety instructions.",
-        "导游说得很慢，为了让我们能听懂安全说明。",
-        "目的动作的主体是 we，保留独立从句可以清楚说明谁需要理解。"
+        "I speak slowly so that you can understand.",
+        "我说得慢，是为了让你听懂。",
+        "so that 是为了让；you can understand 说清楚希望谁能听懂。"
       ],
       [
-        "She saved a copy in case the original file was damaged.",
-        "她保存了一份副本，以防原文件损坏。",
-        "保存副本是预先准备，不表示文件损坏已经发生。"
+        "Take a coat in case it gets cold.",
+        "带件外套，以防天气变冷。",
+        "in case 是以防。带外套是提前做的准备。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "The coach drew a diagram so that the players could understand the plan. 最直接说明：",
+        "prompt": "I speak slowly so that you can understand.（我说得慢，为了让你听懂。）后半是在说：",
         "options": [
-          "队员一定已经完全理解",
-          "画图导致队员睡着",
-          "画图的目的是帮助队员理解",
-          "只有队员不理解才允许画图"
+          "你一定已经完全听懂",
+          "我说话太快的结果",
+          "我说得慢的目的",
+          "我说话的地点"
         ],
         "answer": 2,
-        "why": "目的从句说明想实现的目标，不单凭 could understand 证明目标事实上已全部实现。"
+        "why": "so that you can understand 说“为了让你能听懂”，是在说明我这样做的用意。"
       },
       {
         "type": "fill",
-        "prompt": "The teacher repeated the question so that we could ____ (hear) it clearly.",
+        "prompt": "I spoke slowly so that you could ____ (hear) me.",
         "answer": [
           "hear"
         ],
-        "why": "could 后接动词原形 hear，构成目的从句中的情态谓语。"
+        "why": "could 后要用动词原形 hear。“you could hear me”是“你能听见我”。"
       },
       {
         "type": "mc",
-        "prompt": "要明确保留“孩子们能看见”的独立主语，哪一句最清楚？",
+        "prompt": "要说“我开灯，为了让你能看见”，哪一句最清楚？",
         "options": [
-          "He moved aside see the screen.",
-          "He moved aside in order the children see the screen.",
-          "He moved aside so that seeing the screen.",
-          "He moved aside so that the children could see the screen."
+          "I turned on the light see.",
+          "I turned on the light in order you see.",
+          "I turned on the light so that seeing.",
+          "I turned on the light so that you could see."
         ],
         "answer": 3,
-        "why": "so that 后保留 the children could see 的完整主谓结构，准确交代目标动作的主体。"
+        "why": "so that 后有 you“你”和 could see“能看见”，说清了希望谁能做什么。"
       }
     ],
     "classification": [
-      "目标与实际结果",
-      "so that / in order that",
-      "主体相同的转换",
-      "in case 预防性目的"
+      "so that：为了让……",
+      "in order to：为了做……",
+      "in case：以防……"
     ],
     "pitfalls": [
-      {
-        "title": "目的从句不能只剩一个原形动词",
-        "wrong": "She whispered so that not wake the baby.",
-        "right": "She whispered so that she would not wake the baby.",
-        "text": "so that 引出的从句在这里要有主语和限定谓语；也可改用不定式 She whispered so as not to wake the baby.。"
-      },
-      {
-        "title": "in order 后接目的不定式时需要 to",
-        "wrong": "He left early in order catch the train.",
-        "right": "He left early in order to catch the train.",
-        "text": "in order to + 原形表达目的；若用 in order that，则后接完整分句，不能把两种框架混合。"
-      }
+      [
+        "so that 后要说清楚谁来做",
+        "I spoke slowly so that understand.",
+        "I spoke slowly so that you could understand.",
+        "后半要说“为了让你能听懂”，所以需要 you。could understand 是能听懂。"
+      ],
+      [
+        "in order to 中不要漏掉 to",
+        "I got up early in order catch the bus.",
+        "I got up early in order to catch the bus.",
+        "in order to 是连在一起学的表达，意思是为了；后面用 catch 这样的动词原形。"
+      ]
     ],
     "related": [
       "purpose-result",
       "infinitive"
+    ],
+    "usage": [
+      {
+        "h": "so that 后说清楚谁做什么",
+        "t": "I speak slowly 说“我说得慢”。so that you can understand 说“为了让你能听懂”。前后做事的人可以不同，要把 you 这样的“谁”写清楚。"
+      },
+      {
+        "h": "同一个人做事时，也常用 to",
+        "t": "I got up early to catch the bus. 是“我早起，为了赶上公交车”。也可用 in order to catch the bus；in order to 后接动词原形 catch。"
+      },
+      {
+        "h": "in case 表示提前做准备",
+        "t": "Take a coat in case it gets cold. 表示“带件外套，以防变冷”。现在先带外套，不是等变冷以后才决定要不要带。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "so that 后既可能说目的，也可能说实际结果。看上下文：如果是在说“我这样做，是想让……”，常是目的。can、could、will、would 常用在目的从句中，但不是每次都必须出现。",
+        "advanced": true
+      }
     ]
   },
   {
     "g": "adverbial",
     "id": "clause-adverbial-result",
-    "title": "结果状语从句：so 与 such 的结构",
+    "title": "结果状语从句：所以发生了什么",
     "en": "Result clauses",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 状语从句与虚拟语气；细分讲解与练习",
-    "formula": "so + 形容词/副词 + that；such + 名词性部分 + that",
-    "take": "先认清修饰的中心，再判断句子是在说意图还是结果。",
+    "formula": "I was so tired that I went to bed.",
+    "take": "用 so ... that 或 such ... that 说明程度带来的结果。",
     "steps": [
       [
-        "结果从句说明达到某程度后的结果",
-        "The room was so quiet that we could hear the clock. 前面陈述安静程度，后面说明由此能够听见钟声的结果。结果不是说话者必然有意追求的目标，不能与目的从句混为一谈。"
+        "先知道它在说什么",
+        "I was so tired that I went to bed. 表示“我太累了，所以去睡觉了”。前面说累到什么程度，后面说实际发生的结果。"
       ],
       [
-        "so 与 such 后面的中心不同",
-        "so 常修饰形容词、副词，如 so useful、so quickly；such 常修饰名词性部分，如 such a useful guide。单数可数名词要考虑冠词，复数或不可数表达可用 such useful books、such good advice。较正式的 so useful a guide 也是合法结构，不能一概判错。"
+        "so 后常接说明特点的词",
+        "so tired 是“这么累”，so cold 是“这么冷”。The box is so heavy that I cannot lift it. 表示箱子很重，所以我搬不动。"
       ],
       [
-        "数量词形成 so many/much/few/little",
-        "so many/few 后通常是可数复数，so much/little 后通常是不可数数量，如 so much noise。little 若表示小的而非少量，结构与词义会不同，例如 such little children 表示这么小的孩子，不能只背 so 与 little 的固定组合。"
+        "such 后常带一个名词词组",
+        "such a hot day 是“这么热的一天”。It was such a hot day that we stayed home. 表示那天很热，所以我们待在家里。注意 a 不能漏掉。"
       ],
       [
-        "根据实际逻辑区分目的与结果",
-        "He spoke slowly so that everyone could follow. 常突出目的；He spoke so slowly that we became impatient. 突出造成的实际结果。so that 也可能表结果，不能仅凭 that 前有没有逗号或从句有没有情态动词强行分类。"
+        "数量多用 so much 或 so many",
+        "money“钱”通常不直接数一个、两个，所以用 so much money。books“书”可以一本、两本地数，所以用 so many books。后面再接 that 说明结果。"
       ]
     ],
     "examples": [
       [
-        "The box was so heavy that two people had to carry it.",
-        "这个箱子太重了，以至于需要两个人来搬。",
-        "so 修饰形容词 heavy，that 从句说明重量产生的结果。"
+        "I was so tired that I went to bed.",
+        "我太累了，所以去睡觉了。",
+        "so tired 说累的程度；that I went to bed 说实际发生的结果。"
       ],
       [
-        "It was such a useful guide that I kept it on my desk.",
-        "这本指南非常实用，所以我一直把它放在书桌上。",
-        "such 限定包含单数可数中心 guide 的名词短语，需要 a。"
+        "It was such a hot day that we stayed home.",
+        "那天太热了，所以我们待在家里。",
+        "a hot day 是“炎热的一天”。such 放在这个名词词组前面。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "It was ____ a useful guide that I bought another copy. 应选哪项？",
+        "prompt": "It was ____ a hot day that we stayed home.（那天太热了，所以我们待在家。）",
         "options": [
           "such",
           "so",
@@ -444,98 +516,116 @@
           "too"
         ],
         "answer": 0,
-        "why": "这里已经给出 a useful guide 的普通名词短语顺序，采用 such ... that；so 的替代结构须改成 so useful a guide。"
+        "why": "a hot day 是“炎热的一天”，是一个名词词组。它前面用 such，不写 so a hot day。"
       },
       {
         "type": "fill",
-        "prompt": "There was so ____ (much/many) useful information that I took several pages of notes.",
+        "prompt": "I had so ____ (much/many) work that I stayed home.",
         "answer": [
           "much"
         ],
-        "why": "information 在此为不可数名词，数量表达用 much，而不是 many。"
+        "why": "work 在这里指整体的工作，不按一个、两个来数。因此用 much，不用 many。"
       },
       {
         "type": "mc",
-        "prompt": "He spoke so quietly that nobody heard the announcement. 主要说明：",
+        "prompt": "He spoke so quietly that I did not hear him.（他说得太轻，所以我没听见。）后半说明：",
         "options": [
-          "他想让所有人听懂这一目的",
-          "音量小导致无人听见的结果",
-          "两个句子没有逻辑关系",
-          "应删掉 that 后的主语"
+          "他说话的目的",
+          "说话轻带来的结果",
+          "两件事毫无关系",
+          "我没有耳朵"
         ],
         "answer": 1,
-        "why": "so quietly 描述程度，that 从句叙述其产生的结果，不是在说明说话者想达到的目标。"
+        "why": "that I did not hear him 说实际出现的结果：声音太轻，我没有听见。"
       }
     ],
     "classification": [
-      "程度导致的结果",
-      "so 修饰形容词或副词",
-      "such 修饰名词性部分",
-      "数量与可数性"
+      "so + 形容词 / 副词",
+      "such + 名词词组",
+      "so much / so many"
     ],
     "pitfalls": [
-      {
-        "title": "普通名词短语前用 such",
-        "wrong": "It was so a cold day that the lake froze.",
-        "right": "It was such a cold day that the lake froze.",
-        "text": "a cold day 是普通顺序的名词短语，用 such；也可调整为 so cold a day，但不能保留 so a cold day 这个顺序。"
-      },
-      {
-        "title": "noise 的不可数数量用 much",
-        "wrong": "There was so many noise that I could not sleep.",
-        "right": "There was so much noise that I could not sleep.",
-        "text": "这里 noise 指整体噪声，不直接计数，数量词用 much；many 需要可数复数中心。"
-      }
+      [
+        "普通顺序里用 such a ...",
+        "It was so a hot day that we stayed home.",
+        "It was such a hot day that we stayed home.",
+        "这里后面是 a hot day 这个名词词组，前面用 such，不写 so a hot day。"
+      ],
+      [
+        "noise 在这里不按一个、两个来数",
+        "There was so many noise that I could not sleep.",
+        "There was so much noise that I could not sleep.",
+        "noise 在这里表示整体的噪声，用 much。many 后一般要接 books 这样的复数可数名词。"
+      ]
     ],
     "related": [
       "purpose-result",
       "quantifiers",
       "comparison"
+    ],
+    "usage": [
+      {
+        "h": "so 后常接说明特点的词",
+        "t": "so tired 是“这么累”，so cold 是“这么冷”。The box is so heavy that I cannot lift it. 表示箱子很重，所以我搬不动。"
+      },
+      {
+        "h": "such 后常带一个名词词组",
+        "t": "such a hot day 是“这么热的一天”。It was such a hot day that we stayed home. 表示那天很热，所以我们待在家里。注意 a 不能漏掉。"
+      },
+      {
+        "h": "数量多用 so much 或 so many",
+        "t": "money“钱”通常不直接数一个、两个，所以用 so much money。books“书”可以一本、两本地数，所以用 so many books。后面再接 that 说明结果。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "还可以说 so hot a day，但这个顺序初学者不必急着使用。先学稳 so hot 和 such a hot day。目的说“想达到什么”，结果说“实际发生了什么”，不要只因看到 that 就把两者混在一起。",
+        "advanced": true
+      }
     ]
   },
   {
     "g": "subjunctive",
     "id": "conditional-present",
-    "title": "现在非真实条件：过去形式的距离感",
+    "title": "现在虚拟条件：假如现在不一样",
     "en": "Present unreal conditionals",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 状语从句与虚拟语气；细分讲解与练习",
-    "formula": "if + 过去形式；would/could/might + 原形",
-    "take": "先判断现在的事实与假设立场，过去形式不一定表示过去时间。",
+    "formula": "If I had a car, I would drive home.",
+    "take": "想象一个与现在实际情况不同的条件，再说可能的结果。",
     "steps": [
       [
-        "过去形式在这里指向现在的非真实假设",
-        "If she knew the number, she would call him. 可以设想她现在知道号码，而语境通常表示她并不知道。knew 体现与当前现实的距离，不是简单叙述她昨天知道。条件是否真实或开放，需要结合说话者的态度与上下文。"
+        "先知道它在说什么",
+        "我现在没有车，但可以想：If I had a car, I would drive home.，意思是“如果我有车，我就开车回家”。这是假想，不是在说我真的有车。"
       ],
       [
-        "结果分句的情态词表达不同意义",
-        "would + 原形常说设想结果，could 突出能力或可能，might 突出不确定可能。If I had more time, I could help. 表能力条件，不应把所有结果一律换成 would 而忽视原意。"
+        "if 后的过去形式可说现在的假想",
+        "had 是 have 的过去形式，但这里设想的是现在有车。先看句子在说现实还是假想，不要看到 had 就一律理解为“昨天”。"
       ],
       [
-        "be 的 were 与 was 要说明语域",
-        "正式的现在反事实表达常对各人称用 were，如 If I were you。日常语境中 I/he/she was 也可出现，不能一概判成不合法。倒装 Were I you 则依赖 were 结构，不能照搬成 Was I you 来替代条件句。"
+        "后面常用 would 加动词原形",
+        "I would drive 表示“我就会开车”。would 后用 drive，不写 drives 或 drove。could 常表示“就能”，might 常表示“可能会”。"
       ],
       [
-        "与真实条件、过去反事实分开",
-        "If she knows, she will tell us. 可以把知道当作开放的现实可能；If she had known, she would have told us. 转为对过去的假设。选形式前分别确认条件与结果的时间，不把现在非真实误套为一律过去发生。"
+        "记住 If I were you",
+        "If I were you, I would wait. 是“如果我是你，我会等一等”。were 在这里表示把自己放到对方的位置来想，并不是在说过去的身份。"
       ]
     ],
     "examples": [
       [
-        "If I had a quieter room, I could concentrate more easily.",
-        "如果我有一间更安静的房间，我就能更容易集中注意力。",
-        "had 设想现在的条件；could concentrate 突出这个条件带来的能力或可能。"
+        "If I had a car, I would drive home.",
+        "如果我有车，我就开车回家。",
+        "实际情况是现在没有车；had 在这里说假想，would drive 说假想的结果。"
       ],
       [
-        "If I were you, I would check the figures again.",
-        "如果我是你，我会再检查一遍数字。",
-        "were 表正式假设身份；would 后的 check 保持原形。"
+        "If I were you, I would wait.",
+        "如果我是你，我会等一等。",
+        "If I were you 常用来给建议；would 后的 wait 不变形。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "语境：她现在没有钥匙。要表达“如果有钥匙，她就会开门”，哪句最合适？",
+        "prompt": "她现在没有钥匙。要设想“如果有钥匙，她就会开门”，选哪一句？",
         "options": [
           "If she have the key, she would opens the door.",
           "If she had the key, she would opened the door.",
@@ -543,197 +633,233 @@
           "If she has the key yesterday, she opens the door."
         ],
         "answer": 2,
-        "why": "已明确是现在没有钥匙的设想，条件用 had，结果用 would + 原形 open。"
+        "why": "这里想象现在有钥匙，用 had。would 后用 open 原形，不能用 opens 或 opened。"
       },
       {
         "type": "fill",
-        "prompt": "她现在不知道号码。按现在非真实条件表达：If she ____ (know) the number, she would call him.",
+        "prompt": "她现在不知道号码。请说“假如知道”：If she ____ (know) it, she would call Tom.",
         "answer": [
           "knew"
         ],
-        "why": "knew 在这里表达与现在现实拉开距离；不是因为事件发生在过去。"
+        "why": "这里设想她现在知道号码，用 know 的过去形式 knew；不是说她昨天知道。"
       },
       {
         "type": "mc",
-        "prompt": "If I had more time now, I could learn another language. 中 had 指向：",
+        "prompt": "If I had more time now, I could help. 中 had 是在说什么？",
         "options": [
-          "一定发生在昨天的真实事件",
-          "过去之前已经完成的动作",
-          "将来已经完成的活动",
-          "现在拥有更多时间的设想"
+          "昨天真实发生的事",
+          "过去之前已经做完的事",
+          "将来已经做完的事",
+          "设想现在有更多时间"
         ],
         "answer": 3,
-        "why": "now 给出现在参照，had 是非真实条件中的距离形式，不能只凭词形解释为过去事实。"
+        "why": "now 表示现在。这里 had 用来设想现在的另一种情况，不是说昨天有时间。"
       }
     ],
     "classification": [
-      "现在事实与假设",
-      "would / could / might",
-      "were 的正式用法",
-      "真实条件与非真实条件"
+      "if：假如",
+      "现在的假设",
+      "would / could + 原形"
     ],
     "pitfalls": [
-      {
-        "title": "would 后保持动词原形",
-        "wrong": "If I were you, I would waits here.",
-        "right": "If I were you, I would wait here.",
-        "text": "would 是情态动词，后接原形 wait，不随 I 或其他主语再加第三人称词尾。"
-      },
-      {
-        "title": "明确的现在反事实条件用相应过去形式",
-        "wrong": "If she have more time now, she would study French.",
-        "right": "If she had more time now, she would study French.",
-        "text": "在给定现在非真实语境中，用 had 表示假设距离；have 也不能直接作为 she 的普通一般现在时形式。"
-      }
+      [
+        "would 后用动词原形",
+        "If I were you, I would waits here.",
+        "If I were you, I would wait here.",
+        "would 后接原形 wait。这里不加 -s，也不把 wait 改为 waited。"
+      ],
+      [
+        "现在没有时间，却设想有时间",
+        "If she have more time now, she would help.",
+        "If she had more time now, she would help.",
+        "这里已说明她现在没有更多时间。设想有时间时，用 had，不是 she have。"
+      ]
     ],
     "related": [
       "unreal",
       "conditional-past",
       "conditional-mixed"
+    ],
+    "usage": [
+      {
+        "h": "if 后的过去形式可说现在的假想",
+        "t": "had 是 have 的过去形式，但这里设想的是现在有车。先看句子在说现实还是假想，不要看到 had 就一律理解为“昨天”。"
+      },
+      {
+        "h": "后面常用 would 加动词原形",
+        "t": "I would drive 表示“我就会开车”。would 后用 drive，不写 drives 或 drove。could 常表示“就能”，might 常表示“可能会”。"
+      },
+      {
+        "h": "记住 If I were you",
+        "t": "If I were you, I would wait. 是“如果我是你，我会等一等”。were 在这里表示把自己放到对方的位置来想，并不是在说过去的身份。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "正式的假想表达中，be 常用 were。日常说话也可能听到 If I was ...，不能把所有 was 都看成错误。先用 If I were you 这个常见句型入门。",
+        "advanced": true
+      }
     ]
   },
   {
     "g": "subjunctive",
     "id": "conditional-past",
-    "title": "过去非真实条件：未实现的过去",
+    "title": "过去虚拟条件：假如当时不一样",
     "en": "Past counterfactual conditionals",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 状语从句与虚拟语气；细分讲解与练习",
-    "formula": "if + had done；would/could/might have done",
-    "take": "分别检查过去条件与过去结果，完成形式连接的是对过去的设想。",
+    "formula": "If I had left early, I would have caught the bus.",
+    "take": "事情已经过去，想象当时换一种做法会怎样。",
     "steps": [
       [
-        "对已经过去的情况作反事实设想",
-        "If we had left earlier, we would have caught the train. 通常在实际没有早出发且没有赶上车的背景中使用。had left 把条件放在过去，would have caught 表那个过去情境中的设想结果；这不是对现在钥匙或时间的直接设想。"
+        "先知道它在说什么",
+        "昨天没有早出门，结果没赶上车。我可以想：“如果当时早点出门，就能赶上车。”这是对过去另一种情况的想象，不能改变已经发生的事实。"
       ],
       [
-        "从句用 had 加过去分词",
-        "had known、had seen、had left 中最后一项是过去分词，不是看到过去时间就任选过去式。had 在这里作为完成助动词，不随主语变化；否定通常为 had not/hadn’t done。"
+        "条件部分常用 had 加过去分词",
+        "If I had left early 表示“如果我当时早点出门”。left 是 leave 的过去分词；过去分词就是用在 had 后的这类动词形式，如 gone、seen。"
       ],
       [
-        "结果分句的情态完成式",
-        "would have done 表假设结果，could have done 可突出当时能够或可能，might have done 可表示结果不确定。形式要与原意配合；若结果指向现在，如 would be happier now，就属于混合时间条件，不能强制再改为 have been。"
+        "结果部分常用 would have 加过去分词",
+        "I would have caught the bus 表示“我当时就会赶上公交车”。caught 是 catch 的过去分词。不要写 would have catch。"
       ],
       [
-        "与开放的过去条件和过去将来区别",
-        "过去形式的 if 从句也可能是对过去事实不确定的开放条件；would have done 也可能出现在过去视角的将来完成转述中。判断反事实要有上下文支持，不能把任何含 if 或 would 的句子都归为同一类。"
+        "条件和结果都在过去",
+        "If she had asked, I would have helped. 是“如果她当时问了，我就会帮忙”。这里通常在表达：她当时没问，所以那个帮助也没有发生。"
       ]
     ],
     "examples": [
       [
-        "If we had booked earlier, we could have found cheaper tickets.",
-        "如果我们早点预订，当时就有可能买到更便宜的票。",
-        "had booked 设想较早预订；could have found 突出那时获得便宜票的可能。"
+        "If I had left early, I would have caught the bus.",
+        "如果我当时早点出门，就会赶上公交车。",
+        "这是想象过去另一种情况。had left 是条件，would have caught 是结果。"
       ],
       [
-        "If she had checked the address, she would not have gone to the wrong building.",
-        "如果她当时核对过地址，就不会走错楼了。",
-        "条件与结果都指过去；否定结果写 would not have gone。"
+        "If she had asked, I would have helped.",
+        "如果她当时问了，我就会帮忙。",
+        "asked 和 helped 都是过去分词；这里是在设想已经过去的事。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "语境：昨天未早出发，错过了火车。哪句正确表达这件事的反事实假设？",
+        "prompt": "昨天没有早出门，没赶上车。要说“如果早点出门，就会赶上车”，选哪句？",
         "options": [
-          "If we had left earlier, we would have caught the train.",
-          "If we had leave earlier, we would have catch the train.",
-          "If we left earlier yesterday, we will catch the train tomorrow.",
-          "If we had left earlier, we would has caught the train."
+          "If we had left early, we would have caught the bus.",
+          "If we had leave early, we would have catch the bus.",
+          "If we left early yesterday, we will catch the bus tomorrow.",
+          "If we had left early, we would has caught the bus."
         ],
         "answer": 0,
-        "why": "过去反事实用 had + left，设想的过去结果用 would have + caught；过去分词形式要完整。"
+        "why": "条件和结果都说过去的另一种可能。用 had left 和 would have caught。"
       },
       {
         "type": "fill",
-        "prompt": "If they had ____ (leave) before six yesterday, they would have avoided the traffic.",
+        "prompt": "If they had ____ (leave) early yesterday, they would have caught the bus.",
         "answer": [
           "left"
         ],
-        "why": "完成助动词 had 后使用 leave 的过去分词 left，表达对昨天出发时间的设想。"
+        "why": "had 后接过去分词；leave 的过去分词是 left，表示“当时早些离开”。"
       },
       {
         "type": "mc",
-        "prompt": "If I had listened to your advice, I might have avoided the mistake. 通常表达：",
+        "prompt": "If I had asked, she might have helped.（如果我当时问了，她可能会帮忙。）通常是在说：",
         "options": [
-          "现在正在执行的一项安排",
-          "对过去未实现情况及可能结果的设想",
-          "不附带任何假设的过去事实报道",
-          "将来一定不会犯错的保证"
+          "现在正在做的事",
+          "对过去另一种情况的想象",
+          "完全没有假设的事实",
+          "以后一定会发生的事"
         ],
         "answer": 1,
-        "why": "had listened 与 might have avoided 共同表达过去反事实；might 只给出可能结果，不作百分之百保证。"
+        "why": "这里设想过去问过会怎样，不是在说当时真的问过，也不保证帮助一定发生。"
       }
     ],
     "classification": [
-      "过去条件：had done",
-      "过去结果：modal have done",
-      "否定反事实",
-      "与混合时间及转述区别"
+      "假如过去做过",
+      "had + 过去分词",
+      "would have + 过去分词"
     ],
     "pitfalls": [
-      {
-        "title": "had 后用过去分词 known",
-        "wrong": "If I had knew the truth, I would have acted differently.",
-        "right": "If I had known the truth, I would have acted differently.",
-        "text": "know 的过去式是 knew，过去分词是 known；完成助动词 had 后需要 known。"
-      },
-      {
-        "title": "情态完成式不能把原形当作过去分词",
-        "wrong": "We would have catch the train if we had left earlier.",
-        "right": "We would have caught the train if we had left earlier.",
-        "text": "would have 后用过去分词 caught；这里的过去完成意义不能靠原形 catch 表达。"
-      }
+      [
+        "had 后用 known，不用 knew",
+        "If I had knew, I would have helped.",
+        "If I had known, I would have helped.",
+        "know 表示知道。它的过去式是 knew，过去分词是 known；had 后要用 known。"
+      ],
+      [
+        "have 后用 caught，不用 catch",
+        "We would have catch the bus if we had left early.",
+        "We would have caught the bus if we had left early.",
+        "catch 表示赶上。这里要用过去分词 caught，不能直接用原形 catch。"
+      ]
     ],
     "related": [
       "unreal",
       "conditional-present",
       "conditional-mixed"
+    ],
+    "usage": [
+      {
+        "h": "条件部分常用 had 加过去分词",
+        "t": "If I had left early 表示“如果我当时早点出门”。left 是 leave 的过去分词；过去分词就是用在 had 后的这类动词形式，如 gone、seen。"
+      },
+      {
+        "h": "结果部分常用 would have 加过去分词",
+        "t": "I would have caught the bus 表示“我当时就会赶上公交车”。caught 是 catch 的过去分词。不要写 would have catch。"
+      },
+      {
+        "h": "条件和结果都在过去",
+        "t": "If she had asked, I would have helped. 是“如果她当时问了，我就会帮忙”。这里通常在表达：她当时没问，所以那个帮助也没有发生。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "would have done 常表示假想的过去结果；could have done 可表示当时“本来能”，might have done 可表示“本来可能”。意思有差别，但结构中的 have 后都要用过去分词。",
+        "advanced": true
+      }
     ]
   },
   {
     "g": "relative",
     "id": "relative-subject",
-    "title": "关系代词作从句主语",
+    "title": "关系词作主语：谁做这件事",
     "en": "Subject relative pronouns",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 定语从句、名词性从句与混合条件；细分讲解与练习",
-    "formula": "先行词 + who / which / that + 谓语",
-    "take": "先看从句是否缺少主语，再判断先行词所指的人或事物。",
+    "formula": "The girl who sings is my sister.",
+    "take": "用 who 或 that 引出一小句，补充说明前面的人或东西。",
     "steps": [
       [
-        "找到从句里的主语空位",
-        "The student who called is here. 中，外层主语中心是 student；从句的 called 没有另一个主语，who 代指学生并作 called 的主语。不要把 who 只当作没有作用的连接符。"
+        "先知道这类小句在做什么",
+        "The girl who sings is my sister. 是“唱歌的那个女孩是我姐姐”。who sings 这小句帮助我们知道说的是哪一个女孩。前面的 girl 是被补充说明的人，也叫先行词。"
       ],
       [
-        "指人和指物都要结合从句类型",
-        "限制性从句中，指人常用 who 或 that，指物常用 which 或 that。非限制性从句用逗号补充说明，通常不能用 that；whom 主要是宾语形式，不用于代替从句主语。"
+        "who 在小句里表示谁",
+        "在 who sings 中，who 代表 girl，是唱歌的人。这个“谁在做”就是主语。指人时常用 who，指东西时常用 that 或 which。"
       ],
       [
-        "作主语时通常不能直接省去",
-        "作宾语的关系代词在限制性从句中常可省，但作主语的 who、which、that 通常需要保留。the woman who works here 不能直接删成 the woman works here 再接外层谓语；若改成分词结构，要相应改变谓语形式。"
+        "这时通常不能把关系词直接删掉",
+        "The girl who sings is my sister. 中如果直接删掉 who，就变成两件事没有连好：girl sings 和 girl is my sister。这个 who 通常要保留。"
       ],
       [
-        "谓语的数要追随被指代对象",
-        "a device that works 与 devices that work 的区别来自先行对象的数。关系代词作主语并不意味着后面的谓语总用单数；若 whose 后另有主语中心，则按那个中心判断。"
+        "动词形式要跟着所说的人或物",
+        "The cat that lives here is small. 说一只猫，用 lives。The cats that live here are small. 说多只猫，用 live。that 代替谁，后面的动词就与谁配合。"
       ]
     ],
     "examples": [
       [
-        "The scientist who designed the sensor works in our laboratory.",
-        "设计这个传感器的科学家在我们的实验室工作。",
-        "who 是 designed 的主语；外层谓语为 works，两个限定关系由定语从句结构连接。"
+        "The girl who sings is my sister.",
+        "唱歌的那个女孩是我姐姐。",
+        "who 代表 girl。who sings 告诉我们是哪一个女孩。"
       ],
       [
-        "The buses that stop here go to the museum.",
-        "在这里停靠的公交车开往博物馆。",
-        "that 指复数 buses，在从句中作主语，所以用 stop；外层主语也对应 go。"
+        "The cats that live here are big.",
+        "住在这里的猫都很大。",
+        "that 代表多只 cats，所以小句里用 live，不加 -s。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "The nurse ____ helped me yesterday is on duty today.（关系词作 helped 的主语）",
+        "prompt": "The girl ____ helped me is my friend.（帮助我的女孩是我朋友。）哪个词代表“帮助我的人”？",
         "options": [
           "whom",
           "where",
@@ -741,27 +867,27 @@
           "when"
         ],
         "answer": 2,
-        "why": "从句的 helped 缺少主语，先行词指人，给定选项中使用 who；that 在合适的限制性语境中也可用，但不在本题选项中。"
+        "why": "who 代表 girl，也是 helped“帮助”这个动作的执行者。指人且作主语时用 who。"
       },
       {
         "type": "fill",
-        "prompt": "The machines that ____ (make) these parts are new.（从句用一般现在时）",
+        "prompt": "The boys who ____ (play) here are my friends.（小句用一般现在时）",
         "answer": [
-          "make"
+          "play"
         ],
-        "why": "that 代指复数 machines，作从句主语，因此一般现在时用 make。"
+        "why": "who 代表多个 boys。一般现在时说多个男孩的动作，用 play，不加 -s。"
       },
       {
         "type": "mc",
-        "prompt": "在 My aunt, who lives nearby, often visits us. 中，哪种说法准确？",
+        "prompt": "My aunt, who lives here, is kind. 中 who 是“住在这里的人”。哪种说法对？",
         "options": [
-          "who 是 lives 的宾语，可以直接省去",
-          "who 必须换成 whom",
-          "逗号说明可以把 who 换成 that",
-          "who 作 lives 的主语，通常不能直接省去"
+          "who 是被看见的对象，可以直接删",
+          "必须把 who 换成 whom",
+          "有逗号就可以把 who 换成 that",
+          "who 作 lives 的主语，通常不能直接省掉"
         ],
         "answer": 3,
-        "why": "who 在补充说明的非限制性从句中作主语，不能按限制性宾语关系词的规则直接省略。"
+        "why": "who 代表 aunt，是 lives 的执行者，通常不能省掉；这种带逗号的句子也不用 that 代替 who。"
       }
     ],
     "related": [
@@ -770,97 +896,115 @@
       "relative-extra"
     ],
     "classification": [
-      "指人的主语关系词",
-      "指物的主语关系词",
-      "主语关系词的保留",
-      "先行对象与主谓一致"
+      "who：指人",
+      "that / which：可指物",
+      "主语：谁做这件事"
     ],
     "pitfalls": [
+      [
+        "表示谁做事的 who 要保留",
+        "The girl sings is my sister.",
+        "The girl who sings is my sister.",
+        "who 把“唱歌”这个说明接到 girl 后面。外层是在说“这个女孩是我姐姐”。"
+      ],
+      [
+        "说多个人时，study 不加 -s",
+        "The boys who studies here are my friends.",
+        "The boys who study here are my friends.",
+        "who 代表多个 boys。主语不是一个人，动词用 study，不写 studies。"
+      ]
+    ],
+    "usage": [
       {
-        "title": "主语关系词不能照搬宾语省略规则",
-        "wrong": "The woman works here is my aunt.",
-        "right": "The woman who works here is my aunt.",
-        "text": "who 给 works 提供从句主语，并将定语从句接到 woman 后；外层谓语是 is。"
+        "h": "who 在小句里表示谁",
+        "t": "在 who sings 中，who 代表 girl，是唱歌的人。这个“谁在做”就是主语。指人时常用 who，指东西时常用 that 或 which。"
       },
       {
-        "title": "复数先行对象配复数形式",
-        "wrong": "The students who studies here are friendly.",
-        "right": "The students who study here are friendly.",
-        "text": "who 指 students；从句一般现在时谓语因此用 study，而不是单数 studies。"
+        "h": "这时通常不能把关系词直接删掉",
+        "t": "The girl who sings is my sister. 中如果直接删掉 who，就变成两件事没有连好：girl sings 和 girl is my sister。这个 who 通常要保留。"
+      },
+      {
+        "h": "动词形式要跟着所说的人或物",
+        "t": "The cat that lives here is small. 说一只猫，用 lives。The cats that live here are small. 说多只猫，用 live。that 代替谁，后面的动词就与谁配合。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "有逗号、只补充额外说明时，如 My aunt, who lives here, is kind.，关系词通常也不能省略；这种句子里不用 that 替代 who。这个区别可以在学会基本句型后再看。",
+        "advanced": true
       }
     ]
   },
   {
     "g": "relative",
     "id": "relative-object",
-    "title": "关系代词作从句宾语",
+    "title": "关系词作宾语：动作指向谁",
     "en": "Object relative pronouns",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 定语从句、名词性从句与混合条件；细分讲解与练习",
-    "formula": "先行词 + (who / whom / which / that) + 主语 + 谓语",
-    "take": "从句已经有主语时，再检查动词或介词是否需要一个宾语空位。",
+    "formula": "The book that I read is good.",
+    "take": "小句里已经有做事的人，关系词用来表示被看、被读等对象。",
     "steps": [
       [
-        "宾语空位与主语空位不同",
-        "The report that Maya wrote is useful. 中 Maya 是 wrote 的主语，that 对应被写的 report，作 wrote 的宾语。不能因为关系词放在从句开头就把它自动判为主语。"
+        "先看一句简单的话",
+        "The book that I read is good. 是“我读的那本书很好”。I 是读书的人，that 代表被读的 book。动作指向的对象叫宾语。"
       ],
       [
-        "指人时保留语体选择",
-        "限制性从句的宾语关系词指人时可用 who、whom，很多语境也可用 that；whom 较正式。若介词直接前置在关系词前，标准正式表达通常用 whom，不能照搬口语 who 的形式。"
+        "和关系词作主语的情况比较",
+        "The girl who sings ... 中，who 是唱歌的人。The girl who I know ... 中，I 是认识别人的人，who 是我认识的女孩。先问“谁做”，再问“动作指向谁”。"
       ],
       [
-        "省略要满足结构条件",
-        "限制性从句中作宾语的关系代词常可省，如 the report Maya wrote。非限制性从句中的宾语关系词通常保留；前置介词后的关系词也不能直接省。不是所有 that 都服从这个省略规则。"
+        "这类关系词有时能省略",
+        "The book that I read 可简化为 The book I read。“我读的书”这个意思没变。常见的无逗号、用来认出是哪一个对象的句子中，宾语关系词可以省略。"
       ],
       [
-        "空位不再重复放代词",
-        "关系词已经对应从句宾语时，不再用 it、him、her 等重复占据同一位置。若动词搭配需要介词，省略关系词也不等于省略介词，如 the colleague I spoke to。"
+        "不要把同一个对象写两遍",
+        "The book that I read 中，that 已经代表 book。不再写 The book that I read it。小句里也要保留必要的 to，例如 the boy I talked to。"
       ]
     ],
     "examples": [
       [
-        "The film that we watched last night raised an interesting question.",
-        "我们昨晚看的电影提出了一个有趣的问题。",
-        "we 作 watched 的主语，that 对应 film 作宾语；这是限制性从句，可省 that。"
+        "The book that I read is good.",
+        "我读的那本书很好。",
+        "I 做“读”这个动作，that 代表读的书。这里也可以省掉 that。"
       ],
       [
-        "The colleague I spoke to recommended this book.",
-        "我与之交谈的同事推荐了这本书。",
-        "宾语关系词已省略，但 speak to 的介词 to 保留在从句末尾。"
+        "The boy I talked to is Tom.",
+        "和我说话的那个男孩是汤姆。",
+        "省去了代表 boy 的关系词，但 talk to“与……说话”中的 to 仍保留。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "The report that Elena wrote is ready. 中 that 在从句中作：",
+        "prompt": "The book that Tom wrote is good. 中 that 在小句里代表什么？",
         "options": [
-          "wrote 的宾语",
-          "wrote 的主语",
-          "外层 is 的表语",
-          "地点状语"
+          "Tom 写的书，是 wrote 的宾语",
+          "写书的人，是 wrote 的主语",
+          "good 的程度",
+          "写书的地点"
         ],
         "answer": 0,
-        "why": "Elena 是 wrote 的主语，写的对象是 report，that 对应这一宾语位置。"
+        "why": "Tom 是写书的人；that 代表被写的 book。动作指向的对象叫宾语。"
       },
       {
         "type": "fill",
-        "prompt": "The novel that I ____ (buy) yesterday is on the desk.（用一般过去时）",
+        "prompt": "The book that I ____ (buy) yesterday is here.（用一般过去时）",
         "answer": [
           "bought"
         ],
-        "why": "yesterday 指向明确的过去时间，从句用 buy 的过去式 bought。"
+        "why": "yesterday 是昨天。buy 的过去式是 bought，用它说昨天买书这件事。"
       },
       {
         "type": "mc",
-        "prompt": "针对“我昨天打电话找的那个人”，哪组限制性定语表达都可成立？",
+        "prompt": "“我昨天见到的男孩”：The boy ____ I saw yesterday 中，哪组关系词都可以？",
         "options": [
-          "the person where / when I called yesterday",
-          "the person who / whom / that I called yesterday",
-          "the person whom / who called me yesterday 与原意完全相同",
-          "the person which / where I called yesterday"
+          "where / when",
+          "who / whom / that",
+          "whose / where",
+          "which / when"
         ],
         "answer": 1,
-        "why": "called 的主语是 I，关系词指人并作宾语，who、whom、that 在这一限制性结构中都可用，也常可以省去。"
+        "why": "I 是见到别人的人；关系词代表被见到的 boy。这类无逗号的句子中 who、whom、that 都可作宾语。"
       }
     ],
     "related": [
@@ -869,69 +1013,87 @@
       "relative-preposition"
     ],
     "classification": [
-      "动词宾语空位",
-      "介词宾语空位",
-      "限制性从句中的省略",
-      "语体与代词重复"
+      "主语：谁来做",
+      "宾语：动作指向谁或什么",
+      "有时可以省关系词"
     ],
     "pitfalls": [
+      [
+        "不要重复写 it",
+        "The book that I read it is good.",
+        "The book that I read is good.",
+        "that 已经代表 read 后的书，再加 it 就把同一个对象写了两次。"
+      ],
+      [
+        "省关系词，不省 talk to 中的 to",
+        "The boy I talked is Tom.",
+        "The boy I talked to is Tom.",
+        "这里要表达“我和这个男孩说话”，用 talk to。可以省关系词，但仍要保留 to。"
+      ]
+    ],
+    "usage": [
       {
-        "title": "宾语位置不要重复填入 it",
-        "wrong": "The book that I bought it yesterday is useful.",
-        "right": "The book that I bought yesterday is useful.",
-        "text": "that 已经对应 bought 的宾语 book，不能再用 it 重复充当同一个宾语。"
+        "h": "和关系词作主语的情况比较",
+        "t": "The girl who sings ... 中，who 是唱歌的人。The girl who I know ... 中，I 是认识别人的人，who 是我认识的女孩。先问“谁做”，再问“动作指向谁”。"
       },
       {
-        "title": "省关系词不省动词搭配所需介词",
-        "wrong": "The colleague I spoke yesterday was helpful.",
-        "right": "The colleague I spoke to yesterday was helpful.",
-        "text": "这里表达与同事交谈，使用 speak to someone；关系词可以省略，搭配中的 to 仍需保留。"
+        "h": "这类关系词有时能省略",
+        "t": "The book that I read 可简化为 The book I read。“我读的书”这个意思没变。常见的无逗号、用来认出是哪一个对象的句子中，宾语关系词可以省略。"
+      },
+      {
+        "h": "不要把同一个对象写两遍",
+        "t": "The book that I read 中，that 已经代表 book。不再写 The book that I read it。小句里也要保留必要的 to，例如 the boy I talked to。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "指人并作宾语时，who、whom、that 都可能用在这类无逗号的句子里。whom 比较正式。前面有逗号或介词时，不能直接照搬这里的省略方法。",
+        "advanced": true
       }
     ]
   },
   {
     "g": "relative",
     "id": "relative-preposition",
-    "title": "介词前置与关系代词",
+    "title": "介词加关系词：to whom 与 in which",
     "en": "Prepositions before relative pronouns",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 定语从句、名词性从句与混合条件；细分讲解与练习",
-    "formula": "介词 + whom / which；数量表达 + of whom / which",
-    "take": "先还原动词搭配或意义关系，再决定介词与关系词。",
+    "formula": "This is the room in which I sleep.",
+    "take": "把 to、in 这样表示关系的小词放在关系词前面，是一种较正式的写法。",
     "steps": [
       [
-        "前置介词后用合适的宾语形式",
-        "the teacher from whom I learned a lot 中，whom 是 from 的宾语，指人；the room in which we meet 中，which 是 in 的宾语，指物。标准正式表达中，前置介词后通常不用 that，也不能直接省关系词。"
+        "先从熟悉的短句开始",
+        "I sleep in this room. 是“我在这个房间睡觉”。in 表示“在……里面”，叫介词。把 room 后面的说明接起来，可以写 This is the room in which I sleep.。"
       ],
       [
-        "介词由搭配或真实关系决定",
-        "depend on the method 对应 the method on which we depend；meet on that day 对应 the day on which we meet。不能看到关系代词就机械选 of、in 或 to；先把从句还原成普通句核对搭配。"
+        "指东西时，常用 which",
+        "in which 在这里相当于“在这个房间里”。in 来自 sleep in；which 代替 room。这里不能把 which 换成 that。"
       ],
       [
-        "前置与后置有语体差别",
-        "the person to whom I spoke 较正式；the person who I spoke to 或 the person I spoke to 在日常表达中自然。后置介词不等于错误，也不能把固定短语中的每一部分都任意拆到前面。"
+        "指人时，正式写法常用 whom",
+        "I spoke to the boy. 是“我和那个男孩说了话”。较正式地连起来，可写 The boy to whom I spoke is Tom.。to 来自 speak to，whom 代表男孩。"
       ],
       [
-        "分清数量分组与独立并列句",
-        "three students, two of whom were absent 用关系从句补充这个集合中的部分；three students, and two of them were absent 用并列句。whom 与 them 不能在不处理连接方式时直接互换。"
+        "先学常见说法，再认识正式说法",
+        "日常可以说 the room I sleep in，也可说 the boy I spoke to。把介词移到前面以后，常用 which 或 whom；不能把前面这个关系词随便删掉。"
       ]
     ],
     "examples": [
       [
-        "The researcher with whom we collaborated has published the results.",
-        "与我们合作的研究者已经发表了结果。",
-        "with 来自 collaborate with；前置介词后指人，用正式宾语形式 whom。"
+        "This is the room in which I sleep.",
+        "这是我睡觉的房间。",
+        "in which 是较正式的说法；常见说法是 the room I sleep in。"
       ],
       [
-        "She showed me six sketches, two of which were unfinished.",
-        "她给我看了六幅草图，其中两幅还没有完成。",
-        "two of which 从 six sketches 这个集合中取出两幅，which 是 of 的宾语。"
+        "The boy to whom I spoke is Tom.",
+        "和我说过话的那个男孩是汤姆。",
+        "to whom 代表“和那个男孩”；to 来自 spoke to。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "The engineer with ____ we worked was very patient.（正式书面表达）",
+        "prompt": "The boy with ____ I play is Tom.（正式写法，和我一起玩的男孩是汤姆。）",
         "options": [
           "that",
           "whose",
@@ -939,19 +1101,19 @@
           "when"
         ],
         "answer": 2,
-        "why": "with 已前置，关系词指人并作介词宾语，标准正式表达用 whom。"
+        "why": "with 已放到关系词前面，指人时正式写法用 whom，不用 that。"
       },
       {
         "type": "fill",
-        "prompt": "This is the evidence on ____ the conclusion is based.（填一个指物的关系代词）",
+        "prompt": "This is the room in ____ I sleep.（填一个指物的关系词）",
         "answer": [
           "which"
         ],
-        "why": "be based on 给出介词 on；介词前置后，指物的关系代词用 which。"
+        "why": "in 已放在前面；which 代表 room，组成 in which“在这个房间里”。"
       },
       {
         "type": "mc",
-        "prompt": "She has two assistants, both of ____ speak French. 应选择：",
+        "prompt": "I have two friends, both of ____ live here.（两个朋友都住在这里。）",
         "options": [
           "them",
           "that",
@@ -959,7 +1121,7 @@
           "whom"
         ],
         "answer": 3,
-        "why": "逗号后是补充说明 assistants 的关系从句，both of whom 可作主语；若用 them，需要另改连接方式，如 and both of them…。"
+        "why": "both of whom 表示“这两人都”，whom 把后半的小句连到 friends 后面。"
       }
     ],
     "related": [
@@ -968,69 +1130,87 @@
       "relative-extra"
     ],
     "classification": [
-      "介词 + whom",
-      "介词 + which",
-      "搭配还原",
-      "数量 + of + 关系代词"
+      "to / with + whom：指人",
+      "in / on + which：指物",
+      "较正式的表达"
     ],
     "pitfalls": [
+      [
+        "介词前置后，不用 that",
+        "This is the room in that I sleep.",
+        "This is the room in which I sleep.",
+        "in 已放在关系词前面，指房间用 which。先把 in which 作为一个组合来认。"
+      ],
+      [
+        "用 whom 才能把两部分接成这类从句",
+        "I have two friends, both of them live here.",
+        "I have two friends, both of whom live here.",
+        "whom 把“这两个朋友都住这里”接到 friends 后。若用 them，可以改成两个句子，或在后半前加 and。"
+      ]
+    ],
+    "usage": [
       {
-        "title": "前置介词后通常不能用 that",
-        "wrong": "This is the topic about that we talked.",
-        "right": "This is the topic about which we talked.",
-        "text": "talk about 决定介词 about；直接前置介词后指物使用 which，不能照搬普通限制性从句中的 that。"
+        "h": "指东西时，常用 which",
+        "t": "in which 在这里相当于“在这个房间里”。in 来自 sleep in；which 代替 room。这里不能把 which 换成 that。"
       },
       {
-        "title": "关系从句与并列句需要各自的连接方式",
-        "wrong": "I met two guides, both of them spoke English.",
-        "right": "I met two guides, both of whom spoke English.",
-        "text": "whom 把后半接成非限制性定语从句；也可保留 them，但应改成 and both of them spoke English。"
+        "h": "指人时，正式写法常用 whom",
+        "t": "I spoke to the boy. 是“我和那个男孩说了话”。较正式地连起来，可写 The boy to whom I spoke is Tom.。to 来自 speak to，whom 代表男孩。"
+      },
+      {
+        "h": "先学常见说法，再认识正式说法",
+        "t": "日常可以说 the room I sleep in，也可说 the boy I spoke to。把介词移到前面以后，常用 which 或 whom；不能把前面这个关系词随便删掉。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "both of whom 是“其中两人都”，two of which 是“其中两个”。这类写法较正式，初学时先认识意思即可，不必急着用它写长句。",
+        "advanced": true
       }
     ]
   },
   {
     "g": "nominal",
     "id": "nominal-that",
-    "title": "that 内容从句",
+    "title": "that 从句：说一件事",
     "en": "Content clauses with that",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 定语从句、名词性从句与混合条件；细分讲解与练习",
-    "formula": "that + 陈述结构；从句整体承担名词性作用",
-    "take": "that 只引入内容，本身不补从句内部的主语或宾语空位。",
+    "formula": "I know that Tom is at home.",
+    "take": "that 可以把一件完整的事接到句子里。",
     "steps": [
       [
-        "看整个从句在上层的作用",
-        "That the plan worked surprised us. 中 that 从句作主语；I believe that the plan will work. 中作宾语；The fact is that it worked. 中作表语。that 本身只标明内容连接，不作 worked 的主语。"
+        "先知道它在说什么",
+        "I know that Tom is at home. 表示“我知道汤姆在家”。that 后的 Tom is at home 是一件完整的事，作为 know“知道”的内容。"
       ],
       [
-        "从句内部保持陈述关系",
-        "内容从句通常按主语在前、谓语在后的陈述结构组织。外层可以是疑问句，如 Do you know that he is here?，不代表 that 后也要写成 is he here。"
+        "这里的 that 通常不单独翻译",
+        "Tom is at home 本身已经能表达“汤姆在家”。that 的工作是把这件事接到前面，不需要硬翻成“那个”。"
       ],
       [
-        "省略受位置和清晰度限制",
-        "在 think、believe 等之后的宾语内容从句中，that 常可省；句首主语内容从句通常保留 that。多个并列内容、插入或可能产生歧义时，保留连接词有助于读者识别层级。"
+        "小句里仍按正常顺序说",
+        "正常说 Tom is at home，不说 is Tom at home。即使外面在问 Do you know ...?，里面也保持 that Tom is at home 的顺序。"
       ],
       [
-        "与关系代词 that 分开分析",
-        "the fact that she left 说明事实的内容，that 后 she left 已有自己的主谓；the fact that she mentioned 则是她提到的那个事实，that 在关系从句中作 mentioned 的宾语。不能仅凭同一个词形判定从句种类。"
+        "整件事也可以放在句首",
+        "That he is here makes me happy. 是“他在这里，这件事让我很开心”。放在句首的 That 标明：接下来这一整件事是句子要谈的内容。"
       ]
     ],
     "examples": [
       [
-        "That the road was closed surprised the visitors.",
-        "道路关闭这件事让游客们很惊讶。",
-        "整个 that 从句作 surprised 的主语；从句内部 road 是 was closed 的主语。"
+        "I know that Tom is at home.",
+        "我知道汤姆在家。",
+        "that 后的 Tom is at home 是 know 的内容；that 在这里不表示“那个”。"
       ],
       [
-        "I am confident that the new system will save time.",
-        "我确信新系统会节省时间。",
-        "that 从句补充 confident 的内容；其内部是 the new system will save time 的陈述关系。"
+        "That he is here makes me happy.",
+        "他在这里，这件事让我很开心。",
+        "That he is here 整体说一件事；makes me happy 说这件事让我感觉怎样。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "____ she had passed the examination surprised no one.（引导完整内容作主语）",
+        "prompt": "____ Tom is here makes me happy.（汤姆在这里这件事让我开心。）",
         "options": [
           "That",
           "What",
@@ -1038,27 +1218,27 @@
           "Whom"
         ],
         "answer": 0,
-        "why": "she had passed the examination 已有主语和宾语，用只引入陈述内容的 That，整个从句作 surprised 的主语。"
+        "why": "Tom is here 已是一件完整的事，用 That 把这整件事放到句首，作为后面要谈的内容。"
       },
       {
         "type": "fill",
-        "prompt": "I believe ____ the report is accurate.（填只引入陈述内容的连接词，不省略）",
+        "prompt": "I think ____ Tom is right.（填引出这件事的连接词，不省略）",
         "answer": [
           "that"
         ],
-        "why": "the report is accurate 的内部结构完整，用 that 标明 believe 后的内容从句。"
+        "why": "Tom is right 已经说清一件事。that 把这件事接在 I think“我认为”后面。"
       },
       {
         "type": "mc",
-        "prompt": "the fact that she left 与 the fact that she mentioned 的主要区别是：",
+        "prompt": "对比 the fact that he left 和 the book that he bought，两个 that 的工作是：",
         "options": [
-          "两者 that 都只能作主语",
-          "前者 that 只连接内容，后者 that 作 mentioned 的宾语",
-          "前者一定是定语从句，后者一定是同位语从句",
-          "两者 that 都表示是否"
+          "两者都表示是否",
+          "前者只连接一件事，后者还代表买的书",
+          "前者表示在哪里，后者表示时间",
+          "两者都必须翻译成那个"
         ],
         "answer": 1,
-        "why": "she left 自身主谓完整，前者说明 fact 的内容；mentioned 需要宾语，后者的 that 对应 fact 作从句宾语。"
+        "why": "he left 是一件完整的事；he bought 后需要买的东西，第二个 that 还代表 book。"
       }
     ],
     "related": [
@@ -1068,69 +1248,87 @@
       "appositive"
     ],
     "classification": [
-      "主语内容从句",
-      "宾语内容从句",
-      "表语与同位内容",
-      "that 的保留与省略"
+      "that：引出一件事",
+      "通常不单独翻译 that",
+      "小句内部用正常语序"
     ],
     "pitfalls": [
+      [
+        "that 后不照搬问句顺序",
+        "Do you know that is he here?",
+        "Do you know that he is here?",
+        "外面是问句，里面仍按 he is here 的顺序说，不把 is 提到 he 前面。"
+      ],
+      [
+        "放在句首说一整件事时，要连清楚",
+        "He is here makes me happy.",
+        "That he is here makes me happy.",
+        "这里不是简单说“他在这里”，而是说“他在这里这件事让我开心”。用 That 把这一整件事圈出来。"
+      ]
+    ],
+    "usage": [
       {
-        "title": "外层问句不改变内容从句的陈述关系",
-        "wrong": "Do you know that is he ready?",
-        "right": "Do you know that he is ready?",
-        "text": "that 后是内容陈述，主语 he 在 is 前；提问发生在外层 Do you know。"
+        "h": "这里的 that 通常不单独翻译",
+        "t": "Tom is at home 本身已经能表达“汤姆在家”。that 的工作是把这件事接到前面，不需要硬翻成“那个”。"
       },
       {
-        "title": "句首内容从句需要清楚的引导边界",
-        "wrong": "He arrived early surprised me.",
-        "right": "That he arrived early surprised me.",
-        "text": "That 标明 he arrived early 这个整体是外层 surprised 的主语，避免把两个限定谓语无连接地堆在一起。"
+        "h": "小句里仍按正常顺序说",
+        "t": "正常说 Tom is at home，不说 is Tom at home。即使外面在问 Do you know ...?，里面也保持 that Tom is at home 的顺序。"
+      },
+      {
+        "h": "整件事也可以放在句首",
+        "t": "That he is here makes me happy. 是“他在这里，这件事让我很开心”。放在句首的 That 标明：接下来这一整件事是句子要谈的内容。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "I think that he is right. 中的 that 常可省略，变成 I think he is right.。但不要认为所有 that 都可删；句首的 That he is here ... 通常要保留 that。",
+        "advanced": true
       }
     ]
   },
   {
     "g": "nominal",
     "id": "nominal-what",
-    "title": "what 从句与内部成分",
+    "title": "what 从句：想要或需要的东西",
     "en": "Nominal clauses with what",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 定语从句、名词性从句与混合条件；细分讲解与练习",
-    "formula": "what + 从句其余部分；what = 所……的事物 / 内容",
-    "take": "what 连接从句的同时，还在从句中作主语、宾语或表语等成分。",
+    "formula": "I know what you want.",
+    "take": "what 常表示“……的东西”或“……的事”，不是只表示问句里的“什么”。",
     "steps": [
       [
-        "what 把缺位与整体作用连起来",
-        "I understand what you mean. 中 what 是 mean 的宾语，整个 what 从句又是 understand 的宾语。内层角色和外层角色需要分别判断，不能只看到宾语从句就忽略内部缺少什么。"
+        "先知道它在说什么",
+        "I know what you want. 是“我知道你想要什么”。这里 what you want 可以理解为“你想要的东西”。从句是一小句；整个小句说明 know 的内容。"
       ],
       [
-        "先检查内部是否确实需要一个成分",
-        "What she needs is more practice. 中 what 作 needs 的宾语；What happened was unexpected. 中 what 作 happened 的主语。若 that 后本来已有完整的主谓宾，不能随意把 that 换成 what。"
+        "what 自己也有工作",
+        "you want ... 表示“你想要……”。what 正好代表想要的东西。它既把小句连进来，又在小句里代表一个东西，不是只用来连接。"
       ],
       [
-        "名词性 what 不能机械接在先行名词后",
-        "what 在这里通常包含所指内容，不像普通关系代词那样接在一个先行名词后。标准基础表达中，the book that I bought 与 what I bought 分别是名词加定语从句、独立的名词性表达。"
+        "不要再用 it 重复代替那个东西",
+        "I know what you bought. 是“我知道你买了什么”。what 已经代表买的东西，所以 bought 后不再加 it。"
       ],
       [
-        "省略与疑问语序不能混用",
-        "what 承担内部成分，通常不能像某些宾语内容从句的 that 一样随意省去。I know what she wants 用陈述语序；What does she want? 才是独立疑问句。"
+        "和只连接内容的 that 比较",
+        "I know that Tom is here. 中，Tom is here 已经完整。I know what you want. 中，what 代表 want 后的东西。先看小句里是否还需要一个“人或东西”。"
       ]
     ],
     "examples": [
       [
-        "What the team needs is a clear timetable.",
-        "团队需要的是一份清晰的时间表。",
-        "what 在 needs 后对应宾语位置；整个 what 从句作外层 is 的主语。"
+        "I know what you want.",
+        "我知道你想要什么。",
+        "what 代表你想要的东西；不用在 want 后再加 it。"
       ],
       [
-        "Please tell me what happened during the meeting.",
-        "请告诉我会议期间发生了什么。",
-        "what 作 happened 的主语，整个从句作 tell 的内容宾语，不再额外添加一个 it 作主语。"
+        "What I need is a new book.",
+        "我需要的是一本新书。",
+        "What I need 是“我需要的东西”，is a new book 说明那个东西是什么。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "I cannot understand ____ you mean by this sentence.（意为“这句话所表达的内容”）",
+        "prompt": "I know ____ you want.（我知道你想要的东西。）",
         "options": [
           "that",
           "whether",
@@ -1138,27 +1336,27 @@
           "when"
         ],
         "answer": 2,
-        "why": "mean 在这里需要宾语，what 表示所表达的内容；that 只连接完整内容，不能补这个宾语位置。"
+        "why": "what you want 表示“你想要的东西”。what 正好代表 want 后需要的那个东西。"
       },
       {
         "type": "fill",
-        "prompt": "____ he needs is a quiet room.（用一个连接代词表示“他所需要的”）",
+        "prompt": "____ I need is a new book.（用一个连接词表示“我所需要的东西”）",
         "answer": [
           "What"
         ],
-        "why": "what 作 needs 的宾语，整个从句作 is 的主语，句首写 What。"
+        "why": "What I need 是“我需要的东西”。what 既连接小句，又代表 need 的对象。"
       },
       {
         "type": "mc",
-        "prompt": "关于 what 从句，准确的是：",
+        "prompt": "I know what you bought. 中 what 的作用是：",
         "options": [
-          "what 总是没有实际作用的连接词",
-          "只要看到 what，内部都必须用疑问倒装",
-          "what 与 that 在任何名词性从句中都可互换",
-          "what 连接从句，也在从句内部承担成分"
+          "只连接，没有任何意思",
+          "让后面必须变成问句顺序",
+          "总能直接换成 that",
+          "既连接小句，又代表买的东西"
         ],
         "answer": 3,
-        "why": "what 和 that 的重要区别是 what 在从句内部承担成分；名词性从句通常保持陈述语序。"
+        "why": "what 不只是一个接头词。它还代表 bought 后的东西，所以不能再重复加 it。"
       }
     ],
     "related": [
@@ -1167,69 +1365,87 @@
       "nominal-that"
     ],
     "classification": [
-      "what 作从句主语",
-      "what 作从句宾语",
-      "从句整体的名词性作用",
-      "与 that 及定语从句的区别"
+      "what：……的东西或事情",
+      "动作指向的东西",
+      "做事的人或东西"
     ],
     "pitfalls": [
+      [
+        "what 后不重复放 it",
+        "I know what you bought it.",
+        "I know what you bought.",
+        "what 已经代表买到的东西。it 再代表一次，就重复了。"
+      ],
+      [
+        "完整的一件事，不随便换成 what",
+        "What Tom is here makes me happy.",
+        "That Tom is here makes me happy.",
+        "Tom is here 已经完整，想说“汤姆在这里这件事”，用 That；这里不缺 what 要代表的东西。"
+      ]
+    ],
+    "usage": [
       {
-        "title": "what 占据的宾语位置不再重复放 it",
-        "wrong": "I know what you bought it.",
-        "right": "I know what you bought.",
-        "text": "what 已经作 bought 的宾语；再加 it 会重复占据同一位置。"
+        "h": "what 自己也有工作",
+        "t": "you want ... 表示“你想要……”。what 正好代表想要的东西。它既把小句连进来，又在小句里代表一个东西，不是只用来连接。"
       },
       {
-        "title": "完整陈述内容不能无故换用 what",
-        "wrong": "What she is honest is clear.",
-        "right": "That she is honest is clear.",
-        "text": "she is honest 的主谓表关系完整，所需的是引入内容的 That，而非还要在内部承担成分的 What。"
+        "h": "不要再用 it 重复代替那个东西",
+        "t": "I know what you bought. 是“我知道你买了什么”。what 已经代表买的东西，所以 bought 后不再加 it。"
+      },
+      {
+        "h": "和只连接内容的 that 比较",
+        "t": "I know that Tom is here. 中，Tom is here 已经完整。I know what you want. 中，what 代表 want 后的东西。先看小句里是否还需要一个“人或东西”。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "what 也可以代表做事的一方，例如 Tell me what happened. 是“告诉我发生了什么”。happened 前不再加 it，因为 what 已经承担“什么事情发生了”中的“什么事情”。",
+        "advanced": true
       }
     ]
   },
   {
     "g": "nominal",
     "id": "nominal-whether",
-    "title": "whether 与 if 表示是否",
+    "title": "whether 与 if：是否",
     "en": "Whether and if in noun clauses",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 定语从句、名词性从句与混合条件；细分讲解与练习",
-    "formula": "whether / if + 陈述结构；whether to do",
-    "take": "先判断是不是“是否”，再检查从句所处的位置与结构。",
+    "formula": "I do not know whether he will come.",
+    "take": "whether 和 if 在有些句子里表示“是否”，也就是还不知道答案是“是”还是“不是”。",
     "steps": [
       [
-        "宾语从句中两者常有交集",
-        "I wonder whether she will come. 和 I wonder if she will come. 都可询问她是否会来。这里 if 不是假设条件；两者引导的名词性从句一般采用主语在前、谓语在后的陈述结构。"
+        "先知道“是否”是什么意思",
+        "I do not know whether he will come. 是“我不知道他是否会来”。他可能来，也可能不来。whether 在这里引出这个还没确定的问题。"
       ],
       [
-        "有些位置优先或要求 whether",
-        "在基础标准书面语中，直接接在介词后、与 to do 组合或引导句首主语从句时，通常使用 whether，如 depend on whether、whether to leave、Whether he agrees is unclear。不能把宾语位置的替换规则推广到所有位置。"
+        "小句里按正常顺序说",
+        "直接问句是 Will he come?。放进 I do not know whether ... 后，改用 he will come 的顺序，不能仍写 will he come。"
       ],
       [
-        "or not 的位置也会影响形式",
-        "whether or not he agrees 和 whether he agrees or not 都自然；if he agrees or not 在许多宾语语境中也成立，但通常不写 if or not he agrees。避免把 whether 比 if 正式的倾向说成 if 永远不表示是否。"
+        "是否要做某事，用 whether to",
+        "I cannot decide whether to go. 是“我不能决定要不要去”。whether to go 可以理解为“是否要去”；这种形式不写 if to go。"
       ],
       [
-        "与条件 if 区分时间和逻辑",
-        "I wonder if he will come. 是是否的内容；If he comes, we will begin. 是条件。表示将来的条件从句常用现在形式，但这一规则不能机械套到 if 引导的宾语从句。"
+        "先记住两个常见区别",
+        "I do not know if he will come. 中，if 也可表示是否。若紧跟 on 这类介词，或用 whether to go，则用 whether；不要把所有 whether 都直接换成 if。"
       ]
     ],
     "examples": [
       [
-        "We have not decided whether to postpone the trip.",
-        "我们还没有决定是否推迟旅行。",
-        "whether 与 to postpone 组成是否要做某事的表达，标准形式不用 if to postpone。"
+        "I do not know whether he will come.",
+        "我不知道他是否会来。",
+        "whether 表示是否；后面按 he will come 的正常顺序说。"
       ],
       [
-        "Whether the bridge is safe remains uncertain.",
-        "这座桥是否安全仍然不能确定。",
-        "整个 whether 从句位于句首作主语；内部保持 the bridge is safe 的陈述结构。"
+        "I cannot decide whether to go.",
+        "我不能决定是否要去。",
+        "whether to go 就是“是否要去”；这里不能改成 if to go。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "We are deciding ____ to leave today or tomorrow.（是否要离开）",
+        "prompt": "I cannot decide ____ to go.（我不能决定是否要去。）",
         "options": [
           "whether",
           "if",
@@ -1237,27 +1453,27 @@
           "what"
         ],
         "answer": 0,
-        "why": "与 to leave 组成是否要做某事的标准结构时，用 whether，不用 if to leave。"
+        "why": "是否要做某事，用 whether to do。这里是 whether to go，不写 if to go。"
       },
       {
         "type": "fill",
-        "prompt": "It depends on ____ the road is open.（在 whether / if 中选择适合紧接介词 on 的正式书面形式）",
+        "prompt": "It depends on ____ Tom can come.（在 whether / if 中选择：这取决于汤姆是否能来。）",
         "answer": [
           "whether"
         ],
-        "why": "紧接介词后的名词性从句，标准正式表达通常选 whether；不能把普通宾语位置的 if 直接套过来。"
+        "why": "这里紧接介词 on，标准写法选 whether。whether 后仍说 Tom can come。"
       },
       {
         "type": "mc",
-        "prompt": "哪一句用从句作句首主语、表达“是否能按时完成仍不确定”？",
+        "prompt": "哪一句用“是否能来”这一整件事作句子开头？",
         "options": [
-          "If we can finish on time remains uncertain.",
-          "Whether we can finish on time remains uncertain.",
-          "Whether can we finish on time remains uncertain.",
-          "That whether we finish on time remains uncertain."
+          "If he can come is not clear.",
+          "Whether he can come is not clear.",
+          "Whether can he come is not clear.",
+          "That whether he can come is not clear."
         ],
         "answer": 1,
-        "why": "句首是否内容从句使用 Whether，并保持 we can finish 的陈述关系。"
+        "why": "整件“是否”的事放句首，标准写法用 Whether he can come，里面不改成问句顺序。"
       }
     ],
     "related": [
@@ -1266,69 +1482,87 @@
       "real-if"
     ],
     "classification": [
-      "一般宾语位置的交集",
-      "介词后与句首主语位置",
-      "whether to do",
-      "是否 if 与条件 if"
+      "whether / if：是否",
+      "whether to：是否要做",
+      "是否从句的正常语序"
     ],
     "pitfalls": [
+      [
+        "是否要做，用 whether to",
+        "I cannot decide if to go.",
+        "I cannot decide whether to go.",
+        "“是否要去”这个组合用 whether to go，不用 if to go。"
+      ],
+      [
+        "是否从句不把 be 提到前面",
+        "I do not know whether is Tom at home.",
+        "I do not know whether Tom is at home.",
+        "把问题放到较长句子里后，用 Tom is at home 的顺序，不用 is Tom at home。"
+      ]
+    ],
+    "usage": [
       {
-        "title": "whether to do 不能直接换成 if to do",
-        "wrong": "We have not decided if to leave early.",
-        "right": "We have not decided whether to leave early.",
-        "text": "在是否加不定式的结构中使用 whether to leave，而不是 if to leave。"
+        "h": "小句里按正常顺序说",
+        "t": "直接问句是 Will he come?。放进 I do not know whether ... 后，改用 he will come 的顺序，不能仍写 will he come。"
       },
       {
-        "title": "是否从句通常用陈述语序",
-        "wrong": "I wonder whether is the office open.",
-        "right": "I wonder whether the office is open.",
-        "text": "疑问意义不等于从句要倒装；whether 后仍是 the office is open 的陈述结构。"
+        "h": "是否要做某事，用 whether to",
+        "t": "I cannot decide whether to go. 是“我不能决定要不要去”。whether to go 可以理解为“是否要去”；这种形式不写 if to go。"
+      },
+      {
+        "h": "先记住两个常见区别",
+        "t": "I do not know if he will come. 中，if 也可表示是否。若紧跟 on 这类介词，或用 whether to go，则用 whether；不要把所有 whether 都直接换成 if。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "整个“是否”问题放在句首时，标准写法常用 whether，例如 Whether he will come is not clear.（他是否会来还不清楚）。这种句子初学时认识即可，写作可先用更简单的 I do not know whether ...。",
+        "advanced": true
       }
     ]
   },
   {
     "g": "subjunctive",
     "id": "conditional-mixed",
-    "title": "混合时间虚拟条件",
+    "title": "混合虚拟条件：分别看两边的时间",
     "en": "Mixed-time unreal conditionals",
     "level": "进阶",
     "source": "《英语语法知识体系详解》· 定语从句、名词性从句与混合条件；细分讲解与练习",
-    "formula": "had done → would do；过去形式 → would have done",
-    "take": "分别确定条件和结果的时间，不机械要求主从句都指同一时间。",
+    "formula": "If I had slept well, I would feel better now.",
+    "take": "有时假设的是过去的一件事，说的却是它对现在的影响。",
     "steps": [
       [
-        "过去原因可以产生现在的假设结果",
-        "If I had accepted the offer, I would be working in Berlin now. 的条件指过去是否接受，结果指现在身在何处。had accepted 表过去反事实，would be working 说明设想的当前状态。"
+        "先从生活里的意思看起",
+        "昨晚没睡好，现在觉得累。我可以想：“如果昨晚睡好了，现在就会舒服些。”条件说昨晚，结果说现在，两边时间不同，这就叫混合时间。"
       ],
       [
-        "现在的性质也可能解释过去结果",
-        "If she were more careful, she would have noticed the error yesterday. 把较持久的当前特征与昨天结果联系起来。形式要看条件表达的是一般性质，还是过去一次事件；若仅谈过去那次不够小心，更常用过去完成条件。"
+        "过去的假设，用 had 加过去分词",
+        "If I had slept well 表示“如果我当时睡好了”。slept 是 sleep 的过去分词。它把条件放在已经过去的时间里。"
       ],
       [
-        "时间线分别标在两边",
-        "先为条件和结果各画一个时间点：现在／将来假设通常用过去形式配 would/could/might 加原形；过去结果通常用 would/could/might have done。now、yesterday 等是线索，真正的时间仍由上下文决定。"
+        "现在的结果，用 would 加动词原形",
+        "I would feel better now 表示“我现在就会感觉好一点”。结果在现在，所以用 would feel，不需要为了配合前面而机械写 would have felt。"
       ],
       [
-        "混合条件不等于时态可以任意搭配",
-        "形式上的跨时间须有可理解的因果关系；不能因为主句出现 now 就把所有完成形式都视为错误。could、might 表不同可能性，be 的 were/was 还涉及语域，应先确定意义再选形式。"
+        "先分别问两次“什么时候”",
+        "先问：条件是在现在，还是过去？再问：结果是在现在，还是过去？两边各自选合适的形式，不是一个句子出现 now，就把所有地方都改成现在形式。"
       ]
     ],
     "examples": [
       [
-        "If I had brought the charger yesterday, my phone would be working now.",
-        "如果我昨天带了充电器，现在手机就能用了。",
-        "过去未带充电器是条件；现在手机能否使用是结果，两边时间不同。"
+        "If I had slept well, I would feel better now.",
+        "如果我昨晚睡好了，现在就会舒服些。",
+        "had slept 说过去的假设；would feel ... now 说现在的结果。"
       ],
       [
-        "If she were less afraid of heights, she might have joined the climb last weekend.",
-        "如果她没有那么恐高，上周末可能就参加攀登了。",
-        "条件表达较稳定的性格或感受，结果假设发生在上周末，所以主句用 might have joined。"
+        "If I were careful, I would have seen it yesterday.",
+        "如果我平时细心，昨天就会看到它了。",
+        "were careful 说平时的特点；would have seen 说昨天本可能发生的结果。"
       ]
     ],
     "quiz": [
       {
         "type": "mc",
-        "prompt": "If I had accepted that job last year, I ____ in Berlin now.（强调设想的当前工作状态）",
+        "prompt": "If I had taken that job, I ____ here now.（如果当时接受那份工作，现在就会在这里工作。）",
         "options": [
           "will have worked",
           "had worked",
@@ -1336,27 +1570,27 @@
           "would working"
         ],
         "answer": 2,
-        "why": "条件指去年未接受的工作，结果是设想现在正在柏林工作，用 would be working。"
+        "why": "前面设想过去接受工作，后面说现在会怎样。用 would be working 说现在的工作状态。"
       },
       {
         "type": "fill",
-        "prompt": "If I had read the instructions yesterday, I ____ (know) how to start the machine now.（主句用 would，表达现在的结果）",
+        "prompt": "If I had asked yesterday, I ____ (know) the answer now.（用 would 表达现在的结果）",
         "answer": [
           "would know"
         ],
-        "why": "条件是过去未阅读，结果是现在本会知道，使用 would know，而不是把现在结果机械写成过去完成结果。"
+        "why": "asked 说昨天，know ... now 说现在。结果在现在，用 would know，不必写成 would have known。"
       },
       {
         "type": "mc",
-        "prompt": "判断混合时间虚拟条件时，最可靠的方法是：",
+        "prompt": "遇到混合时间的假设，应该怎样选形式？",
         "options": [
-          "只要有 now 就把所有完成形式判错",
-          "让主句与从句永远使用同一时间形式",
-          "看到 would 就一定判为过去事实",
-          "分别确定条件与结果的时间及因果关系"
+          "两边必须永远用同一形式",
+          "只要有 now 就不能用 had done",
+          "看到 would 就一定是在讲过去事实",
+          "分别看条件和结果各在什么时间"
         ],
         "answer": 3,
-        "why": "混合条件允许条件和结果分属不同时间，但需要由上下文支持的时间线与因果联系。"
+        "why": "条件和结果可能在不同时间。先分别看清“什么时候”，再给两边选形式。"
       }
     ],
     "related": [
@@ -1366,23 +1600,41 @@
       "inversion-conditional"
     ],
     "classification": [
-      "过去条件与现在结果",
-      "现在性质与过去结果",
-      "两侧时间分别判断",
-      "would / could / might 的语气"
+      "过去的假设 → 现在的结果",
+      "现在的特点 → 过去的结果",
+      "先看每一部分的时间"
     ],
     "pitfalls": [
+      [
+        "had 后用 taken，不用 took",
+        "If I had took it, I would have it now.",
+        "If I had taken it, I would have it now.",
+        "took 是 take 的过去式，taken 是过去分词。had 后需要 taken；后半说现在会拥有它。"
+      ],
+      [
+        "过去的结果需要 have 加过去分词",
+        "If she were careful, she would have see it yesterday.",
+        "If she were careful, she would have seen it yesterday.",
+        "yesterday 说明结果在昨天。would have 后用过去分词 seen，不直接用原形 see。"
+      ]
+    ],
+    "usage": [
       {
-        "title": "过去反事实条件中的过去分词",
-        "wrong": "If I had took your advice, I would be safer now.",
-        "right": "If I had taken your advice, I would be safer now.",
-        "text": "had 后要求过去分词 taken；条件指先前没采纳建议，结果指设想现在更安全。"
+        "h": "过去的假设，用 had 加过去分词",
+        "t": "If I had slept well 表示“如果我当时睡好了”。slept 是 sleep 的过去分词。它把条件放在已经过去的时间里。"
       },
       {
-        "title": "过去假设结果的完成结构",
-        "wrong": "If she were more careful, she would have catch the mistake yesterday.",
-        "right": "If she were more careful, she would have caught the mistake yesterday.",
-        "text": "主句假设昨天本可能发现错误，would have 后接过去分词 caught；条件则描述一般性的细心程度。"
+        "h": "现在的结果，用 would 加动词原形",
+        "t": "I would feel better now 表示“我现在就会感觉好一点”。结果在现在，所以用 would feel，不需要为了配合前面而机械写 would have felt。"
+      },
+      {
+        "h": "先分别问两次“什么时候”",
+        "t": "先问：条件是在现在，还是过去？再问：结果是在现在，还是过去？两边各自选合适的形式，不是一个句子出现 now，就把所有地方都改成现在形式。"
+      },
+      {
+        "h": "再了解一点",
+        "t": "另一种组合是：一个人平时的特点，影响了过去的结果，如第二个例句。这里的特点不是只在“昨天”存在。学会最常见的“过去条件 → 现在结果”后，再看这一种。",
+        "advanced": true
       }
     ]
   }
@@ -1398,7 +1650,10 @@
     ...(window.LESSON_DETAILS || {}),
     ...Object.fromEntries(entries.map(entry => [entry.id, {
       classification: entry.classification,
-      pitfalls: entry.pitfalls
+      usage: entry.usage,
+      pitfalls: entry.pitfalls.map(p => Array.isArray(p)
+        ? {title:p[0], wrong:p[1], right:p[2], text:p[3]}
+        : p)
     }]))
   };
 })();

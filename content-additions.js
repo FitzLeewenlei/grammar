@@ -1,259 +1,3384 @@
-/* Additional curriculum adapted from the user-provided grammar reference.
-   Existing lesson and question identifiers are intentionally left unchanged. */
+/* Beginner-first explanations: everyday words, small steps, optional extra detail. */
 (() => {
-const ref=chapter=>`参考《英语语法知识体系详解》· ${chapter}；补充讲解与练习`;
-
-add('parts','word-formation','构词法与词形变化','Word formation & inflection','基础',ref('构词法与词形变化'),'派生 / 合成 / 转化 ≠ 复数 / 时态 / 比较级','先区分“形成另一个词”和“同一词的语法变化”，再按句子位置选择词形。',[
- ['派生：意义和词性可能改变','前缀常改变意义，如 happy → unhappy；后缀常帮助构成新词类，如 success → successful → successfully。但前缀不一定改变词性，-ly 结尾也不一定是副词，如 friendly。词缀是线索，不能替代句法判断。'],
- ['合成：多个词共同组成一个单位','合成词可连写、分写或带连字符，如 classroom、bus stop、well-known。名词前的复合修饰语常用单位名词单数，如 a five-year-old child；The child is five years old 中却用复数 years，结构不同。'],
- ['转化：词形不变，工作改变','water the plants 中 water 是动词，a glass of water 中是名词；a clean room 中 clean 是形容词，clean the room 中是动词。判断要看它修饰什么、能否接宾语、是否承担谓语功能。'],
- ['屈折变化服务于当前语法关系','books、studies、studied、working、taller 分别表达数、主谓配合、时态或动作状态、比较程度，通常不是另外一个词汇项目。先找名词中心或动词组，再决定需要哪种词形，避免 success / successful / successfully 只凭中文选词。']
-],[['The team completed the project successfully.','团队成功完成了这个项目。','successfully 修饰 completed，需要副词；successful 常用于修饰名词或作表语。'],['We took a ten-minute break.','我们休息了十分钟。','ten-minute 整体在名词前作修饰语，单位名词 minute 用单数。']],[mc('The experiment was ____. 应选哪一种词形？',['success','successful','successfully','succeed'],1,'was 在这里是系动词，后面用形容词 successful 说明实验的结果。'),fill('She answered the question ____ (careful).','carefully','空格修饰动作 answered，使用方式副词 carefully。'),mc('年龄复合修饰语中，哪一种表达正确？',['a five-years-old child','a five-year-old child','a five-year-olds child','a five-years-olds child'],1,'名词前的复合年龄修饰语用连字符连接，单位名词 year 用单数。')],['adjadv','verb-forms','noun-plurals']);
-
-add('parts','determiners','限定词与名词前的顺序','Determiners','基础',ref('冠词与限定词'),'限定词 + 修饰语 + 名词中心','限定词说明所指范围；传统词类与限定功能会交叉。',[
- ['限定词是功能分类','the、this、my、some、three 都可放在名词前限定指称、所属或数量。它们按传统教学又分别属于冠词、代词或数词。词性名称和在名词短语中的作用是两个观察角度，并不矛盾。'],
- ['有无中心名词决定结构','This book is new 中 this 限定 book；This is new 中 This 独立指物。my 后通常需要名词，如 my bag；mine 可以独立替代“我的包”，如 This bag is mine。不能把两种形式机械互换。'],
- ['限定词共同出现有顺序限制','通常说 all my three books，而不说 the my book。the、my、this 等核心限定成分通常不能直接相互叠加；需要“我的这本书”可按语境用 this book of mine，或直接用 this book。'],
- ['限定词也受可数性限制','普通单数可数名词通常需要一个合适的限定成分，如 a pen、this pen、my pen；many 配复数可数名词，much 配不可数名词。all、some 等的结构要连同名词及 of 后的限定形式一起判断，如 some books / some of the books。']
-],[['All my three cousins live nearby.','我的三个表亲都住在附近。','all 在物主限定词 my 和数词 three 之前，三个限定成分共同限定 cousins。'],['This umbrella is mine, and that one is yours.','这把伞是我的，那把是你的。','This 限定 umbrella；mine 与 yours 独立使用，one 替代同类可数名词。']],[mc('请选择自然的限定词搭配。',['the my notebook','my the notebook','my notebook','mine notebook'],2,'my 已承担所属限定功能，通常不再直接叠加 the；mine 不能这样限定后面的名词。'),fill('These books are ____ (our).','ours','空格独立表示“我们的书”，需要名词性物主代词 ours。'),mc('some books 与 some of the books 的区别是：',['前者总是错误','后者指一个已限定集合中的一部分','两者都必须接单数名词','some 只能限定不可数名词'],1,'some of the books 从语境已确定的那些书中选取一部分，the books 给出了限定集合。')],['articles','pronouns','quantifiers']);
-
-add('parts','noun-phrase','名词短语与中心词','Noun phrases','基础',ref('短语·名词短语'),'限定词 + 前置修饰 + 中心名词 + 后置修饰','先圈出整个名词短语，再找决定核心指称的中心词。',[
- ['一个句子成分可以含许多词','名词短语以名词性中心为核心，整体作主语、宾语或表语，如 the two helpful students near the door。不要因为其中有形容词、介词短语，就把这个整体拆成互不相关的主句成分。'],
- ['中心词与前置修饰','a useful grammar book 中 book 是中心名词，useful 说明性质，grammar 说明类别，a 限定范围。判断主语的数时，通常找中心词，而不是离谓语最近的名词。'],
- ['后置修饰形成更长的短语','the books on the shelf、the students waiting outside、the story that she told 分别带介词短语、分词短语和定语从句。先辨认修饰对象，再分析其内部结构；后置部分可能很长，但不自动改变外层中心。'],
- ['边界清楚才能避免误读','The cover of these books is blue 中主语中心是 cover，of these books 为修饰语。I saw the boy with a telescope 中 with 短语可能修饰动作或男孩；如语境不能排除歧义，应改写说明谁使用望远镜。']
-],[['The list of new students is on the desk.','新生名单在桌上。','整个 The list of new students 作主语，中心词 list 为单数，所以用 is。'],['I bought a useful book about birds.','我买了一本介绍鸟类的实用书。','book 是宾语短语中心；useful 在前，about birds 在后，共同修饰 book。']],[mc('The color of the walls ____ pleasant.',['are','is','have','be'],1,'主语中心是单数 color，of the walls 是修饰语，因此谓语用 is。'),fill('a useful grammar book 的中心名词是 ____。','book','book 决定整个短语指什么，useful 与 grammar 都提供修饰信息。'),mc('the girl standing by the window 整体最适合看作：',['一个名词短语','两个独立句','一个完整的过去时陈述句','一个主语倒装句'],0,'girl 是中心，standing by the window 是后置分词修饰，整个组合仍是名词短语。')],['agreement','relative-omit','phrase-types']);
-
-add('parts','verb-forms','动词词形与谓语组合','Verb forms & finite groups','基础',ref('动词·基本形式；助动词'),'原形 / 第三人称单数 / 过去式 / 过去分词 / -ing','词形本身不能说明全部功能；要看它在整个动词组中的位置。',[
- ['五类常见词形各有用途','以 write 为例：原形 write、第三人称单数 writes、过去式 wrote、过去分词 written、-ing 形式 writing。过去式可直接构成一般过去时谓语，过去分词通常需要助动词，不能把 He written 当作普通完整陈述。'],
- ['助动词决定后一个成分的形式','情态动词后通常用原形，完成助动词 have 后用过去分词，进行 be 后用 -ing，被动 be 后用过去分词。She may have been working 中 may → have，have → been，进行 been → working，结构逐层衔接。'],
- ['一个谓语可由多个动词组成','has been repaired 是一个完成被动谓语组合，不是三个独立谓语。找句子骨架时，要把助动词与中心动词一起看，再区分 to repair、repairing 等非谓语结构。有限形式提供时态、情态或与主语的配合。'],
- ['同形形式要按结构分析','She is reading 中 reading 参与进行谓语；Reading helps 中 Reading 作主语；the girl reading outside 中 reading 引出修饰结构。非谓语可以带自己的宾语和状语，但通常不能独自构成普通完整的限定陈述句。']
-],[['The report has been checked twice.','这份报告已经检查了两次。','has been checked 是一个现在完成被动谓语，checked 为过去分词。'],['Reading the instructions saves time.','阅读说明会节省时间。','Reading the instructions 整体作主语，限定谓语是 saves。']],[mc('He has ____ three letters.',['wrote','writing','written','writes'],2,'完成助动词 has 后接过去分词 written，不用过去式 wrote。'),fill('They may ____ (be) waiting outside.','be','情态动词 may 后接原形 be，be 再与 waiting 构成进行结构。'),mc('The door is being painted. 中整个限定谓语是：',['painted','being','is being painted','The door'],2,'is being painted 共同构成现在进行被动，不应把各个动词拆成独立谓语。')],['auxiliaries','participles','passive']);
-
-add('sentence','phrase-types','短语类型与整体作用','Phrase types','基础',ref('短语'),'先找中心词，再判断整个短语作什么','短语按内部中心分类，句子成分按它在上层结构中的作用判断。',[
- ['名词、形容词与副词短语','名词短语如 the new teacher，形容词短语如 very proud of her team，副词短语如 much more carefully。内部中心不同，但不能只凭短语名称决定它在句中的全部作用，例如形容词短语既可作表语，也可作宾补。'],
- ['动词短语是组合而非词数游戏','has been studying 中助动词与中心动词共同表达完成进行；look after the child 等固定搭配又常被称作动词短语。分析时分清是助动词组合还是词汇搭配，再核对宾语与词形要求。'],
- ['介词短语的作用取决于依附对象','in the garden 修饰 the flowers 时可作后置定语；修饰 play 时可作地点状语；在 The children are in the garden 中说明所在位置。介词后可接名词短语、宾格代词或 -ing 结构。'],
- ['非谓语短语保留动词内部结构','to make the room tidy 中 the room 是 make 的宾语，tidy 是宾补；整个 to make the room tidy 又可作上层句子的目的状语。先看整体，再分析内部，不应把内部宾语误当外层主句宾语。']
-],[['She is very proud of her team.','她非常为自己的团队骄傲。','very proud of her team 是形容词短语，整体作表语，中心为 proud。'],['The students in the garden are talking quietly.','花园里的学生正在轻声交谈。','in the garden 在主语名词短语内修饰 students；are talking 是谓语组合。']],[mc('very slowly 的中心词是：',['very','slowly','两者都是名词','没有中心词'],1,'slowly 提供主要方式意义，very 说明程度；整个组合是副词短语。'),fill('介词短语 with ____ (they) 中应填哪种代词形式？','them','介词 with 后使用人称代词宾格 them。'),mc('to help the new students 在 We stayed to help the new students 中整体作：',['目的状语','主句主语','主句限定谓语','定冠词'],0,'stayed 是主句谓语，to help... 整体说明留下的目的，内部 students 是 help 的宾语。')],['noun-phrase','infinitive','prepositions']);
-
-add('sentence','sentence-elements','句子成分与分析层级','Sentence elements','基础',ref('句子成分'),'主语—谓语—宾语 / 表语 / 补足语；修饰语分层附着','词性是词的类别，成分是一个词或结构在当前句子中承担的作用。',[
- ['先找限定谓语与主语中心','谓语可能是 works，也可能是 will have been repaired 这样的组合。主语可以是一个名词、较长名词短语或从句，如 What she said matters。先确认“谁／什么”与动作或状态的关系，避免把修饰词当主语中心。'],
- ['宾语、表语、宾补要看关系','宾语是动词支配的对象，如 read a book；表语说明主语，如 She seems calm；宾补进一步说明宾语，如 We found the room empty。不能把谓语后所有名词都叫宾语，也不能把所有形容词都叫定语。'],
- ['定语、状语和同位语处在不同位置','定语修饰名词性中心，状语补充动作或整句的时间、地点、方式等，同位语重新说明同一个对象。my friend Anna 中 Anna 说明朋友是谁；a friend from Rome 中 from Rome 限定 friend，并非主句地点状语。'],
- ['整体和内部可以各有成分','I enjoy reading stories 中 reading stories 整体作 enjoy 的宾语，stories 又是 reading 内部的宾语。The news that she won surprised us 中 that 从句说明 news 的内容；外层谓语是 surprised，不应把 won 与 surprised 当同层并列。']
-],[['We found the classroom unusually quiet.','我们发现教室异常安静。','We 为主语，found 为谓语，the classroom 为宾语，unusually quiet 为宾补。'],['What the guide explained was useful.','导游讲解的内容很有用。','What the guide explained 整体作主语；was useful 是外层系表部分。']],[mc('The news made Leo happy. 中 happy 是：',['宾语补足语','主语','直接宾语','限定谓语'],0,'happy 进一步说明宾语 Leo 的状态，是宾补，不能因为它是形容词就自动认作定语。'),fill('She looks tired. 中 tired 作 ____。',['表语','主语补足语'],'looks 是系动词，tired 描述主语 She 的状态，基础教学中称表语。'),mc('Reading stories helps me relax. 的外层主语是：',['stories','Reading stories','helps','me'],1,'Reading stories 整体作主语；stories 只是 reading 内部的宾语。')],['skeleton','phrase-types','subject-clause']);
-
-add('sentence','double-object','双宾语与宾补的区别','Double objects & complements','基础',ref('基本句型·双宾语'),'give sb. sth. / give sth. to sb.；make sb. happy','后一个成分是“给出的东西”，还是在说明前一个宾语？',[
- ['双宾语表达接收或受益关系','She gave me a notebook 中 me 为间接宾语，a notebook 为直接宾语；它们指不同对象，notebook 不是在说明 me 的身份。give、show、send、buy 等在合适用法中可带这种结构。'],
- ['to 与 for 不能任意换','give / send / show sth. to sb. 通常突出接收对象；buy / make sth. for sb. 通常突出受益者。具体选择取决于动词搭配，不能把每个含“给”的中文表达都译成同一介词。'],
- ['并非所有动词都允许双宾语','可以说 explain the rule to me，但标准表达通常不说 explain me the rule。introduce、describe 等也需按自身结构学习。转换还受宾语长短、代词形式和信息重点影响，不要把一种形式当作通用公式。'],
- ['宾补与宾语建立说明关系','They made her captain 中 captain 说明 her 的身份；They made her a cake 中 a cake 是为她制作的东西。判断时尝试读成“她是队长／她是蛋糕”，前者语义相合，后者不合；再结合动词结构确认。']
-],[['Nora bought her sister a ticket.','诺拉给妹妹买了一张票。','her sister 是受益者，a ticket 是购买物；可按语境改为 bought a ticket for her sister。'],['The club elected Nora captain.','俱乐部选诺拉为队长。','captain 说明 Nora 的身份，是宾补，不是另一件被给予的东西。']],[mc('请选择正确的 explain 搭配。',['Please explain me the plan.','Please explain the plan to me.','Please explain to the plan me.','Please explain me to the plan.'],1,'explain 内容 to 人是这里所需的结构，不能直接照搬 give me a book 的双宾语形式。'),fill('Leo bought a scarf ____ his mother.（为妈妈买围巾）','for','buy sth. for sb. 表示为某人购买某物，通常用 for 引出受益者。'),mc('We found the door open. 中 open 与 the door 的关系是：',['open 说明门的状态','open 是另一件被找到的东西','open 是间接宾语','open 与 found 构成并列谓语'],0,'open 描述宾语 the door 的状态，因此作宾语补足语。')],['skeleton','object-complement','prepositions']);
-
-add('sentence','required-adverbials','不可随意省略的补足信息','Obligatory adverbials','进阶',ref('基本句型·含必需状语的句型'),'put + 物 + 位置；SV(A) / SVO(A)','形式上像状语的成分，也可能是动词当前用法所要求的。',[
- ['动词会要求特定补足内容','She put the cup on the tray 中 put 表示“把……放在……”，通常既需要被放置的物体，也需要位置说明。只写 She put the cup，在普通独立语境中往往信息不完整。'],
- ['区分必需信息与附加信息','She read a book yesterday 中 yesterday 为可添加的时间说明，去掉后 read a book 仍完整；She put the book on the shelf 中 on the shelf 满足放置地点要求，不能仅因它是介词短语就认定可随意删去。'],
- ['五句型与七句型是分析口径','基础教学常用五种句型概括骨架；另一些教材把含必需地点等成分的主谓状、主谓宾状单列，形成七种框架。名称不同不改变学习目标：检查当前动词用法是否得到必要的对象或位置补足。'],
- ['能否省略还受语境和词义影响','live 可说 I live in Chengdu，也可在表示“活着”时独立用，如 He still lives；明确场景中的省略也可能自然。不能仅把单词列入“必须带状语”的清单，应先确定这一次使用的具体意义和语境。']
-],[['Please put the glasses beside the plates.','请把玻璃杯放在盘子旁边。','glasses 是放置对象，beside the plates 提供当前 put 用法要求的位置。'],['The guests stayed for two nights.','客人们住了两晚。','for two nights 说明持续时间；stay 的补足与省略要按具体意义判断。']],[mc('在独立叙述“她把钥匙放到抽屉里”时，哪一句信息最完整？',['She put.','She put the keys.','She put the keys in the drawer.','She the keys in the drawer.'],2,'put 表示放置时，通常需要放置对象及位置，完整句应同时交代。'),fill('Please put the folder ____ the drawer.（放进抽屉里）',['in','into'],'in the drawer 或 into the drawer 均可说明放进抽屉的位置或方向；这个放置用法需要地点信息。'),mc('关于基本句型分析，合理的是：',['所有介词短语都能删掉','动词的实际用法决定所需补足','五句型与七句型不能描述同一句话','凡有地点词就是定语'],1,'句型名称是概括方式，真正需要核对的是动词在当前含义中要求的结构。')],['skeleton','double-object','prepositions']);
-
-add('sentence','imperatives','祈使句与行动建议','Imperatives','基础',ref('句子的种类·祈使句'),'动词原形；Don’t + 原形；Let’s + 原形','祈使句通常对听话者提出行动要求，主语 you 常省略。',[
- ['肯定祈使句用动词原形','Please wait here、Be careful、Take a seat 都可提出请求或提醒。主语通常理解为 you，不需要把 is 或 are 加在句首；be 在这类结构中也用原形。'],
- ['否定通常借助 do not','Don’t touch the cable、Don’t be late 用 Don’t + 原形。即使后面的词是 be，也不改成 Isn’t 或 Aren’t。Never give up 也可作否定性劝告，语气由场景决定。'],
- ['let 结构先看谁采取行动','Let me check 表示让我检查；Let’s begin 常提出共同建议，否定常说 Let’s not argue。let 后用宾格，再接不带 to 的不定式。Let us go 在具体语境中也可表示请求对方允许我们离开。'],
- ['and 与 or 建立条件结果联系','Check the address, and you will find it 表示做到前项可有后果；Leave now, or you will miss the bus 表示不做前项会有不利结果。句首称呼如 Mia, sit here 中 Mia 是呼语，并不强制改成第三人称单数动词。']
-],[['Please be patient with the new students.','请耐心对待新同学。','be 用原形；祈使句通常省略可理解的 you。'],['Hurry up, or we will miss the train.','快一点，否则我们会赶不上火车。','or 在这里引出不采取前项行动的不利后果。']],[mc('请选择正确的否定祈使句。',['Not be noisy.','Don’t be noisy.','Doesn’t be noisy.','Aren’t noisy.'],1,'否定祈使句通常用 Don’t + 动词原形，be 也适用这个结构。'),fill('Let’s not ____ (argue) about it now.','argue','Let’s not 后接动词原形，不能再加 to 或使用 -ing。'),mc('Turn left, and you will see the station. 中 and 后面表示：',['按前项行动会出现的结果','动作发生的过去时间','主语的身份','与前项无关的插入语'],0,'祈使句与 and 引出的陈述句可共同表达条件与结果的逻辑。')],['questions','real-if','verb-forms']);
-
-add('sentence','exclamations','what 与 how 感叹句','Exclamations','基础',ref('句子的种类·感叹句'),'What + 名词性部分；How + 形容词 / 副词','先判断被突出的核心是名词短语还是程度特征。',[
- ['what 引出名词性部分','What a useful guide it is! 突出 a useful guide；What beautiful flowers! 突出复数名词短语；What good advice! 突出不可数名词短语。只有单数可数名词才在此类结构中需要考虑 a / an。'],
- ['how 引出程度特征','How quiet the room is! 突出形容词 quiet；How carefully she works! 突出副词 carefully。后面的主体关系通常保持陈述语序，不按普通直接疑问句把 is 提到主语前。'],
- ['省略有特定表达条件','What a surprise!、How lovely! 在语境明确时自然。它们属于允许省略的感叹表达，并不意味着所有名词短语或目的短语都能独立充当正式完整陈述句。'],
- ['感叹词与感叹句不是同一层','Wow 是词类中的感叹词；What a lovely view! 是一种句式。How tall is the tower? 询问信息，How tall the tower is! 表达感叹，需同时看语序、标点和交际目的。']
-],[['What an interesting question you asked!','你提了一个多么有趣的问题！','what 后是单数可数名词短语 an interesting question，an 按 interesting 的起始音素选择。'],['How clearly the guide explains the rules!','导游把规则讲得多么清楚啊！','how 突出副词 clearly，后面用 the guide explains 的陈述关系。']],[mc('____ useful advice this is!',['What','What a','How','How a'],0,'advice 通常不可数，what 后直接接 useful advice，不能加 a。'),fill('____ carefully she draws!','How','carefully 是副词，突出其程度时用 How 引出。'),mc('哪一句是自然的感叹表达？',['How beautiful the gardens is!','How the garden beautiful is!','How beautiful the garden is!','What beautiful is the garden!'],2,'How + 形容词后接陈述关系 the garden is，区别于询问程度的疑问语序。')],['interjections','articles','questions']);
-
-add('sentence','negation','否定范围与部分否定','Negation & scope','进阶',ref('句子的种类·否定结构'),'not all ≠ none；mustn’t ≠ needn’t','先找否定落在哪一层，再判断它是否否定了整个集合或整个动作。',[
- ['否定形式与动词结构配合','be、情态或已有助动词后可加 not，如 is not、cannot、has not finished；普通一般时实义动词借 do / does / did，后面的动词恢复原形。非谓语否定常放在结构前，如 not to leave、not knowing。'],
- ['部分否定与全否定','Not all the answers are correct 表示并非所有答案正确，仍可能有一些正确；None of the answers is correct 表示没有一个正确。not every、not both 与 no、neither 等的范围不同，不能只凭出现 not 就理解为全盘否定。'],
- ['已有否定意义时检查标准表达','Nobody came、I never saw it 中 nobody、never 已表达否定。在标准书面英语中，通常不用 didn’t 与 nobody 再重复否定同一事实；某些方言中的否定一致需与标准教学口径区分。'],
- ['位置和语境会改变解释','I don’t think she is ready 常表达我认为她尚未准备好；not uncommon 意为并不少见。He didn’t leave because he was tired 可能否定离开，也可能否定原因，应改写明确，而不要宣称只存在一种读法。']
-],[['Not all the passengers got off at this stop.','并非所有乘客都在这一站下了车。','not all 只否定“全部都下车”，不能推导出没有人下车。'],['You don’t have to finish it today.','你不必今天完成它。','没有必要不等于禁止；mustn’t 常表示不允许做。']],[mc('Not every student agreed. 表示：',['每个学生都没同意','并非每个学生都同意','每个学生都同意','没有学生能表示意见'],1,'not every 是部分否定，只说明“全员同意”不成立，不等于全员反对。'),fill('She did not ____ (notice) the sign.','notice','did 已承担过去时和否定结构，后面的实义动词用原形 notice。'),mc('标准书面表达中哪一句最合适？',['Nobody didn’t arrive.（表达无人到达）','Nobody arrived.（表达无人到达）','Everybody arrived.（表达无人到达）','Not all arrived.（明确表达无人到达）'],1,'Nobody 自带否定；Not all 只是否定全体，不准确等于无人。')],['must','questions','quantifiers']);
-
-add('tenses','future-in-past','过去将来与过去视角','Future in the past','进阶',ref('动词时态·过去将来'),'would do / was going to do；would be doing / would have done','立足点在过去，所说动作发生在那个过去立足点之后。',[
- ['“将来”相对于哪一个时间点','He said he would call 中 said 是过去参照点，电话是从那时看尚未发生的事。电话相对现在可能已经发生，也可能尚未发生，过去将来形式本身不决定最终结果。'],
- ['过去的打算、安排和临近动作','was / were going to do 常表示当时的打算或迹象；was / were about to do 表示当时正要发生。I was going to call, but I forgot 的未实现来自 but 后的语境，不是所有 was going to 都必然未实现。'],
- ['同一过去视角也可表达不同体态','would be doing 表示从过去看后续某时正在进行；would have done 可表达后续某点之前会已完成；would have been doing 可表达届时已持续多久。它们较少见，主要出现在具体转述中，需先建立清楚参照点。'],
- ['would 不自动等于虚拟','She promised she would help 通常是过去视角的预期；If she had time, she would help 则可是假设结果。would 也能表达礼貌或过去习惯，分类必须依据上下文，而不是只看一个词。']
-],[['Mina said she would be working at nine that evening.','米娜说那晚九点她会正在工作。','said 提供过去视角；would be working 把过程放在当时的后续时刻。'],['He expected that by Friday he would have finished the report.','他预期到周五之前会完成报告。','过去的 expected 与后续截止点 by Friday 共同支持过去将来完成解释。']],[mc('He told me he would return the next day. 中 would return 主要表示：',['过去某时看以后的动作','现在正在进行','必然与事实相反','过去之前已完成'],0,'told 是过去立足点，the next day 是从当时看以后的时间，不必理解为虚拟。'),fill('She said she ____ (be going to) study abroad.（用过去形式转述她当时的打算）','was going to','过去转述中的原打算可用 was going to；she 为单数主语。'),mc('区分 would have finished 的过去将来和虚拟结果，最需要：',['只数单词','检查参照时间与假设语境','一律判为遗憾','一律改为现在完成时'],1,'相同形式可用于过去转述中的后续完成，也可用于非真实条件结果，必须结合语境。')],['future','unreal','reported']);
-
-add('tenses','future-continuous','将来进行时','Future continuous','进阶',ref('动词时态·将来进行'),'will be + doing','把镜头放在将来某时，观察那时正在展开的过程。',[
- ['进行过程需要将来观察点','At eight tomorrow, I will be travelling 表示明天八点时旅程正在进行。时间点可以明说，也可由对话提供；重点不是动作一定恰好在八点开始，而是那时处于过程中。'],
- ['结构按助动词顺序组成','will 后用原形 be，进行 be 后用现在分词，构成 will be doing。否定在 will 后加 not，疑问把 will 提到主语前，如 Will you be working?，不能省掉 be。'],
- ['区别将来事实与过程视角','I will work tomorrow 陈述将来的工作；I will be working at ten tomorrow 说明十点时正在工作。将来进行时也可表达按正常进程预期会发生的活动，或礼貌询问安排，并非只能搭配一个精确钟点。'],
- ['不要把所有将来安排都强制进行化','已安排的近期活动也常用现在进行时，如 I’m meeting Ava tomorrow。状态动词在普通状态含义下通常不用进行式；选择形式依表达重点，不能见到 tomorrow 就固定填 will be doing。']
-],[['This time tomorrow, we will be crossing the bridge.','明天这个时候，我们会正在过桥。','将来观察点是明天此时，crossing 描述那个时刻展开的过程。'],['Will you be using the printer this afternoon?','你今天下午会用打印机吗？','可礼貌询问对方届时的使用安排，为自己的计划作准备。']],[mc('At ten tomorrow, I ____ in the laboratory.（强调届时正在工作）',['will working','will be working','will have work','am work'],1,'将来进行时由 will be + -ing 构成，强调将来十点时的过程。'),fill('We will be ____ (wait) outside when you arrive.','waiting','进行助动词 be 后接现在分词 waiting。'),mc('Will you be joining us later? 可能用于：',['礼貌询问后续安排','只询问过去事实','强制表示动作已完成','证明说话人不知道任何时间关系'],0,'将来进行形式可以询问按安排或自然进程预期发生的活动，不只用于精确时刻。')],['future','continuous','future-perfect']);
-
-add('tenses','future-perfect','将来完成时','Future perfect','进阶',ref('动词时态·将来完成'),'will have + done；by + 将来参照点','从将来某点回看：到那时已经完成，或状态已经持续多久。',[
- ['先建立将来的参照点','By Friday, I will have finished the report 把周五设为观察点，从那个点回看完成的报告。它不等同于 I will finish on Friday，后者把完成安排在周五，而不是突出截至周五已经完成。'],
- ['完成结构使用过去分词','will 后用 have，have 后用过去分词，如 will have written。否定用 will not have done，疑问用 Will ... have done?；不要把 will have went 与 will have been 混为合法形式。'],
- ['by 与 by the time','by next month、by then 可给截止点；By the time you return, we will have left 中时间从句用现在形式 return 表达将来。不要把该时间从句机械改成 will return，也不要把所有含 by 的句子都强制判成将来完成。'],
- ['完成既可突出结果，也可表示持续','By June, she will have lived here for five years 描述截至将来某点的持续状态。需要强调活动过程时可用将来完成进行式；状态动词通常更适合完成式。实际时间关系比单一“标志词”更重要。']
-],[['By the time the guests arrive, we will have prepared dinner.','客人到达时，我们就已经准备好晚餐了。','准备完成在客人到达这个将来参照点之前。'],['By July, Ken will have known Mia for ten years.','到七月，肯认识米娅就满十年了。','know 表状态，完成式自然；不必为强调时长强行使用进行形式。']],[mc('By noon tomorrow, I ____ the final draft.（届时已完成）',['will have completed','will completing','have complete','had been complete'],0,'从明天中午回看此前的完成，用 will have completed。'),fill('By the time she ____ (return), we will have finished.',['returns','has returned'],'表示将来的时间从句可用现在形式 returns；强调已经返回也可用现在完成形式 has returned。'),mc('will have written 中 written 是：',['过去分词','一般过去式','第三人称单数','不带 to 的名词'],0,'完成助动词 have 后要求过去分词，write 的过去分词为 written。')],['perfect','future-time','future-perfect-continuous']);
-
-add('tenses','past-perfect-continuous','过去完成进行时','Past perfect continuous','进阶',ref('动词时态·过去完成进行'),'had been + doing','从过去某时回看此前持续的过程，而不是只定位一次过去动作。',[
- ['过去的观察点加此前过程','When the bus arrived, we had been waiting for forty minutes 把车到达设为过去参照点，说明此前已持续等候。参照点可来自另一事件或上下文，不是动作发生很久以前就必须用该形式。'],
- ['结构固定为 had been doing','had 表完成的过去视角，been 为 be 的过去分词，doing 表进行过程。所有人称都用 had；否定在 had 后加 not，疑问把 had 提前，不能省掉 been。'],
- ['与过去完成时比较结果和过程','She had written three pages 常突出完成数量；She had been writing all morning 常突出持续活动，可解释当时为何疲惫。完成进行形式不直接保证整个任务已经结束，是否仍持续由后文决定。'],
- ['状态与有界动作仍需审查','普通 know、belong 等状态含义通常不采用进行式，已持续的状态可用 had known。只说单次瞬间完成的事件时，过去完成通常更合适；反复或过程化解释另当别论。']
-],[['The ground was wet because it had been raining all night.','地面很湿，因为此前整夜都在下雨。','从过去地面湿的时刻回看此前持续的下雨过程。'],['They had been discussing the plan for an hour when I arrived.','我到达时，他们已经讨论这个计划一小时了。','had been discussing 表示到过去到达时已持续多久，不表示刚好那时开始。']],[mc('She was tired because she ____ all morning.（强调此前持续奔跑）',['had been running','will be running','has run tomorrow','had running'],0,'过去的疲惫作为参照，用 had been running 突出此前持续的活动。'),fill('We had been ____ (wait) for an hour when the doors opened.','waiting','had been 后用现在分词 waiting，构成过去完成进行时。'),mc('had written five emails 与 had been writing emails 的常见侧重点是：',['前者完成数量，后者持续过程','前者必为将来，后者必为现在','二者都不含过去参照点','二者只能描述同一瞬间动作'],0,'过去完成常突出已完成的结果或数量，完成进行常突出截至过去参照点的活动过程。')],['past-perfect','perf-cont','future-perfect-continuous']);
-
-add('tenses','future-perfect-continuous','将来完成进行与十六种时态框架','Perfect continuous in the future','拓展',ref('动词时态·十六种形式'),'will have been + doing；四种时间视角 × 四种体态','框架帮助识别时间关系；常见程度不同，不必把十六种形式机械等量使用。',[
- ['将来参照点之前累计的活动','By next June, I will have been teaching here for ten years 表示到明年六月，任教这一活动已持续十年。will be teaching 强调届时进行，will have been teaching 进一步回顾此前累计的过程。'],
- ['完成、进行两层按顺序衔接','will 后用 have，have 后用 been，进行 be 后用 doing，得到 will have been doing。普通状态含义通常选择 will have known 等完成式；实际表达也可用 Next June will mark my tenth year here 这样更自然的改写。'],
- ['四个视角与四种体态组合','按“一般／进行／完成／完成进行”排列：现在为 work(s)／am、is、are working／have、has worked／have、has been working；过去为 worked／was、were working／had worked／had been working；将来为 will work／will be working／will have worked／will have been working；过去将来为 would work／would be working／would have worked／would have been working。它们是十六种教学组合，频率并不相同。'],
- ['罕见组合首先理解，不强求套用','过去将来进行 would be doing、过去将来完成 would have done、过去将来完成进行 would have been doing 多见于特定转述。She said that by June she would have been working there for ten years 需要过去转述与后续截止点共同支持；同形也可能用于虚拟，须看语境。']
-],[['By next month, we will have been studying together for a year.','到下个月，我们一起学习就满一年了。','从将来下个月回看累计持续的学习过程。'],['She said that by August she would have been managing the shop for six years.','她说，到八月她管理这家店就满六年了。','said 是过去视角，by August 是当时后续截止点；这是低频但可解释的转述形式。']],[mc('By next May, I ____ here for ten years.（突出持续教学过程）',['will have been teaching','will have teaching','had teach','have been taught tomorrow'],0,'从将来截止点回看此前持续的活动，用 will have been teaching。'),fill('will have been ____ (work) 中应填哪种词形？','working','been 后的进行层需要现在分词 working；整个组合为 will have been working。'),mc('“十六种时态”框架最合理的学习方式是：',['每种形式在所有语境中同样常用','先理解参照点与体态，再注意使用频率','凡有 would 就一定是虚拟','凡表示持续就禁止完成式'],1,'教学框架概括组合关系，并不意味着十六种形式频率或语境可互换。')],['future-in-past','future-perfect','past-perfect-continuous']);
-
-add('parts','modal-perfect','情态动词与完成形式','Modal perfect forms','进阶',ref('助动词与情态动词·完成形式'),'modal + have + done','have done 把情态判断指向此前情况，具体含义仍由情态词和上下文决定。',[
- ['过去推测：是否可能发生过','must have done 常是较有把握的过去肯定推测；may / might / could have done 可表示过去可能发生；can’t / couldn’t have done 可表示过去不可能。它们表达判断，不自动给出事实证据，也不宜机械量化为固定概率。'],
- ['过去建议与实际结果结合','should / ought to have done 常用于批评或遗憾，表示过去本应做而未做；但 The train should have arrived by now 也可表达按预期应已到达，不能把每一个 should have done 都判为没有做。'],
- ['本可做到和本无必要','could have done 可表示过去的可能，也可表示本来能做却没做，如 You could have asked me。needn’t have done 通常表示已经做了但无必要；didn’t need to do 只说明无必要，是否做了要看上下文。'],
- ['先找情态意义，再还原时间','must have left 不是“过去必须离开”，普通过去义务常用 had to leave。否定位置也重要：can’t have left 否定过去离开的可能，shouldn’t have left 常批评已经离开。判断要结合明示的结果和说话意图。']
-],[['The lights are off; the staff must have left.','灯都熄了，员工们一定已经离开了。','must have left 根据当前线索推测过去事件，不表示过去的命令。'],['You needn’t have printed the whole file; I only needed one page.','你原本不必打印整个文件；我只需要一页。','needn’t have printed 表示打印确实发生了，但没有必要。']],[mc('He must have forgotten the appointment. 主要表达：',['推测他已经忘了约会','命令他过去必须忘记','证明他一定没忘','他未来必须忘掉'],0,'must have done 常对过去作较有把握的肯定推测。'),fill('The receipt is here, so she may have ____ (pay) already.','paid','may have 后使用过去分词 paid，表示可能已经付款。'),mc('关于 needn’t have bought，正确的是：',['通常表示买了但原本不必','必然表示没有买','相当于禁止将来买','与 didn’t need to buy 的实际发生含义永远相同'],0,'needn’t have done 通常带已经做了的含义；didn’t need to do 是否实际做了需看语境。')],['can','must','should','perfect']);
-
-add('tenses','passive-special','特殊结构的被动与边界','Special passive structures','进阶',ref('被动语态·特殊结构'),'modal be done / be made to do / be looked after','被动转换要保留动词的搭配和补足要求，不是只在原句前加 be。',[
- ['双宾语与宾补保留原有关系','She gave him a badge 可按语境改为 He was given a badge 或 A badge was given to him。They elected her leader 改为 She was elected leader，leader 仍说明她的身份。具体能否转换取决于动词和自然表达习惯。'],
- ['短语动词中的小词不能丢','They looked after the children 改为 The children were looked after，after 是整体搭配的一部分。情态被动用 must be checked 等；推测过去被动事件可用 must have been checked。'],
- ['有些主动省 to 结构在被动中恢复','They made him wait 可变为 He was made to wait；主动感官结构如 They saw him leave 也可有 He was seen to leave。不要据此为所有动词套同样变换；let 等常用其他自然表达改写。'],
- ['被动形式、状态与主动被动义区分','The door is closed 可能描述状态，也可能涉及被动动作，需看上下文。This book sells well 用主动形式表达销售特性；The room needs cleaning 的 doing 可带被动理解。不及物 happen、arrive 普通用法不能生造 be happened / be arrived。']
-],[['The visitor was made to wait outside.','来访者被要求在外面等候。','make 在主动宾补中常省 to，被动中使用 was made to wait。'],['The old bridge must have been repaired recently.','这座旧桥最近一定修缮过。','must 表推测，have been repaired 表示推测过去发生的被动事件。']],[mc('The children were looked ____ by a neighbor.（由邻居照顾）',['after','at to','off to','零介词'],0,'look after 是照顾的整体搭配，被动转换后仍要保留 after。'),fill('He was made ____ (leave) the room.','to leave','主动 make sb. leave 转为被动时通常恢复 to，写成 was made to leave。'),mc('哪一个普通用法不能直接套 be + 过去分词？',['repair the roof','write a letter','arrive at the station','check the tickets'],2,'arrive 在普通到达用法中不直接带可转为主语的宾语，不能生造 was arrived。')],['passive','object-complement','phrasal','modal-perfect']);
-
-add('sentence','clause-basics','从句、分句与连接层级','Clause foundations','基础',ref('从句与连接结构概述'),'看上层作用 → 划边界 → 看内部主谓与引导词','从句类型由整个结构的作用决定，不能只看 when、where、that 等单个词。',[
- ['独立分句和从属分句','I stayed 可独立陈述，because it rained 依附主句说明原因。普通限定分句通常有主谓关系；非限定从句另有不定式或分词形式。基础判断先区分是否能独立成句，以及它依附哪一层结构。'],
- ['同一引导词可以引出不同作用','I know where she lives 中 where 从句整体作宾语；Stay where she lives 中整体说明地点；the town where she lives 中修饰 town。不能因为 where 表地点就把每一种都叫地点状语从句。'],
- ['连接作用与内部角色分别检查','I know that she left 中 that 只引出陈述内容；I know what she bought 中 what 还作 bought 的宾语。内部主谓齐全也未必只能用 that，例如 why 可说明原因，选择还取决于意义。'],
- ['多谓语要按层级解析','I know that she said she was tired 含嵌套的内容从句，know、said、was 不在同一层。一个动词组合也可能有多个动词词形，如 has been reading。先分助动词组合、并列和从属，再检查是否缺连接。']
-],[['I remember when the library opened.','我记得图书馆是什么时候开放的。','when 从句整体作 remember 的宾语，不能仅凭 when 的时间意义判为时间状语。'],['The library was quiet when we arrived.','我们到达时，图书馆很安静。','when 从句为整件事提供时间说明，作时间状语。']],[mc('I know where the keys are. 中 where 从句整体作：',['宾语','地点先行词','并列主句','形容词'],0,'整个从句是 know 的内容宾语；where 在从句内部才承担地点信息。'),fill('I wonder where she ____ (be) now.','is','名词性从句通常用陈述语序 where she is，she 后用 is。'),mc('I think she knows him. 中多个动词为何可以共存？',['省略 that 的从属结构合法','因为一个句子可任意连动词','所有动词都属于一个完成时','knows 是形容词'],0,'think 后的宾语从句可省 that；两层限定关系有从属连接，不能只数词判错。')],['objects','relative-adverbs','sentence-elements']);
-
-add('adverbial','place-manner-clauses','地点与方式状语从句','Place & manner clauses','进阶',ref('状语从句·地点与方式'),'where / wherever；as / as if / as though','先看整个从句是在说明位置，还是说明动作如何发生。',[
- ['地点从句整体补充位置','Leave the box where I can see it 中 where 从句说明放箱子的位置，不一定有名词先行词。the place where I left it 中则是从句在名词短语内修饰 place，应与定语从句区分。'],
- ['wherever 常带任意地点或让步色彩','Wherever you go, keep in touch 可理解为无论去哪里都保持联系。它不只是某一个固定地点，分类时应承认地点意义与让步意义可能交叉，而不是硬套唯一中文译法。'],
- ['方式从句表达按照或如同','Do it as I showed you 中 as 表按照演示的方式；Leave it as it is 表保持原样。as 还可能表示时间、原因、比较等，不能看见 as 就一律判作方式。'],
- ['as if 不一定需要虚拟形式','It looks as if it is going to rain 可描述有根据的印象；He talks as if he knew the answer 可表达实际上并不知道的距离感。先确定说话人是否将内容看作现实可能，再选择时间和假设形式。']
-],[['Keep the medicine where children cannot reach it.','把药放在孩子够不到的地方。','where 从句整体说明存放地点，没有需要修饰的 place 先行词。'],['Arrange the cards as I showed you.','按我给你演示的方式排列卡片。','as 从句说明排列方式，不是原因或时间关系。']],[mc('Put the chair where the light is strongest. 中 where 从句主要说明：',['放椅子的位置','chair 的复数','过去完成的次数','说话人的身份'],0,'从句整体补充 put 所需的位置；没有名词 place 作为从句的先行词。'),fill('Do exactly ____ I demonstrated.（用本课表示“按照”的方式连词）','as','as 在这里引导方式从句，表示按照示范的方式。'),mc('关于 as if 从句，合理的是：',['所有情况必须用过去时','可按现实可能或非真实假设选择形式','所有情况必须用将来完成时','只可能表示时间'],1,'as if 可以表达有依据的现实印象，也可表达非真实假设；形式不能一概规定。')],['relative-adverbs','unreal','required-adverbials']);
-
-add('adverbial','comparison-clauses','比较从句与比较对象','Comparison clauses','进阶',ref('状语从句·比较；比较结构'),'than / as ... as / the + 比较级','比较的是同类的性质、数量或程度；检查对象和被省略的信息。',[
- ['than 与比较级配合','She writes more clearly than I do 中 than I do 是比较部分，do 替代重复的 write。比较从句可省略共同内容，日常 than me 等表达也可能自然，不能把口语宾格一律判为语法错误。'],
- ['as ... as 的两层作用','as careful as she is 表示同等程度，第一个 as 表程度，第二个引出比较部分；not as / so careful as 通常表示不及。中间用形容词或副词原级，不能写 as more careful as。'],
- ['比较对象应在同一层','The weather here is warmer than that in Harbin 把这里天气与哈尔滨天气比较，that 替代 weather。不要把天气直接与城市作同一层比较；复数名词可用 those 避免重复，如 prices / those。'],
- ['关联比较与倍数要清楚','The more you practice, the more confident you become 表示两种变化对应，不是普通最高级。twice as long as 表示总长度为两倍；写作时明确比较总量还是增加量，避免含混的中文倍数直译。']
-],[['This route is shorter than the one we used yesterday.','这条路线比我们昨天走的那条短。','比较两个同类路线；one 替代可数名词 route，后面再带修饰。'],['The more carefully you plan, the fewer mistakes you make.','计划越仔细，犯的错误就越少。','两侧 the + 比较级表达对应变化，fewer 搭配可数复数 mistakes。']],[mc('The weather here is colder than ____ in my hometown.',['that','my hometown','those','it is the city'],0,'that 替代单数不可数 weather，使比较落在两地天气，而非天气与城市之间。'),fill('She is as ____ (patient) as her teacher.','patient','as ... as 中使用原级 patient，不用 more patient 或比较级词尾。'),mc('The more you read, the more you discover. 表达：',['两种变化之间的对应关系','唯一的最高级对象','直接疑问','过去反事实条件'],0,'关联的 the + 比较级表示随前者变化，后者也相应变化。')],['comparison','pronouns','degree-order']);
-
-add('sentence','ellipsis','省略、替代与可恢复信息','Ellipsis & substitution','进阶',ref('特殊句式·省略与替代'),'省掉能还原的成分；保留合法连接与助动词','简洁不等于残缺：先尝试还原，再核对结构是否允许。',[
- ['并列和助动词省略','She opened the door and walked in 由两个谓语共用主语；He can swim, and she can too 中第二个 can 后省去 swim。省略保留了连接层次及所需助动词，不代表可任意删除独立句的主语或谓语。'],
- ['从句压缩需要主体关系成立','While she was reading, she took notes 可按条件压缩为 While reading, she took notes。若读书者与主句主语不同，直接删掉从句主语可能造成悬垂修饰；If necessary 等适合的 it + be 结构另有固定省略。'],
- ['引导词省略各有范围','know 后的宾语从句 that 常可省；限制性定语从句中作宾语的关系代词常可省。作主语的关系词、前置介词后的关系词等不能照搬。保留 that 有时有助于消除复杂结构中的歧义。'],
- ['替代是出现一个代替表达','I think so 用 so 替代前述命题；She promised to help and did so 用 did so 替代动作；one / ones 替代同类可数名词。省略则不再出现对应内容。具体动词是否允许 so、not 或 to 作简略答语，要按搭配判断。']
-],[['I can finish the first task, and Jo can too.','我能完成第一项任务，乔也能。','Jo can 后省略可由前文恢复的 finish the first task，can 仍保留。'],['While waiting for the bus, we reviewed the map.','等公交时，我们查看了地图。','等待者是主句主语 we，主体对应支持该分词省略结构。']],[mc('Would you like to join us? — I’d love ____.（保留不定式标记）',['to','that I','joining to','do to'],0,'不定式简略答语可保留 to，后面的 join you 由前文恢复。'),fill('He can speak Spanish, and I ____ too.（保留表示能力的相同情态动词）','can','保留与前文情态能力对应的 can，省略可恢复的 speak Spanish。'),mc('压缩 While reading, the phone rang 的问题通常是：',['reading 的主体与 the phone 不合','while 必须永远删除','phone 不能作主语','所有省略结构都错误'],0,'普通分词状语通常与主句主语建立逻辑关系，电话不是读书者；应补明读书的人或改写。')],['coordination','relative-omit','participles']);
-
-add('sentence','formal-it','形式主语、形式宾语与 it','Formal it','进阶',ref('常用结构·it 的用法'),'It is ... to do / that ...；find it ... to do','先分清 it 是指具体对象，还是暂占一个句法位置。',[
- ['指代和空主语先区分','I bought a clock. It is quiet 中 it 指同一具体时钟；It is raining、It is late 中 it 为天气、时间等结构服务，没有一个前文物品可直接替换。它们都与 one 表示同类另一对象不同。'],
- ['形式主语把长内容放后面','It is helpful to make notes 中 it 占据主语位置，to make notes 给出实际评价的活动；It is clear that she understands 中 that 从句给出内容。通常不能简单把形式 it 删掉，留下 Is helpful to make notes 作为普通完整句。'],
- ['形式宾语与宾补配合','I find it difficult to explain 中 it 先占宾语位置，difficult 作宾补，to explain 给出较长内容。不能写 I find difficult to explain 来机械省掉形式宾语；不同动词允许的结构仍需核对。'],
- ['不要把所有 it 都叫强调句','It was Mia who called 属于强调框架；It is important to listen 属于形式主语。It takes sb. time to do 表花时间；It is the first time that I have flown 常用现在完成，过去立足点相应常用过去完成。']
-],[['It is difficult to hear the guide from here.','从这里很难听清导游的话。','it 是形式主语，to hear... 给出被评价的活动。'],['We found it useful to label every folder.','我们发现给每个文件夹贴标签很有用。','it 为形式宾语，useful 为宾补，to label... 为具体内容。']],[mc('I find ____ hard to concentrate in this room.',['it','that it to','what','零成分'],0,'find it + 形容词 + to do 中 it 是形式宾语，不能只保留宾补 hard。'),fill('It takes us twenty minutes ____ (walk) to the station.','to walk','It takes sb. time to do 用不定式说明花费时间的活动。'),mc('It is obvious that she knows the answer. 中 it 通常是：',['形式主语','指前文另一支笔','宾语补足语','强调句中被强调的人'],0,'that 从句给出“她知道答案”这一实际内容，it 在句首先占主语位置。')],['subject-clause','emphasis','infinitive']);
-
-add('nonfinite','absolute-with','独立主格与 with 复合结构','Absolute & with constructions','拓展',ref('特殊句式·独立主格与 with'),'逻辑主语 + 补充部分；with + 宾语 + 宾补','这类附加结构可以有自己的逻辑主体，不要误当作第二个无连接主句。',[
- ['普通分词状语与自身主体不同','Having finished the work, we left 中完成工作的是 we；The work finished, we left 中附加结构有自身主体 the work，finished 描述它的被动完成状态。独立主格不具有普通完整限定分句的全部结构。'],
- ['with 复合结构先看宾语关系','With the baby sleeping, she spoke quietly 中 baby 是 sleeping 的执行者；With the work finished, we could rest 中 work 是 finished 的承受对象。形式选择取决于逻辑关系，不能一律用 doing 或 done。'],
- ['不定式与其他补足形式','With three emails to write, I stayed at my desk 中 to write 表示尚待处理的任务，可由主句主体执行；不必因 emails 承受 write 就机械改为被动。with the door open、with the lights on、with a book in her hand 也可补充状态或位置。'],
- ['和普通介词短语、限定从句区分','with my friends 只有普通介词宾语，不是完整的 with 复合结构。Weather permitting, we will go 可提供条件；若使用 The weather is fine 这样的限定分句，则需合适连接或独立标点，不能只用逗号生硬拼接。']
-],[['With the windows closed, the room became quiet.','窗户关上后，房间安静了下来。','windows 是 closed 的逻辑主体并承受关闭，整个 with 结构提供背景。'],['Weather permitting, we will have lunch outside.','天气允许的话，我们将在室外吃午饭。','Weather 是 permitting 的自身逻辑主语，整体提供条件。']],[mc('With the children ____, we spoke softly.（孩子们正在睡觉）',['sleeping','slept by','to sleeping','are sleeping'],0,'children 是睡觉的执行者，with 复合结构中使用现在分词 sleeping，不加入限定谓语 are。'),fill('With all the tickets ____ (sell), the organizer closed the box office.','sold','tickets 承受出售，且语境说明已售完，使用过去分词 sold。'),mc('with my classmates 与 with my classmates waiting 的区别是：',['后者有说明宾语状态的补足部分','前者必定是独立限定主句','二者都必须有谓语 are','with 后不能使用人称对象'],0,'前者是普通介词短语；后者还用 waiting 说明 classmates 的活动，形成 with 复合结构。')],['participles','ellipsis','punctuation-analysis']);
-
-add('sentence','punctuation-analysis','标点、完整句与长句分析','Punctuation & sentence analysis','进阶',ref('语序 标点与句子分析'),'找主干 → 划层级 → 核修饰与指代 → 检查边界','逗号不是万能连词；长句的难度来自层次，不来自单词数量。',[
- ['普通陈述先满足完整结构','The students near the gate 只是名词短语；To improve my reading 只是非谓语目的结构。作为无语境的正式完整陈述，通常还需合法主谓关系及动词所需补足。祈使句、标题和规范省略另按各自条件理解。'],
- ['独立分句需要恰当边界','I was tired, I went home 通常是逗号拼接；可改为 I was tired, so I went home，或用分号、句号。however 常是连接性副词，不能仅凭逗号加 however 就把两个独立分句合法粘连。'],
- ['补充与必要限定使用不同标点','My brother, who lives nearby, visits often 中从句是补充说明，句中通常两侧分隔；the students who passed 中从句限定是哪一群学生，不能任意加逗号改变意义。插入语和同位说明也需结合是否必要限定判断。'],
- ['长句按结构逐层拆解','先圈出限定谓语组合，暂括后置定语、从句和插入语，找外层主语中心与谓语。再判断 and 连接词、短语还是分句，定位非谓语逻辑主体与代词所指。若修饰或指代确有两种合理读法，应承认歧义并通过语境或改写澄清。']
-],[['The path was slippery; however, the hikers continued carefully.','小路很滑，不过徒步者们仍小心地继续前进。','两个独立分句用分号建立边界，however 作连接性副词。'],['The books that we borrowed yesterday, as you may recall, belong to the museum.','你或许还记得，我们昨天借的那些书属于博物馆。','外层主干是 The books belong to the museum；定语从句和插入语各有自己的层级。']],[mc('哪一句避免了普通正式写作中的逗号拼接？',['It was dark, we stopped.','It was dark; we stopped.','It was dark, however we stopped.','It was dark we stopped.'],1,'分号可以连接语义相关的独立分句；单独逗号或无边界连接通常不合适。'),fill('The students near the gate ____ waiting.（用 be 构成完整进行谓语）','are','主语中心 students 为复数，are waiting 是完整的进行谓语，不能只写 waiting 作独立限定谓语。'),mc('分析长句时，最可靠的第一步通常是：',['先圈限定谓语组合并找外层主干','把每个逗号都当句号','把每个 and 都切成两个独立句','见到最后一个名词就认定为主语'],0,'找到限定动词组和外层主语中心，才能再分辨并列、从属、插入与非谓语层级。')],['clause-basics','sentence-elements','coordination']);
-const correction=(title,wrong,right,text)=>({title,wrong,right,text});
-const details={
- 'word-formation':{classification:['派生','合成','词类转化','语法词形变化'],pitfalls:[
-  correction('修饰动作需要恰当词形','She speaks English fluent.','She speaks English fluently.','fluent 是形容词；这里修饰 speaks，应使用副词 fluently。'),
-  correction('名词前复合修饰语中的单位','We took a ten-minutes break.','We took a ten-minute break.','ten-minute 整体在名词前作一个修饰单位，minute 通常用单数。')]},
- determiners:{classification:['冠词','指示与物主限定','数量与数词','限定词顺序'],pitfalls:[
-  correction('核心限定词不随意叠加','The my notebook is blue.','My notebook is blue.','my 已说明所属，通常不直接与 the 叠加。'),
-  correction('物主限定与独立物主代词','This is mine pen.','This is my pen.','my 后接所限定的名词，mine 独立代替“我的某物”。')]},
- 'noun-phrase':{classification:['中心名词','前置限定与修饰','后置修饰','整体成分与内部成分'],pitfalls:[
-  correction('不要让谓语跟随修饰语中的名词','The price of these books are high.','The price of these books is high.','主语中心是单数 price，of these books 不决定外层谓语的数。'),
-  correction('数量与中心名词的数','I bought two useful book.','I bought two useful books.','two 限定可数名词时，中心 book 应采用复数 books，形容词 useful 不变化。')]},
- 'verb-forms':{classification:['五种基本词形','助动词链','限定谓语','非谓语功能'],pitfalls:[
-  correction('过去式不等于过去分词','She has wrote the summary.','She has written the summary.','完成助动词 has 后接过去分词 written，不接过去式 wrote。'),
-  correction('情态动词后保持原形','He can swims very well.','He can swim very well.','can 后接动词原形，不加第三人称单数 -s。')]},
- 'phrase-types':{classification:['名词短语','动词短语','形容词与副词短语','介词与非谓语短语'],pitfalls:[
-  correction('表语中心需要形容词','She is very proudly of her team.','She is very proud of her team.','very proud of her team 是形容词短语作表语，不能把中心 proud 改为副词 proudly。'),
-  correction('介词短语内部使用合适的宾语','We went with they.','We went with them.','with 后接人称代词宾格；短语整体作用与内部代词形式要分别检查。')]},
- 'sentence-elements':{classification:['主语与谓语','宾语与表语','宾语补足语','定语、状语与同位说明'],pitfalls:[
-  correction('名词短语不自动构成完整陈述','The students in the classroom.','The students are in the classroom.','在无语境的完整陈述中，原表达只有主语名词短语；补入 are 才说明学生所在位置。'),
-  correction('宾补说明宾语状态','We found the room emptily.','We found the room empty.','empty 描述宾语 room 的状态，作形容词宾补，不用副词形式。')]},
- 'double-object':{classification:['间接与直接宾语','to / for 转换','动词搭配限制','双宾语与宾补'],pitfalls:[
-  correction('explain 不照搬 give 的双宾语结构','Please explain me the rule.','Please explain the rule to me.','通常用 explain 内容 to 人，不能机械写 explain 人 内容。'),
-  correction('宾语位置使用宾格代词','They elected she captain.','They elected her captain.','her 是 elected 的宾语，captain 说明 her 的身份，不能把宾格改为主格 she。')]},
- 'required-adverbials':{classification:['主谓状','主谓宾状','动词所需补足','语境允许的省略'],pitfalls:[
-  correction('放置用法通常需要地点信息','She put the keys.','She put the keys in the drawer.','在普通独立的放置叙述中，仅给出对象通常不够，in the drawer 补足放在哪里。'),
-  correction('介词本身也需要完整结构','Please put the folder on.','Please put the folder on the desk.','这里的 on 引出放置地点，不能只留下介词却没有其宾语。')]},
- imperatives:{classification:['肯定祈使','否定祈使','let 结构','祈使与 and / or'],pitfalls:[
-  correction('be 也用动词原形','Is careful when crossing the road.','Be careful when crossing the road.','作提醒的祈使句使用原形 be，而不是第三人称单数 is。'),
-  correction('否定祈使用 Don’t','Doesn’t touch the switch.','Don’t touch the switch.','否定祈使通常用 Don’t + 原形，不依据省略的听话者改成 Doesn’t。')]},
- exclamations:{classification:['what + 名词短语','how + 形容词 / 副词','语境省略','感叹与疑问'],pitfalls:[
-  correction('不可数名词前不机械加 a','What a useful advice!','What useful advice!','advice 通常不可数，这里的 what 感叹结构不加 a。'),
-  correction('系表关系用形容词描述主语','How beautifully the garden is!','How beautiful the garden is!','这里表达花园本身很美，is 后对应形容词 beautiful，而不是修饰动作的副词 beautifully。')]},
- negation:{classification:['not 与动词结构','部分与全部否定','否定范围','语境与双重否定'],pitfalls:[
-  correction('did 后恢复原形','She did not noticed the warning.','She did not notice the warning.','did 已承担一般过去时关系，后面的实义动词用原形 notice。'),
-  correction('标准教学中的否定重复','Nobody didn’t come.','Nobody came.','若想表达“没有人来”，nobody 已带否定意义；这里按标准书面语纠正，方言否定一致另行分析。')]},
- 'future-in-past':{classification:['过去视角的一般将来','过去的打算','进行与完成组合','与虚拟和习惯区别'],pitfalls:[
-  correction('would 后使用原形','She said she would arrived soon.','She said she would arrive soon.','would 后接动词原形 arrive，不能直接接过去式 arrived。'),
-  correction('过去打算的结构保持完整','He was going study medicine.','He was going to study medicine.','表示过去打算使用 was going to do，不能遗漏不定式符号 to。')]},
- 'future-continuous':{classification:['将来观察点','will be doing','正常进程与礼貌询问','与一般将来区别'],pitfalls:[
-  correction('进行助动词 be 不能漏','At nine tomorrow, I will working.','At nine tomorrow, I will be working.','will 后需 be，再由 be 接 working 构成将来进行。'),
-  correction('be 后的进行词形','This time tomorrow, we will be travel.','This time tomorrow, we will be travelling.','表示届时正在旅行，进行层需要 -ing 形式；美式拼写 traveling 也正确。')]},
- 'future-perfect':{classification:['将来截止点','will have done','by the time','结果与持续状态'],pitfalls:[
-  correction('完成层使用过去分词','By Friday, she will have wrote the report.','By Friday, she will have written the report.','will have 后应接过去分词 written，不用过去式 wrote。'),
-  correction('将来时间从句通常用现在形式','By the time she will return, we will have finished.','By the time she returns, we will have finished.','这里 by the time 引导将来时间从句，通常用 returns；不是关于所有从句中 will 的绝对禁令。')]},
- 'past-perfect-continuous':{classification:['过去参照点','had been doing','此前持续过程','与完成结果比较'],pitfalls:[
-  correction('完成进行要保留 been','We had waiting for an hour when she arrived.','We had been waiting for an hour when she arrived.','had been waiting 把持续过程放在过去到达时之前，不能省掉 been。'),
-  correction('been 后使用 -ing','He had been worked all night and was exhausted.','He had been working all night and was exhausted.','突出此前持续工作时用 working；had been worked 若作被动需要另一种动词与语义结构，不合这里的主动意思。')]},
- 'future-perfect-continuous':{classification:['将来累计过程','will have been doing','十六种教学组合','低频与虚拟同形'],pitfalls:[
-  correction('完成与进行层都要保留','By June, I will have teaching here for ten years.','By June, I will have been teaching here for ten years.','have 之后需 been，been 之后用 teaching，完整表达届时累计的持续过程。'),
-  correction('have 后的 be 用过去分词','She said she would have be working there for a year by July.','She said she would have been working there for a year by July.','would 后用 have，完成助动词 have 后必须用 been，再接 working。')]},
- 'modal-perfect':{classification:['过去可能与推测','本应与预期','本可与本无必要','否定情态完成'],pitfalls:[
-  correction('情态完成不是过去式直接相接','He must has forgotten the date.','He must have forgotten the date.','情态动词 must 后使用原形 have，不能加第三人称单数 -s。'),
-  correction('完成层选过去分词','She may have went home already.','She may have gone home already.','may have 后接 gone；went 是一般过去式，不是过去分词。')]},
- 'passive-special':{classification:['双宾语与宾补的被动','短语动词被动','省 to 的恢复','被动、状态与主动意义'],pitfalls:[
-  correction('make 的被动恢复 to','He was made wait outside.','He was made to wait outside.','对应主动 make him wait 的被动通常用 be made to wait。'),
-  correction('短语动词不可漏介词','The child was looked by the nurse.','The child was looked after by the nurse.','表达“被照顾”需保留 look after 的 after，不能只留下 looked。')]},
- 'clause-basics':{classification:['独立与从属分句','名词性、定语与状语作用','引导词内部角色','嵌套与并列'],pitfalls:[
-  correction('名词性从句保持陈述语序','I wonder where is she.','I wonder where she is.','整句在陈述想知道的内容，where 后通常用 she is，不套独立疑问的倒装。'),
-  correction('从属分句不能任意独立陈述','Because the bus was late.','Because the bus was late, we walked.','作为无上下文的完整书面陈述，需要主句；对话答语等省略语境另当别论。')]},
- 'place-manner-clauses':{classification:['where 地点','wherever 与让步','as 方式','as if 的现实与假设'],pitfalls:[
-  correction('地点从句也需要内部主谓','Leave the box where can I see it.','Leave the box where I can see it.','where 后是从句内部的陈述关系 I can see it，不作直接疑问倒装。'),
-  correction('按示范方式做使用 as','Do it as I shown you.','Do it as I showed you.','as 从句需要限定谓语；这里叙述过去的示范用 showed，shown 不能单独代替过去式。')]},
- 'comparison-clauses':{classification:['than 比较','as ... as','对象替代','关联比较与倍数'],pitfalls:[
-  correction('as ... as 中用原级','She is as more patient as her teacher.','She is as patient as her teacher.','同级比较中间用 patient 原级，不能叠加 more。'),
-  correction('比较同类对象','The weather here is warmer than Harbin.','The weather here is warmer than that in Harbin.','应比较两地天气，that 替代 weather，而不是把天气与城市放在同一比较层。')]},
- ellipsis:{classification:['并列省略','助动词与不定式省略','从句压缩条件','替代与指代'],pitfalls:[
-  correction('分词省略需要正确的动作主体','While reading the map, the bus arrived.','While we were reading the map, the bus arrived.','普通分词状语会与主句主语建立关系；原句容易变成公交车在读地图，补明 we 消除悬垂。'),
-  correction('简略答语保留正确助动词','She can swim, and I am too.','She can swim, and I can too.','省略 swim 时，保留与能力结构对应的 can，不能任意换成 am。')]},
- 'formal-it':{classification:['普通指代','时间天气空主语','形式主语','形式宾语与强调框架'],pitfalls:[
-  correction('形式宾语不能机械删除','We find difficult to follow the guide.','We find it difficult to follow the guide.','find it + 形容词 + to do 中，it 占宾语位置，difficult 为宾补。'),
-  correction('形式主语结构要完整','Is useful to keep notes.','It is useful to keep notes.','普通完整陈述中需要形式主语 it，后面的不定式给出评价内容。')]},
- 'absolute-with':{classification:['自身逻辑主体','with + doing','with + done / to do','状态与普通介词短语'],pitfalls:[
-  correction('复合结构不用独立限定谓语','With the baby was sleeping, she spoke softly.','With the baby sleeping, she spoke softly.','with 后的复合结构用 baby 加分词补足，不在此直接加入 was 构成限定分句。'),
-  correction('承受关系选过去分词','With the windows closing by the guard, the room became quiet.','With the windows closed by the guard, the room became quiet.','windows 承受 guard 的关闭动作，by the guard 进一步确认被动关系，使用 closed。')]},
- 'punctuation-analysis':{classification:['完整主干','独立分句边界','限制与补充标点','分层分析与指代'],pitfalls:[
-  correction('逗号不是独立分句的万能连接','The path was dark, we stopped.','The path was dark, so we stopped.','两个独立分句需要适当连接或标点；此处用 so 明确因果，也可用分号或拆句。'),
-  correction('however 不替代并列连词资格','The path was dark, however, we continued.','The path was dark; however, we continued.','however 通常是连接性副词，前面用分号建立两个独立分句的边界。')]}
-};
-window.LESSON_DETAILS={...(window.LESSON_DETAILS||{}),...details};
+  const entries = [
+  {
+    "id": "word-formation",
+    "g": "parts",
+    "title": "构词法与词形变化",
+    "en": "Word formation & inflection",
+    "level": "基础",
+    "source": "参考《英语语法知识体系详解》· 构词法与词形变化；补充讲解与练习",
+    "formula": "help → helpful；book → books",
+    "take": "同一个词可以变样，也可以变成一个新词。",
+    "steps": [
+      [
+        "先分清两种变化",
+        "book 变成 books，还是“书”，只是变成多本。help 变成 helpful，意思从“帮助”变成“有帮助的”，这是形成了新词。"
+      ],
+      [
+        "在词的前后加一小段",
+        "happy 是“开心的”，加上 un- 就成了 unhappy“不开心的”。help 是“帮助”，加上 -ful 就成了 helpful“有帮助的”。这些加上的部分叫“词缀”。"
+      ],
+      [
+        "两个词也能合成新词",
+        "class 和 room 合成 classroom，意思是“教室”。ten-minute walk 表示“十分钟的步行路程”；minute 在名词 walk 前作说明时，用单数。"
+      ],
+      [
+        "同一个词也能换工作",
+        "water 可表示“水”，也可表示“浇水”：Water the flowers. 是“给花浇水”。先看句子想说什么，再判断词的用法；不能只看词尾猜答案。"
+      ]
+    ],
+    "examples": [
+      [
+        "This book is helpful.",
+        "这本书很有帮助。",
+        "helpful 说明书怎么样；help 是“帮助”，helpful 是“有帮助的”。"
+      ],
+      [
+        "It is a ten-minute walk.",
+        "步行需要十分钟。",
+        "ten-minute 放在 walk 前面作说明，minute 不加 s。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "The game was ____. 应选哪一种词形？",
+        "options": [
+          "success",
+          "successful",
+          "successfully",
+          "succeed"
+        ],
+        "answer": 1,
+        "why": "was 后要说明游戏怎么样，用 successful“成功的”。",
+        "id": "word-formation-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "She answered the question ____ (careful).",
+        "answer": [
+          "carefully"
+        ],
+        "why": "这里说她回答得怎么样，用副词 carefully“仔细地”。",
+        "id": "word-formation-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "年龄复合修饰语中，哪一种表达正确？",
+        "options": [
+          "a five-years-old child",
+          "a five-year-old child",
+          "a five-year-olds child",
+          "a five-years-olds child"
+        ],
+        "answer": 1,
+        "why": "five-year-old 一起说明 child 的年龄，year 用单数。",
+        "id": "word-formation-2"
+      }
+    ],
+    "related": [
+      "adjadv",
+      "verb-forms",
+      "noun-plurals"
+    ],
+    "classification": [
+      "加前后缀",
+      "把词合起来",
+      "同词换用法",
+      "复数等词形变化"
+    ],
+    "pitfalls": [
+      {
+        "title": "描述状态要用合适的词",
+        "wrong": "She is happily.",
+        "right": "She is happy.",
+        "text": "这里要说“她很开心”，用 happy。happily 通常说明一个动作做得怎么样。"
+      },
+      {
+        "title": "单位词在这种结构中用单数",
+        "wrong": "It is a ten-minutes walk.",
+        "right": "It is a ten-minute walk.",
+        "text": "ten-minute 一起放在 walk 前作说明，minute 用单数。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "在词的前后加一小段",
+        "t": "happy 是“开心的”，加上 un- 就成了 unhappy“不开心的”。help 是“帮助”，加上 -ful 就成了 helpful“有帮助的”。这些加上的部分叫“词缀”。"
+      },
+      {
+        "h": "两个词也能合成新词",
+        "t": "class 和 room 合成 classroom，意思是“教室”。ten-minute walk 表示“十分钟的步行路程”；minute 在名词 walk 前作说明时，用单数。"
+      },
+      {
+        "h": "同一个词也能换工作",
+        "t": "water 可表示“水”，也可表示“浇水”：Water the flowers. 是“给花浇水”。先看句子想说什么，再判断词的用法；不能只看词尾猜答案。"
+      }
+    ]
+  },
+  {
+    "id": "determiners",
+    "g": "parts",
+    "title": "限定词与名词前的顺序",
+    "en": "Determiners",
+    "level": "基础",
+    "source": "参考《英语语法知识体系详解》· 冠词与限定词；补充讲解与练习",
+    "formula": "my book（我的书）；two books（两本书）",
+    "take": "先说清楚是哪一个、谁的，或有多少。",
+    "steps": [
+      [
+        "名词前面的小帮手",
+        "book 只说“书”。this book 说“这本书”，my book 说“我的书”，two books 说“两本书”。this、my、two 这类词放在名词前作说明，统称“限定词”。"
+      ],
+      [
+        "后面有没有名词很重要",
+        "my 后通常接名词：my bag“我的包”。mine 可以自己表示“我的那个”：This bag is mine.（这个包是我的。）不要把 my 和 mine 随意交换。"
+      ],
+      [
+        "不要把 the 和 my 硬放一起",
+        "通常说 my book，不说 the my book。my 已经说明是谁的书，不必再直接加一个 the。this book of mine 可表示“我的这本书”。"
+      ],
+      [
+        "数量也要和名词搭配",
+        "many books 是“许多书”，much water 是“很多水”。书能一本本数，水通常不能直接一份份数。some of the books 表示“这些书中的一些”。"
+      ]
+    ],
+    "examples": [
+      [
+        "This book is mine.",
+        "这本书是我的。",
+        "This 后有 book；mine 后不再接 book。"
+      ],
+      [
+        "I have two red bags.",
+        "我有两个红色的包。",
+        "two 说明数量，red 说明颜色，bags 才是要说的东西。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "请选择自然的限定词搭配。",
+        "options": [
+          "the my notebook",
+          "my the notebook",
+          "my notebook",
+          "mine notebook"
+        ],
+        "answer": 2,
+        "why": "my notebook 就是“我的笔记本”；my 和 the 不这样叠放。",
+        "id": "determiners-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "These books are ____ (our).",
+        "answer": [
+          "ours"
+        ],
+        "why": "空格后没有名词，要用能独立表示“我们的”的 ours。",
+        "id": "determiners-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "some books 与 some of the books 的区别是：",
+        "options": [
+          "前者总是错误",
+          "后者指一个已限定集合中的一部分",
+          "两者都必须接单数名词",
+          "some 只能限定不可数名词"
+        ],
+        "answer": 1,
+        "why": "the books 指已经说清楚的那些书；some of 从里面选出一些。",
+        "id": "determiners-2"
+      }
+    ],
+    "related": [
+      "articles",
+      "pronouns",
+      "quantifiers"
+    ],
+    "classification": [
+      "指哪一个",
+      "说明是谁的",
+      "说明有多少"
+    ],
+    "pitfalls": [
+      {
+        "title": "my 后要接所说明的东西",
+        "wrong": "This is my.",
+        "right": "This is mine.",
+        "text": "想单独说“这是我的”，用 mine；也可以说 This is my bag。"
+      },
+      {
+        "title": "不要重复放 the 和 my",
+        "wrong": "This is the my book.",
+        "right": "This is my book.",
+        "text": "my 已说明“我的”，普通表达中不再把 the 直接放在它前面。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "后面有没有名词很重要",
+        "t": "my 后通常接名词：my bag“我的包”。mine 可以自己表示“我的那个”：This bag is mine.（这个包是我的。）不要把 my 和 mine 随意交换。"
+      },
+      {
+        "h": "不要把 the 和 my 硬放一起",
+        "t": "通常说 my book，不说 the my book。my 已经说明是谁的书，不必再直接加一个 the。this book of mine 可表示“我的这本书”。"
+      },
+      {
+        "h": "数量也要和名词搭配",
+        "t": "many books 是“许多书”，much water 是“很多水”。书能一本本数，水通常不能直接一份份数。some of the books 表示“这些书中的一些”。"
+      }
+    ]
+  },
+  {
+    "id": "noun-phrase",
+    "g": "parts",
+    "title": "名词短语与中心词",
+    "en": "Noun phrases",
+    "level": "基础",
+    "source": "参考《英语语法知识体系详解》· 短语·名词短语；补充讲解与练习",
+    "formula": "a red bag（一个红色的包）",
+    "take": "几个词可以合起来说同一个人或东西。",
+    "steps": [
+      [
+        "把几个词当成一个整体",
+        "a red bag 的意思是“一个红色的包”。虽然有三个词，它们合起来都在说一个包。这种以名词为中心的词组，叫“名词短语”。"
+      ],
+      [
+        "先找最主要的名词",
+        "在 a red bag 中，最主要的词是 bag。a 说明是一个，red 说明颜色。这个最主要的名词叫“中心词”。"
+      ],
+      [
+        "说明也可以放在后面",
+        "the book on the desk 是“桌上的那本书”。book 是中心词，on the desk 告诉我们是哪一本。先认出整组词，再看每一部分的作用。"
+      ],
+      [
+        "不要被旁边的复数带跑",
+        "The color of the bags is red. 意思是“这些包的颜色是红色的”。主要说的是 color“颜色”，不是 bags“包”，所以这里用 is。"
+      ]
+    ],
+    "examples": [
+      [
+        "The book on the desk is mine.",
+        "桌上的那本书是我的。",
+        "The book on the desk 合起来说一本书，中心词是 book。"
+      ],
+      [
+        "I want a red bag.",
+        "我想要一个红色的包。",
+        "a red bag 整体表示我想要的东西。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "The color of the walls ____ red.",
+        "options": [
+          "are",
+          "is",
+          "have",
+          "be"
+        ],
+        "answer": 1,
+        "why": "句子主要说单数 color“颜色”，所以用 is。",
+        "id": "noun-phrase-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "a useful grammar book 的中心名词是 ____。",
+        "answer": [
+          "book"
+        ],
+        "why": "这组词主要说一本 book，useful 和 grammar 都在说明这本书。",
+        "id": "noun-phrase-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "the girl standing by the window 整体最适合看作：",
+        "options": [
+          "一个名词短语",
+          "两个独立句",
+          "一个完整的过去时陈述句",
+          "一个主语倒装句"
+        ],
+        "answer": 0,
+        "why": "整个词组都在说一个 girl；后面的 standing by the window 说明是哪位女孩。",
+        "id": "noun-phrase-2"
+      }
+    ],
+    "related": [
+      "agreement",
+      "relative-omit",
+      "phrase-types"
+    ],
+    "classification": [
+      "中心词",
+      "放在前面的说明",
+      "放在后面的说明"
+    ],
+    "pitfalls": [
+      {
+        "title": "先找主语短语的中心",
+        "wrong": "The color of the bags are red.",
+        "right": "The color of the bags is red.",
+        "text": "句子主要说一个 color，因而用 is；不要只看旁边的 bags。"
+      },
+      {
+        "title": "一组词可以有不同种类的说明",
+        "wrong": "I want a red a bag.",
+        "right": "I want a red bag.",
+        "text": "a red bag 已是完整的一组词，不要在 red 后再多加一个 a。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "先找最主要的名词",
+        "t": "在 a red bag 中，最主要的词是 bag。a 说明是一个，red 说明颜色。这个最主要的名词叫“中心词”。"
+      },
+      {
+        "h": "说明也可以放在后面",
+        "t": "the book on the desk 是“桌上的那本书”。book 是中心词，on the desk 告诉我们是哪一本。先认出整组词，再看每一部分的作用。"
+      },
+      {
+        "h": "不要被旁边的复数带跑",
+        "t": "The color of the bags is red. 意思是“这些包的颜色是红色的”。主要说的是 color“颜色”，不是 bags“包”，所以这里用 is。"
+      }
+    ]
+  },
+  {
+    "id": "verb-forms",
+    "g": "parts",
+    "title": "动词词形与谓语组合",
+    "en": "Verb forms & finite groups",
+    "level": "基础",
+    "source": "参考《英语语法知识体系详解》· 动词·基本形式；助动词；补充讲解与练习",
+    "formula": "go / goes / went / gone / going",
+    "take": "动词会根据句子的需要改变样子。",
+    "steps": [
+      [
+        "先认识动词的几种样子",
+        "go 是“去”，goes、went、gone、going 都和“去”有关。它们的用处不同，不能看着像就随便换。初学时可以把同一个动词的这些形式放在一起记。"
+      ],
+      [
+        "看前面的词给什么提示",
+        "can 后通常用原形：can go。have 或 has 后，用过去分词：has gone。这里的 gone 就是 go 的过去分词，要按整组写法记。"
+      ],
+      [
+        "几个词可以一起说明动作",
+        "She is reading. 是“她正在读书”。is 和 reading 在这里一起说明动作。不要把 is 和 reading 当成两个互不相关的完整动作。"
+      ],
+      [
+        "同样的 -ing，也可能有不同用处",
+        "She is reading. 说她正在读书。Reading is fun. 说“读书这件事很有趣”。两句都有 reading，具体作用要放回句子里看。"
+      ]
+    ],
+    "examples": [
+      [
+        "She has gone home.",
+        "她已经回家了。",
+        "has 后接 gone，不用过去式 went。"
+      ],
+      [
+        "Reading is fun.",
+        "读书很有趣。",
+        "这里把“读书这件事”放在句首，作为要谈论的内容。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "He has ____ three letters.",
+        "options": [
+          "wrote",
+          "writing",
+          "written",
+          "writes"
+        ],
+        "answer": 2,
+        "why": "has 后需要 write 的过去分词 written。",
+        "id": "verb-forms-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "They may ____ (be) waiting outside.",
+        "answer": [
+          "be"
+        ],
+        "why": "may 后接原形；be 再和 waiting 一起表示“可能正在等”。",
+        "id": "verb-forms-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "The door is being painted. 中整个限定谓语是：",
+        "options": [
+          "painted",
+          "being",
+          "is being painted",
+          "The door"
+        ],
+        "answer": 2,
+        "why": "is being painted 合起来说明“正在被刷漆”，要作为一组来看。",
+        "id": "verb-forms-2"
+      }
+    ],
+    "related": [
+      "auxiliaries",
+      "participles",
+      "passive"
+    ],
+    "classification": [
+      "原形",
+      "现在与过去",
+      "过去分词",
+      "-ing 形式"
+    ],
+    "pitfalls": [
+      {
+        "title": "has 后不要接 went",
+        "wrong": "She has went home.",
+        "right": "She has gone home.",
+        "text": "go 的过去式是 went，过去分词是 gone；has 后要用 gone。"
+      },
+      {
+        "title": "can 后用原形",
+        "wrong": "He can plays.",
+        "right": "He can play.",
+        "text": "can 后面的动词用原形 play，不加 s。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "看前面的词给什么提示",
+        "t": "can 后通常用原形：can go。have 或 has 后，用过去分词：has gone。这里的 gone 就是 go 的过去分词，要按整组写法记。"
+      },
+      {
+        "h": "几个词可以一起说明动作",
+        "t": "She is reading. 是“她正在读书”。is 和 reading 在这里一起说明动作。不要把 is 和 reading 当成两个互不相关的完整动作。"
+      },
+      {
+        "h": "同样的 -ing，也可能有不同用处",
+        "t": "She is reading. 说她正在读书。Reading is fun. 说“读书这件事很有趣”。两句都有 reading，具体作用要放回句子里看。"
+      }
+    ]
+  },
+  {
+    "id": "phrase-types",
+    "g": "sentence",
+    "title": "短语类型与整体作用",
+    "en": "Phrase types",
+    "level": "基础",
+    "source": "参考《英语语法知识体系详解》· 短语；补充讲解与练习",
+    "formula": "a red bag；very happy；in the room",
+    "take": "短语就是一起表达一部分意思的一组词。",
+    "steps": [
+      [
+        "先看这组词主要在说什么",
+        "a red bag 在说一个包，是名词短语。very happy 在说“非常开心”，以 happy 为主，是形容词短语。短语的名称常根据里面最主要的词来取。"
+      ],
+      [
+        "动词也常和其他词一起用",
+        "is reading 表示“正在读”，look after 表示“照顾”。看到这样的组合，要一起理解，再检查后面要不要接人或东西。"
+      ],
+      [
+        "in the room 可以作不同说明",
+        "The bag in the room is mine. 中，in the room 说明是哪一个包。We play in the room. 中，它说明在哪里玩。同一组词，放的位置不同，作用也可能不同。"
+      ],
+      [
+        "先看整组，再看里面",
+        "We stayed to help Tom. 是“我们留下来帮助汤姆”。to help Tom 整组说明为什么留下；里面的 Tom 又是 help“帮助”的对象。"
+      ]
+    ],
+    "examples": [
+      [
+        "The bag in the room is mine.",
+        "房间里的包是我的。",
+        "in the room 一起说明是哪一个包。"
+      ],
+      [
+        "She is very happy.",
+        "她非常开心。",
+        "very 加强 happy 的程度，两词合起来说明她怎么样。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "very slowly 的中心词是：",
+        "options": [
+          "very",
+          "slowly",
+          "两者都是名词",
+          "没有中心词"
+        ],
+        "answer": 1,
+        "why": "slowly 说“慢慢地”，very 只是把程度加强，所以中心词是 slowly。",
+        "id": "phrase-types-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "介词短语 with ____ (they) 中应填哪种代词形式？",
+        "answer": [
+          "them"
+        ],
+        "why": "with 后用宾格代词 them，意思是“和他们一起”。",
+        "id": "phrase-types-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "to help the new students 在 We stayed to help the new students 中整体作：",
+        "options": [
+          "目的状语",
+          "主句主语",
+          "主句限定谓语",
+          "定冠词"
+        ],
+        "answer": 0,
+        "why": "to help... 说明留下的目的，也就是“为什么留下”。",
+        "id": "phrase-types-2"
+      }
+    ],
+    "related": [
+      "noun-phrase",
+      "infinitive",
+      "prepositions"
+    ],
+    "classification": [
+      "名词短语",
+      "形容词与副词短语",
+      "介词短语",
+      "含动词的短语"
+    ],
+    "pitfalls": [
+      {
+        "title": "介词后用合适的代词",
+        "wrong": "Come with they.",
+        "right": "Come with them.",
+        "text": "with 后用 them，不用作句子主语时常见的 they。"
+      },
+      {
+        "title": "说明状态用形容词",
+        "wrong": "She is very quietly.",
+        "right": "She is very quiet.",
+        "text": "这里要说她很安静，用 quiet；quietly 通常说明动作做得怎么样。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "动词也常和其他词一起用",
+        "t": "is reading 表示“正在读”，look after 表示“照顾”。看到这样的组合，要一起理解，再检查后面要不要接人或东西。"
+      },
+      {
+        "h": "in the room 可以作不同说明",
+        "t": "The bag in the room is mine. 中，in the room 说明是哪一个包。We play in the room. 中，它说明在哪里玩。同一组词，放的位置不同，作用也可能不同。"
+      },
+      {
+        "h": "先看整组，再看里面",
+        "t": "We stayed to help Tom. 是“我们留下来帮助汤姆”。to help Tom 整组说明为什么留下；里面的 Tom 又是 help“帮助”的对象。"
+      }
+    ]
+  },
+  {
+    "id": "sentence-elements",
+    "g": "sentence",
+    "title": "句子成分与分析层级",
+    "en": "Sentence elements",
+    "level": "基础",
+    "source": "参考《英语语法知识体系详解》· 句子成分；补充讲解与练习",
+    "formula": "谁或什么 + 做什么 / 怎么样",
+    "take": "句子里的词各有任务，先找谁和动作。",
+    "steps": [
+      [
+        "先找句子说的是谁",
+        "Tom reads. 说的是 Tom“汤姆”。句子要说的这个人或东西，叫“主语”。主语不一定只有一个词，The boy in red 也可以一起作主语。"
+      ],
+      [
+        "再找做什么或怎么样",
+        "Tom reads. 中 reads 说明他做什么，是“谓语”的主要部分。Tom is happy. 中 is happy 说明他怎么样。先把句子的主要意思读出来，再细分名称。"
+      ],
+      [
+        "认清被说明的是谁",
+        "Tom reads a book. 中 a book 是读的对象，叫“宾语”。We made Tom happy. 中 happy 说明 Tom 的状态，叫“宾语补足语”，可以先理解为“给宾语补一句说明”。"
+      ],
+      [
+        "长词组也能只做一个任务",
+        "Reading books is fun. 中，Reading books 合起来表示“读书这件事”，是整句的主语。不要看见里面的 books，就把它当成外层句子的主语。"
+      ]
+    ],
+    "examples": [
+      [
+        "Tom reads a book.",
+        "汤姆读一本书。",
+        "Tom 是说的人，reads 是动作，a book 是读的对象。"
+      ],
+      [
+        "We made Tom happy.",
+        "我们让汤姆开心了。",
+        "happy 说明 Tom 变得怎么样，不是另一个被给予的东西。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "The news made Leo happy. 中 happy 是：",
+        "options": [
+          "宾语补足语",
+          "主语",
+          "直接宾语",
+          "限定谓语"
+        ],
+        "answer": 0,
+        "why": "happy 说明 Leo 变得怎么样，是给宾语 Leo 补充的说明。",
+        "id": "sentence-elements-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "She looks tired. 中 tired 作 ____。",
+        "answer": [
+          "表语",
+          "主语补足语"
+        ],
+        "why": "tired 说明主语 She 的状态，放在系动词 looks 后，叫表语。",
+        "id": "sentence-elements-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "Reading stories helps me relax. 的外层主语是：",
+        "options": [
+          "stories",
+          "Reading stories",
+          "helps",
+          "me"
+        ],
+        "answer": 1,
+        "why": "整个 Reading stories 表示“读故事这件事”，所以整体作主语。",
+        "id": "sentence-elements-2"
+      }
+    ],
+    "related": [
+      "skeleton",
+      "phrase-types",
+      "subject-clause"
+    ],
+    "classification": [
+      "主语：说谁或什么",
+      "谓语：做什么或怎么样",
+      "宾语：动作的对象",
+      "其他说明"
+    ],
+    "pitfalls": [
+      {
+        "title": "普通完整句不要漏掉 be",
+        "wrong": "I a student.",
+        "right": "I am a student.",
+        "text": "想说“我是一名学生”，需要用 am 把 I 和 a student 连起来。"
+      },
+      {
+        "title": "动作的对象要用 her",
+        "wrong": "He likes she.",
+        "right": "He likes her.",
+        "text": "这里她是 likes 的对象，要用 her，不用 she。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "再找做什么或怎么样",
+        "t": "Tom reads. 中 reads 说明他做什么，是“谓语”的主要部分。Tom is happy. 中 is happy 说明他怎么样。先把句子的主要意思读出来，再细分名称。"
+      },
+      {
+        "h": "认清被说明的是谁",
+        "t": "Tom reads a book. 中 a book 是读的对象，叫“宾语”。We made Tom happy. 中 happy 说明 Tom 的状态，叫“宾语补足语”，可以先理解为“给宾语补一句说明”。"
+      },
+      {
+        "h": "长词组也能只做一个任务",
+        "t": "Reading books is fun. 中，Reading books 合起来表示“读书这件事”，是整句的主语。不要看见里面的 books，就把它当成外层句子的主语。"
+      }
+    ]
+  },
+  {
+    "id": "double-object",
+    "g": "sentence",
+    "title": "双宾语与宾补的区别",
+    "en": "Double objects & complements",
+    "level": "基础",
+    "source": "参考《英语语法知识体系详解》· 基本句型·双宾语；补充讲解与练习",
+    "formula": "give me a book；make me happy",
+    "take": "先看是给了两个人和物，还是在说明一个人。",
+    "steps": [
+      [
+        "先看 give me a book",
+        "She gave me a book. 是“她给了我一本书”。me 说给谁，a book 说给什么；这两个部分叫“双宾语”。可以先记住这两个小问题。"
+      ],
+      [
+        "有时把东西放在前面说",
+        "She gave a book to me. 仍是“她给了我一本书”。buy 常用 for：She bought a book for me.（她给我买了一本书。）to 或 for 要和前面的动词一起记。"
+      ],
+      [
+        "不要把每个动词都套进去",
+        "可以说 give me a book，但通常不说 explain me the rule。要说 explain the rule to me“给我解释这条规则”。不同动词有自己的常用搭配。"
+      ],
+      [
+        "另一种情况是在说明这个人",
+        "We made Tom happy. 是“我们让汤姆开心了”。happy 不是给汤姆的另一件东西，而是在说汤姆怎么样，所以叫“宾语补足语”。"
+      ]
+    ],
+    "examples": [
+      [
+        "She gave me a book.",
+        "她给了我一本书。",
+        "me 是接收的人，a book 是给出的东西。"
+      ],
+      [
+        "We made Tom happy.",
+        "我们让汤姆开心了。",
+        "happy 说明 Tom 的状态，不是另一个被给予的东西。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "请选择正确的 explain 搭配。",
+        "options": [
+          "Please explain me the plan.",
+          "Please explain the plan to me.",
+          "Please explain to the plan me.",
+          "Please explain me to the plan."
+        ],
+        "answer": 1,
+        "why": "explain 的常用顺序是“解释什么 + to + 给谁”。",
+        "id": "double-object-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "Leo bought a book ____ his mother.（给妈妈买书）",
+        "answer": [
+          "for"
+        ],
+        "why": "这里说“给妈妈买书”，buy ... for ... 表示为某人买。",
+        "id": "double-object-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "We found the door open. 中 open 与 the door 的关系是：",
+        "options": [
+          "open 说明门的状态",
+          "open 是另一件被找到的东西",
+          "open 是间接宾语",
+          "open 与 found 构成并列谓语"
+        ],
+        "answer": 0,
+        "why": "open 在说明门怎么样，是对 the door 的补充说明。",
+        "id": "double-object-2"
+      }
+    ],
+    "related": [
+      "skeleton",
+      "object-complement",
+      "prepositions"
+    ],
+    "classification": [
+      "给谁、给什么",
+      "to 与 for",
+      "不能随便套用",
+      "说明宾语的状态"
+    ],
+    "pitfalls": [
+      {
+        "title": "动作的接收者用 me",
+        "wrong": "She gave I a pen.",
+        "right": "She gave me a pen.",
+        "text": "这里是给“我”，所以用 me，不用作主语的 I。"
+      },
+      {
+        "title": "记住 explain 的搭配",
+        "wrong": "Please explain me the rule.",
+        "right": "Please explain the rule to me.",
+        "text": "explain the rule to me 表示“给我解释这条规则”，不直接套 give me... 的顺序。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "有时把东西放在前面说",
+        "t": "She gave a book to me. 仍是“她给了我一本书”。buy 常用 for：She bought a book for me.（她给我买了一本书。）to 或 for 要和前面的动词一起记。"
+      },
+      {
+        "h": "不要把每个动词都套进去",
+        "t": "可以说 give me a book，但通常不说 explain me the rule。要说 explain the rule to me“给我解释这条规则”。不同动词有自己的常用搭配。"
+      },
+      {
+        "h": "另一种情况是在说明这个人",
+        "t": "We made Tom happy. 是“我们让汤姆开心了”。happy 不是给汤姆的另一件东西，而是在说汤姆怎么样，所以叫“宾语补足语”。"
+      }
+    ]
+  },
+  {
+    "id": "required-adverbials",
+    "g": "sentence",
+    "title": "不可随意省略的补足信息",
+    "en": "Obligatory adverbials",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 基本句型·含必需状语的句型；补充讲解与练习",
+    "formula": "put + 放的东西 + 放在哪里",
+    "take": "有些动词需要把重要信息说完整。",
+    "steps": [
+      [
+        "只说“放了”往往不够",
+        "She put the book on the desk. 是“她把书放在桌上”。用 put 表示放置时，通常既要说放什么，也要说放在哪里。"
+      ],
+      [
+        "地点有时是必需的信息",
+        "She put the book... 会让人接着问“放哪里了？”这里的地点不能随便删掉。on the desk 虽然表示地点，却是这个用法通常需要的信息。"
+      ],
+      [
+        "另一些地点只是补充",
+        "She reads at home. 是“她在家看书”。只说 She reads. 也能表达完整意思，所以 at home 在这里是额外说明。不要只看“地点”就决定能不能删。"
+      ],
+      [
+        "先把意思说完整，再学名称",
+        "有些书把必要地点叫“必需状语”，有些叫“补足语”。初学时不必先争名称，先问：这个动词用在这里，还缺什么重要信息？"
+      ]
+    ],
+    "examples": [
+      [
+        "Put the book in the bag.",
+        "把书放进包里。",
+        "the book 说放什么，in the bag 说放在哪里。"
+      ],
+      [
+        "She reads at home.",
+        "她在家看书。",
+        "这里即使不说 at home，She reads 仍然是完整表达。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "在独立叙述“她把钥匙放到抽屉里”时，哪一句信息最完整？",
+        "options": [
+          "She put.",
+          "She put the keys.",
+          "She put the keys in the drawer.",
+          "She the keys in the drawer."
+        ],
+        "answer": 2,
+        "why": "题目要说清“放钥匙”和“放哪里”，完整表达要包含这两部分。",
+        "id": "required-adverbials-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "Please put the book ____ the bag.（放进包里）",
+        "answer": [
+          "in",
+          "into"
+        ],
+        "why": "in 或 into 都可表达这里的放入，地点信息不能随意删掉。",
+        "id": "required-adverbials-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "关于基本句型分析，合理的是：",
+        "options": [
+          "所有介词短语都能删掉",
+          "动词的实际用法决定所需补足",
+          "五句型与七句型不能描述同一句话",
+          "凡有地点词就是定语"
+        ],
+        "answer": 1,
+        "why": "先看动词在这句话里需要什么，不要只背句型名字。",
+        "id": "required-adverbials-2"
+      }
+    ],
+    "related": [
+      "skeleton",
+      "double-object",
+      "prepositions"
+    ],
+    "classification": [
+      "放什么",
+      "放在哪里",
+      "必要信息与补充信息"
+    ],
+    "pitfalls": [
+      {
+        "title": "“放书”别漏掉书",
+        "wrong": "She put on the desk.",
+        "right": "She put the book on the desk.",
+        "text": "这里想说“把书放在桌上”，要把所放的东西 the book 说出来。"
+      },
+      {
+        "title": "地点前需要连接词",
+        "wrong": "Put the book the bag.",
+        "right": "Put the book in the bag.",
+        "text": "in the bag 表示在包里，不能只把两个名词硬接在一起。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "地点有时是必需的信息",
+        "t": "She put the book... 会让人接着问“放哪里了？”这里的地点不能随便删掉。on the desk 虽然表示地点，却是这个用法通常需要的信息。"
+      },
+      {
+        "h": "另一些地点只是补充",
+        "t": "She reads at home. 是“她在家看书”。只说 She reads. 也能表达完整意思，所以 at home 在这里是额外说明。不要只看“地点”就决定能不能删。"
+      },
+      {
+        "h": "先把意思说完整，再学名称",
+        "t": "有些书把必要地点叫“必需状语”，有些叫“补足语”。初学时不必先争名称，先问：这个动词用在这里，还缺什么重要信息？",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "imperatives",
+    "g": "sentence",
+    "title": "祈使句与行动建议",
+    "en": "Imperatives",
+    "level": "基础",
+    "source": "参考《英语语法知识体系详解》· 句子的种类·祈使句；补充讲解与练习",
+    "formula": "Sit down.；Don’t run.；Let’s go.",
+    "take": "想让别人做事，可以直接用动词开头。",
+    "steps": [
+      [
+        "用动词原形开头",
+        "Open the door. 是“开门”。这种让人做事的句子叫“祈使句”。说话时通常知道是在对谁说，所以常不写 you。"
+      ],
+      [
+        "想说“别做”，前面加 Don’t",
+        "Don’t run. 是“别跑”。后面的 run 用原形。be 也一样：Don’t be late.（别迟到。）不要加成 Don’t to run。"
+      ],
+      [
+        "用 Let’s 邀请一起做",
+        "Let’s go. 是“我们走吧”。Let’s 后用动词原形；想说“我们别吵了”，可以说 Let’s not argue.。please 可以让请求显得更礼貌。"
+      ],
+      [
+        "两句话还可以说条件和结果",
+        "Turn left, and you will see the shop. 是“左转，你就会看到商店”。前半让人采取行动，后半说明接下来会怎样。"
+      ]
+    ],
+    "examples": [
+      [
+        "Please sit down.",
+        "请坐。",
+        "用 sit 开头提出请求，please 表示礼貌。"
+      ],
+      [
+        "Don’t run.",
+        "别跑。",
+        "Don’t 后接原形 run，表示让对方不要这样做。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "请选择正确的否定祈使句。",
+        "options": [
+          "Not be noisy.",
+          "Don’t be noisy.",
+          "Doesn’t be noisy.",
+          "Aren’t noisy."
+        ],
+        "answer": 1,
+        "why": "Don’t 后用原形，be 也要保留：Don’t be noisy。",
+        "id": "imperatives-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "Let’s not ____ (argue) about it now.",
+        "answer": [
+          "argue"
+        ],
+        "why": "Let’s not 后直接接动词原形 argue。",
+        "id": "imperatives-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "Turn left, and you will see the station. 中 and 后面表示：",
+        "options": [
+          "按前项行动会出现的结果",
+          "动作发生的过去时间",
+          "主语的身份",
+          "与前项无关的插入语"
+        ],
+        "answer": 0,
+        "why": "先按前半句说的去做，就会出现后半句的结果。",
+        "id": "imperatives-2"
+      }
+    ],
+    "related": [
+      "questions",
+      "real-if",
+      "verb-forms"
+    ],
+    "classification": [
+      "让人做事",
+      "让人别做",
+      "一起做事"
+    ],
+    "pitfalls": [
+      {
+        "title": "Don’t 后不加 to",
+        "wrong": "Don’t to run.",
+        "right": "Don’t run.",
+        "text": "否定祈使句直接用 Don’t 加动词原形。"
+      },
+      {
+        "title": "Let’s 后用原形",
+        "wrong": "Let’s playing.",
+        "right": "Let’s play.",
+        "text": "Let’s 后用 play，不用 playing。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "想说“别做”，前面加 Don’t",
+        "t": "Don’t run. 是“别跑”。后面的 run 用原形。be 也一样：Don’t be late.（别迟到。）不要加成 Don’t to run。"
+      },
+      {
+        "h": "用 Let’s 邀请一起做",
+        "t": "Let’s go. 是“我们走吧”。Let’s 后用动词原形；想说“我们别吵了”，可以说 Let’s not argue.。please 可以让请求显得更礼貌。"
+      },
+      {
+        "h": "两句话还可以说条件和结果",
+        "t": "Turn left, and you will see the shop. 是“左转，你就会看到商店”。前半让人采取行动，后半说明接下来会怎样。"
+      }
+    ]
+  },
+  {
+    "id": "exclamations",
+    "g": "sentence",
+    "title": "what 与 how 感叹句",
+    "en": "Exclamations",
+    "level": "基础",
+    "source": "参考《英语语法知识体系详解》· 句子的种类·感叹句；补充讲解与练习",
+    "formula": "What a nice dog!；How nice!",
+    "take": "想说“真……”或“多么……”，可以用感叹句。",
+    "steps": [
+      [
+        "What 后面常说人或东西",
+        "What a nice dog! 是“多可爱的狗啊！”nice dog 还是在说一只狗，所以用 What 来带出这组名词。"
+      ],
+      [
+        "How 后面常说怎么样",
+        "How nice! 是“多好啊！”How fast he runs! 是“他跑得真快！”How 后通常接形容词或副词，也就是说明怎么样的词。"
+      ],
+      [
+        "a 不是每次都要加",
+        "一只狗可以说 What a nice dog!。多只狗说 What nice dogs!，不加 a。advice“建议”通常不可数，所以说 What useful advice!，也不加 a。"
+      ],
+      [
+        "先掌握最常用的顺序",
+        "How nice the dog is! 把 the dog is 放在后面，像普通陈述一样排。书面和口语还有其他感叹写法，初学先练熟上面几种即可。"
+      ]
+    ],
+    "examples": [
+      [
+        "What a big dog!",
+        "好大的一只狗啊！",
+        "dog 是单数可数名词，因此这里有 a。"
+      ],
+      [
+        "How fast he runs!",
+        "他跑得真快！",
+        "fast 说明跑得怎么样，用 How 引出感叹。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "____ useful advice this is!",
+        "options": [
+          "What",
+          "What a",
+          "How",
+          "How a"
+        ],
+        "answer": 0,
+        "why": "advice 通常不可数，要用 What，不加 a。",
+        "id": "exclamations-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "____ carefully she draws!",
+        "answer": [
+          "How"
+        ],
+        "why": "carefully 说画得怎么样，所以用 How 来感叹。",
+        "id": "exclamations-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "哪一句是自然的感叹表达？",
+        "options": [
+          "How beautiful the gardens is!",
+          "How the garden beautiful is!",
+          "How beautiful the garden is!",
+          "What beautiful is the garden!"
+        ],
+        "answer": 2,
+        "why": "基本感叹句中，How beautiful 后接 the garden is 这样的普通语序。",
+        "id": "exclamations-2"
+      }
+    ],
+    "related": [
+      "interjections",
+      "articles",
+      "questions"
+    ],
+    "classification": [
+      "What 引出人或东西",
+      "How 强调怎么样",
+      "注意名词能否计数"
+    ],
+    "pitfalls": [
+      {
+        "title": "复数名词前不要加 a",
+        "wrong": "What a nice cats!",
+        "right": "What nice cats!",
+        "text": "cats 是复数，不能再用表示一个的 a。"
+      },
+      {
+        "title": "名词前用合适的句型",
+        "wrong": "How a big dog!",
+        "right": "What a big dog!",
+        "text": "这句要感叹一只狗，用常见的 What a ... + 单数名词结构。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "How 后面常说怎么样",
+        "t": "How nice! 是“多好啊！”How fast he runs! 是“他跑得真快！”How 后通常接形容词或副词，也就是说明怎么样的词。"
+      },
+      {
+        "h": "a 不是每次都要加",
+        "t": "一只狗可以说 What a nice dog!。多只狗说 What nice dogs!，不加 a。advice“建议”通常不可数，所以说 What useful advice!，也不加 a。"
+      },
+      {
+        "h": "先掌握最常用的顺序",
+        "t": "How nice the dog is! 把 the dog is 放在后面，像普通陈述一样排。书面和口语还有其他感叹写法，初学先练熟上面几种即可。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "negation",
+    "g": "sentence",
+    "title": "否定范围与部分否定",
+    "en": "Negation & scope",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 句子的种类·否定结构；补充讲解与练习",
+    "formula": "not all（并非全都）≠ none（一个也没有）",
+    "take": "先看清楚“没”到底否定哪一部分。",
+    "steps": [
+      [
+        "not 用来说不是或没有",
+        "She is not tired. 是“她不累”。She does not like milk. 是“她不喜欢牛奶”。普通动词用 does not 或 did not 时，后面的动词通常回到原形。"
+      ],
+      [
+        "“不是每个”不等于“一个也没有”",
+        "Not every child likes milk. 是“不是每个孩子都喜欢牛奶”，可能有人喜欢。No child likes milk. 才表示“没有孩子喜欢牛奶”。"
+      ],
+      [
+        "“禁止”和“不必”不同",
+        "You mustn’t go. 是“你不许去”。You needn’t go. 是“你不必去”，但想去也未必被禁止。先看句子的意思，再选择否定表达。"
+      ],
+      [
+        "否定位置会影响意思",
+        "I don’t like all the books. 不表示每本书都不喜欢。遇到 all、every 这样的词，要特别检查：是“不是全部”，还是“全部都不”。有歧义时直接换成清楚的说法。"
+      ]
+    ],
+    "examples": [
+      [
+        "She does not like milk.",
+        "她不喜欢牛奶。",
+        "does not 后用原形 like。"
+      ],
+      [
+        "Not every child likes milk.",
+        "不是每个孩子都喜欢牛奶。",
+        "这句话没有说所有孩子都不喜欢。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "Not every student agreed. 表示：",
+        "options": [
+          "每个学生都没同意",
+          "并非每个学生都同意",
+          "每个学生都同意",
+          "没有学生能表示意见"
+        ],
+        "answer": 1,
+        "why": "Not every 只说“并非每个”，不是“所有人都不同意”。",
+        "id": "negation-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "She did not ____ (notice) the sign.",
+        "answer": [
+          "notice"
+        ],
+        "why": "did not 后接动词原形 notice。",
+        "id": "negation-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "标准书面表达中哪一句最合适？",
+        "options": [
+          "Nobody didn’t arrive.（表达无人到达）",
+          "Nobody arrived.（表达无人到达）",
+          "Everybody arrived.（表达无人到达）",
+          "Not all arrived.（明确表达无人到达）"
+        ],
+        "answer": 1,
+        "why": "Nobody 已表示没有人，想说“无人到达”可直接用 Nobody arrived。",
+        "id": "negation-2"
+      }
+    ],
+    "related": [
+      "must",
+      "questions",
+      "quantifiers"
+    ],
+    "classification": [
+      "说不是或没有",
+      "部分否定",
+      "不用、禁止、不需要"
+    ],
+    "pitfalls": [
+      {
+        "title": "doesn’t 后用原形",
+        "wrong": "She doesn’t likes milk.",
+        "right": "She doesn’t like milk.",
+        "text": "doesn’t 已承担主语配合，后面用 like。"
+      },
+      {
+        "title": "标准书面语避免重复否定",
+        "wrong": "Nobody did not come.",
+        "right": "Nobody came.",
+        "text": "如果想说“没有人来”，普通标准书面表达可说 Nobody came，不再多加 did not。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "“不是每个”不等于“一个也没有”",
+        "t": "Not every child likes milk. 是“不是每个孩子都喜欢牛奶”，可能有人喜欢。No child likes milk. 才表示“没有孩子喜欢牛奶”。"
+      },
+      {
+        "h": "“禁止”和“不必”不同",
+        "t": "You mustn’t go. 是“你不许去”。You needn’t go. 是“你不必去”，但想去也未必被禁止。先看句子的意思，再选择否定表达。"
+      },
+      {
+        "h": "否定位置会影响意思",
+        "t": "I don’t like all the books. 不表示每本书都不喜欢。遇到 all、every 这样的词，要特别检查：是“不是全部”，还是“全部都不”。有歧义时直接换成清楚的说法。"
+      }
+    ]
+  },
+  {
+    "id": "future-in-past",
+    "g": "tenses",
+    "title": "过去将来与过去视角",
+    "en": "Future in the past",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 动词时态·过去将来；补充讲解与练习",
+    "formula": "He said he would come.（他说他会来。）",
+    "take": "站在过去某个时候，谈那时以后的事。",
+    "steps": [
+      [
+        "先找到过去的那句话",
+        "He said he would come. 是“他说他会来”。said“说”发生在过去；来这件事，是从他说话时看以后的事。这叫“过去将来”。"
+      ],
+      [
+        "最常见的是 would 加原形",
+        "would come 中 come 用原形。She said she was going to leave. 是“她说她当时打算离开”，也常用来说明过去的计划。"
+      ],
+      [
+        "would 不一定都在说假设",
+        "He said he would help. 可以只是转述“他说会帮忙”。遇到 would，先看前后文，不要马上认定这件事是假想的。"
+      ],
+      [
+        "再了解几种较长形式",
+        "would be doing、would have done、would have been doing 也可从过去看后面的过程或完成。它们较少用，先能认出即可；相同形式在别的句子中还可能表达假设。"
+      ]
+    ],
+    "examples": [
+      [
+        "He said he would come.",
+        "他说他会来。",
+        "先有过去的 said，再从当时往后看 come。"
+      ],
+      [
+        "She said she was going to leave.",
+        "她说她当时打算离开。",
+        "was going to 表示从过去看当时后续的打算。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "He told me he would return the next day. 中 would return 主要表示：",
+        "options": [
+          "过去某时看以后的动作",
+          "现在正在进行",
+          "必然与事实相反",
+          "过去之前已完成"
+        ],
+        "answer": 0,
+        "why": "过去说话时，他把回来这件事放在后面，所以这里是过去将来。",
+        "id": "future-in-past-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "She said she ____ (be going to) study abroad.（用过去形式转述她当时的打算）",
+        "answer": [
+          "was going to"
+        ],
+        "why": "题目要求用过去形式转述当时的计划；she 对应 was going to。",
+        "id": "future-in-past-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "区分 would have finished 的过去将来和虚拟结果，最需要：",
+        "options": [
+          "只数单词",
+          "检查参照时间与假设语境",
+          "一律判为遗憾",
+          "一律改为现在完成时"
+        ],
+        "answer": 1,
+        "why": "相同写法可能表示不同意思，必须看是在转述还是在假设。",
+        "id": "future-in-past-2"
+      }
+    ],
+    "related": [
+      "future",
+      "unreal",
+      "reported"
+    ],
+    "classification": [
+      "would + 原形",
+      "was/were going to",
+      "较少用的长形式"
+    ],
+    "pitfalls": [
+      {
+        "title": "would 后用原形",
+        "wrong": "He said he would comes.",
+        "right": "He said he would come.",
+        "text": "would 后直接用原形 come，不加 s。"
+      },
+      {
+        "title": "going to 后接原形",
+        "wrong": "She was going to plays.",
+        "right": "She was going to play.",
+        "text": "to 后用原形 play，不用 plays。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "最常见的是 would 加原形",
+        "t": "would come 中 come 用原形。She said she was going to leave. 是“她说她当时打算离开”，也常用来说明过去的计划。"
+      },
+      {
+        "h": "would 不一定都在说假设",
+        "t": "He said he would help. 可以只是转述“他说会帮忙”。遇到 would，先看前后文，不要马上认定这件事是假想的。"
+      },
+      {
+        "h": "再了解几种较长形式",
+        "t": "would be doing、would have done、would have been doing 也可从过去看后面的过程或完成。它们较少用，先能认出即可；相同形式在别的句子中还可能表达假设。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "future-continuous",
+    "g": "tenses",
+    "title": "将来进行时",
+    "en": "Future continuous",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 动词时态·将来进行；补充讲解与练习",
+    "formula": "will be + doing（将来那时正在做）",
+    "take": "想象一个将来的时刻，看那时正在做什么。",
+    "steps": [
+      [
+        "先想象明天的一个画面",
+        "At six tomorrow, I will be cooking. 是“明天六点，我会正在做饭”。重点不是几点开始或结束，而是那一刻正在做。"
+      ],
+      [
+        "写成 will be 加 -ing 形式",
+        "I will be waiting. 是“我到时会正在等”。will 后接 be，再接 waiting。否定说 I won’t be waiting.，不要漏掉 be。"
+      ],
+      [
+        "也可以问别人到时的安排",
+        "Will you be using the car? 可以问“你到时会用车吗？”有时这样问比较礼貌，方便安排自己的事情。"
+      ],
+      [
+        "不要见到 tomorrow 就固定套用",
+        "I will cook tomorrow. 只是说“我明天会做饭”；I will be cooking at six. 特别说“六点那时正在做”。选哪一种，看你想强调什么。"
+      ]
+    ],
+    "examples": [
+      [
+        "At six, I will be cooking.",
+        "到六点时，我会正在做饭。",
+        "把六点当作将来的观察时间，想象那时的动作。"
+      ],
+      [
+        "Will you be using the car?",
+        "你到时会用车吗？",
+        "可以用来询问对方后续的安排。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "At ten tomorrow, I ____ at home.（强调届时正在工作）",
+        "options": [
+          "will working",
+          "will be working",
+          "will have work",
+          "am work"
+        ],
+        "answer": 1,
+        "why": "题目强调将来十点正在工作，用 will be working。",
+        "id": "future-continuous-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "We will be ____ (wait) outside when you arrive.",
+        "answer": [
+          "waiting"
+        ],
+        "why": "will be 后接 waiting，表示到时正在等。",
+        "id": "future-continuous-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "Will you be joining us later? 可能用于：",
+        "options": [
+          "礼貌询问后续安排",
+          "只询问过去事实",
+          "强制表示动作已完成",
+          "证明说话人不知道任何时间关系"
+        ],
+        "answer": 0,
+        "why": "这种问法常用来礼貌询问后续安排。",
+        "id": "future-continuous-2"
+      }
+    ],
+    "related": [
+      "future",
+      "continuous",
+      "future-perfect"
+    ],
+    "classification": [
+      "将来某时正在做",
+      "will be doing 的写法",
+      "礼貌询问安排"
+    ],
+    "pitfalls": [
+      {
+        "title": "不要漏掉 be",
+        "wrong": "I will waiting outside.",
+        "right": "I will be waiting outside.",
+        "text": "will be waiting 一起表达将来那时正在等。"
+      },
+      {
+        "title": "be 后用 -ing",
+        "wrong": "She will be sleep.",
+        "right": "She will be sleeping.",
+        "text": "这里要表达将来正在睡觉，be 后用 sleeping。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "写成 will be 加 -ing 形式",
+        "t": "I will be waiting. 是“我到时会正在等”。will 后接 be，再接 waiting。否定说 I won’t be waiting.，不要漏掉 be。"
+      },
+      {
+        "h": "也可以问别人到时的安排",
+        "t": "Will you be using the car? 可以问“你到时会用车吗？”有时这样问比较礼貌，方便安排自己的事情。"
+      },
+      {
+        "h": "不要见到 tomorrow 就固定套用",
+        "t": "I will cook tomorrow. 只是说“我明天会做饭”；I will be cooking at six. 特别说“六点那时正在做”。选哪一种，看你想强调什么。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "future-perfect",
+    "g": "tenses",
+    "title": "将来完成时",
+    "en": "Future perfect",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 动词时态·将来完成；补充讲解与练习",
+    "formula": "will have + done（到将来那时已经做完）",
+    "take": "从将来某个时间，回头看已经做完的事。",
+    "steps": [
+      [
+        "先理解“到那时已经……”",
+        "By six, I will have eaten. 是“到六点时，我就已经吃过了”。我们先把六点当作将来的时间，再从那里回头看吃饭这件事。"
+      ],
+      [
+        "will have 后接过去分词",
+        "eat 的过去分词是 eaten，所以说 will have eaten。过去分词是动词的一种形式，常和 have 一起使用；不熟悉时，先把整组常用写法记住。"
+      ],
+      [
+        "by 常表示“到……时为止”",
+        "By Friday, I will have finished. 是“到周五时，我就已经完成了”。I will finish on Friday. 更像是在说“我周五会完成”，强调点不同。"
+      ],
+      [
+        "再看带时间小句的写法",
+        "By the time you come, I will have left. 是“你来时，我就已经离开了”。you come 用现在形式来指将来；先记住这个常见搭配，不必把所有 by 都当作固定答案提示。"
+      ]
+    ],
+    "examples": [
+      [
+        "By six, I will have eaten.",
+        "到六点时，我就已经吃过了。",
+        "六点是将来的时间，吃饭在那之前已完成。"
+      ],
+      [
+        "By Friday, I will have finished the book.",
+        "到周五时，我就已经读完这本书了。",
+        "从将来的周五回看已经读完的结果。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "By noon tomorrow, I ____ my work.（届时已完成）",
+        "options": [
+          "will have completed",
+          "will completing",
+          "have complete",
+          "had been complete"
+        ],
+        "answer": 0,
+        "why": "题目说到明天中午已完成，所以用 will have completed。",
+        "id": "future-perfect-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "By the time she ____ (return), we will have finished.",
+        "answer": [
+          "returns",
+          "has returned"
+        ],
+        "why": "时间从句可用 returns；也可用 has returned 强调已经返回。",
+        "id": "future-perfect-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "will have written 中 written 是：",
+        "options": [
+          "过去分词",
+          "一般过去式",
+          "第三人称单数",
+          "不带 to 的名词"
+        ],
+        "answer": 0,
+        "why": "have 后要用 write 的过去分词 written。",
+        "id": "future-perfect-2"
+      }
+    ],
+    "related": [
+      "perfect",
+      "future-time",
+      "future-perfect-continuous"
+    ],
+    "classification": [
+      "将来的截止时间",
+      "will have + 过去分词",
+      "和普通将来比较"
+    ],
+    "pitfalls": [
+      {
+        "title": "have 后要用过去分词",
+        "wrong": "I will have ate by six.",
+        "right": "I will have eaten by six.",
+        "text": "eat 的过去式是 ate，过去分词是 eaten；have 后用 eaten。"
+      },
+      {
+        "title": "will 后用 have",
+        "wrong": "He will has left by then.",
+        "right": "He will have left by then.",
+        "text": "will 后用原形 have，不用 has。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "will have 后接过去分词",
+        "t": "eat 的过去分词是 eaten，所以说 will have eaten。过去分词是动词的一种形式，常和 have 一起使用；不熟悉时，先把整组常用写法记住。"
+      },
+      {
+        "h": "by 常表示“到……时为止”",
+        "t": "By Friday, I will have finished. 是“到周五时，我就已经完成了”。I will finish on Friday. 更像是在说“我周五会完成”，强调点不同。"
+      },
+      {
+        "h": "再看带时间小句的写法",
+        "t": "By the time you come, I will have left. 是“你来时，我就已经离开了”。you come 用现在形式来指将来；先记住这个常见搭配，不必把所有 by 都当作固定答案提示。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "past-perfect-continuous",
+    "g": "tenses",
+    "title": "过去完成进行时",
+    "en": "Past perfect continuous",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 动词时态·过去完成进行；补充讲解与练习",
+    "formula": "had been + doing（到过去那时已持续做了一段时间）",
+    "take": "回到过去某个时刻，说此前一直在做什么。",
+    "steps": [
+      [
+        "先找过去的一个时刻",
+        "The bus came. 是“车来了”。想说到车来时，我们已经等了一小时，可以用 We had been waiting for an hour.。它从过去的那一刻回看此前持续的等待。"
+      ],
+      [
+        "写成 had been 加 -ing",
+        "We had been waiting. 是“我们那时已经一直在等”。这里不管主语是 I、she 还是 they，都用 had。不要漏掉中间的 been。"
+      ],
+      [
+        "用它来说明过去为什么会累",
+        "He was tired. He had been running. 是“他很累。他此前一直在跑步”。前面的疲惫是过去的情况，后面的句子解释之前的持续动作。"
+      ],
+      [
+        "完成数量和持续过程侧重点不同",
+        "He had read two books. 重在已读完两本。He had been reading. 重在此前一直读。是否已经停止，需要看后面的内容，不能只凭这种形式断定。"
+      ]
+    ],
+    "examples": [
+      [
+        "We had been waiting for an hour.",
+        "到那时，我们已经等了一小时。",
+        "把过去的某个时刻当作观察点，再回看此前的等待。"
+      ],
+      [
+        "He was tired. He had been running.",
+        "他很累。他此前一直在跑步。",
+        "持续跑步帮助解释他那时为什么累。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "She was tired because she ____ all morning.（强调此前持续奔跑）",
+        "options": [
+          "had been running",
+          "will be running",
+          "has run tomorrow",
+          "had running"
+        ],
+        "answer": 0,
+        "why": "她那时很累，原因是此前一直跑；用 had been running。",
+        "id": "past-perfect-continuous-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "We had been ____ (wait) for an hour when the doors opened.",
+        "answer": [
+          "waiting"
+        ],
+        "why": "had been 后用 waiting，说明此前持续等候。",
+        "id": "past-perfect-continuous-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "had written five emails 与 had been writing emails 的常见侧重点是：",
+        "options": [
+          "前者完成数量，后者持续过程",
+          "前者必为将来，后者必为现在",
+          "二者都不含过去参照点",
+          "二者只能描述同一瞬间动作"
+        ],
+        "answer": 0,
+        "why": "前者重在写完多少，后者重在持续写的过程。",
+        "id": "past-perfect-continuous-2"
+      }
+    ],
+    "related": [
+      "past-perfect",
+      "perf-cont",
+      "future-perfect-continuous"
+    ],
+    "classification": [
+      "过去的一个时刻",
+      "此前持续的动作",
+      "had been doing 的写法"
+    ],
+    "pitfalls": [
+      {
+        "title": "不要漏掉 been",
+        "wrong": "We had waiting for an hour.",
+        "right": "We had been waiting for an hour.",
+        "text": "这个形式要写成 had been waiting，不能省去 been。"
+      },
+      {
+        "title": "been 后用 -ing",
+        "wrong": "He had been wait for an hour.",
+        "right": "He had been waiting for an hour.",
+        "text": "这里要表达持续等待，用 waiting。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "写成 had been 加 -ing",
+        "t": "We had been waiting. 是“我们那时已经一直在等”。这里不管主语是 I、she 还是 they，都用 had。不要漏掉中间的 been。"
+      },
+      {
+        "h": "用它来说明过去为什么会累",
+        "t": "He was tired. He had been running. 是“他很累。他此前一直在跑步”。前面的疲惫是过去的情况，后面的句子解释之前的持续动作。"
+      },
+      {
+        "h": "完成数量和持续过程侧重点不同",
+        "t": "He had read two books. 重在已读完两本。He had been reading. 重在此前一直读。是否已经停止，需要看后面的内容，不能只凭这种形式断定。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "future-perfect-continuous",
+    "g": "tenses",
+    "title": "将来完成进行与十六种时态框架",
+    "en": "Perfect continuous in the future",
+    "level": "拓展",
+    "source": "参考《英语语法知识体系详解》· 动词时态·十六种形式；补充讲解与练习",
+    "formula": "will have been + doing（到将来那时已持续做了多久）",
+    "take": "先会读懂常用例句，长形式可以以后再慢慢练。",
+    "steps": [
+      [
+        "先理解“到那时已经做了多久”",
+        "By May, I will have been working here for a year. 是“到五月，我在这里工作就满一年了”。说话时先想象将来的五月，再回看这之前持续的工作。"
+      ],
+      [
+        "长写法分成三小组",
+        "will / have been / working 可以分开认。整组 will have been working 说“到将来那时，已经持续工作”。working 可换成 waiting、studying 等 -ing 形式。"
+      ],
+      [
+        "先和熟悉的形式比较",
+        "I will be working. 说到时正在工作；I will have been working for a year. 还说到时已经工作了一年。第二种多了一层“往前累计多久”的意思。"
+      ],
+      [
+        "十六种框架先认懂，不必一次背完",
+        "教材常把四个时间视角和四种动作看法组合成十六种形式。有的形式很少用，也可能表示假设。先练常见句子，较长的 would have been doing 以后结合具体上下文再学。"
+      ]
+    ],
+    "examples": [
+      [
+        "By May, I will have been working here for a year.",
+        "到五月，我在这里工作就满一年了。",
+        "五月是将来的时间，for a year 说明累计持续一年。"
+      ],
+      [
+        "He will have been waiting for two hours by noon.",
+        "到中午时，他就已经等了两小时。",
+        "不是说中午才开始等，而是到中午时已累计等了两小时。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "By next May, I ____ here for ten years.（突出持续教学过程）",
+        "options": [
+          "will have been teaching",
+          "will have teaching",
+          "had teach",
+          "have been taught tomorrow"
+        ],
+        "answer": 0,
+        "why": "题目突出到将来那时已持续教了多久，用 will have been teaching。",
+        "id": "future-perfect-continuous-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "will have been ____ (work) 中应填哪种词形？",
+        "answer": [
+          "working"
+        ],
+        "why": "最后一层要表示持续的工作，所以用 working。",
+        "id": "future-perfect-continuous-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "“十六种时态”框架最合理的学习方式是：",
+        "options": [
+          "每种形式在所有语境中同样常用",
+          "先理解参照点与体态，再注意使用频率",
+          "凡有 would 就一定是虚拟",
+          "凡表示持续就禁止完成式"
+        ],
+        "answer": 1,
+        "why": "框架帮助理解时间和过程，但每种形式不一样常用。",
+        "id": "future-perfect-continuous-2"
+      }
+    ],
+    "related": [
+      "future-in-past",
+      "future-perfect",
+      "past-perfect-continuous"
+    ],
+    "classification": [
+      "将来的观察时间",
+      "此前持续了多久",
+      "较少用的组合"
+    ],
+    "pitfalls": [
+      {
+        "title": "末尾需要 -ing",
+        "wrong": "I will have been work here for a year.",
+        "right": "I will have been working here for a year.",
+        "text": "要说持续工作，用 working，不能漏掉 -ing。"
+      },
+      {
+        "title": "will 后仍用原形 have",
+        "wrong": "She will has been waiting for an hour.",
+        "right": "She will have been waiting for an hour.",
+        "text": "will 后接原形 have，整组写成 will have been waiting。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "长写法分成三小组",
+        "t": "will / have been / working 可以分开认。整组 will have been working 说“到将来那时，已经持续工作”。working 可换成 waiting、studying 等 -ing 形式。"
+      },
+      {
+        "h": "先和熟悉的形式比较",
+        "t": "I will be working. 说到时正在工作；I will have been working for a year. 还说到时已经工作了一年。第二种多了一层“往前累计多久”的意思。"
+      },
+      {
+        "h": "十六种框架先认懂，不必一次背完",
+        "t": "教材常把四个时间视角和四种动作看法组合成十六种形式。有的形式很少用，也可能表示假设。先练常见句子，较长的 would have been doing 以后结合具体上下文再学。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "modal-perfect",
+    "g": "parts",
+    "title": "情态动词与完成形式",
+    "en": "Modal perfect forms",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 助动词与情态动词·完成形式；补充讲解与练习",
+    "formula": "must / may / should + have + done",
+    "take": "用这些写法谈之前可能发生、本该发生的事。",
+    "steps": [
+      [
+        "先看 must have done",
+        "He must have left. 可以说“他一定已经走了”。这是根据线索推测以前的事，不是命令他以前必须走。may have left 则表示“他可能已经走了”。"
+      ],
+      [
+        "have 后用过去分词",
+        "go 的过去分词是 gone，所以说 may have gone。leave 的过去分词是 left，所以说 must have left。这里不能把 have 改成 has。"
+      ],
+      [
+        "should have done 常带提醒或遗憾",
+        "You should have called me. 常表示“你当时本该给我打电话”。needn’t have done 常表示实际做了，但本来没有必要。先用明确的日常场景理解它们。"
+      ],
+      [
+        "同一写法也可能有别的意思",
+        "The bus should have come by now. 也可说“按理公交车现在应该已经来了”，不保证它没来。判断这种长写法时，要一起看线索、结果和说话人的意思。"
+      ]
+    ],
+    "examples": [
+      [
+        "He must have left.",
+        "他一定已经走了。",
+        "这是对以前情况的推测，不是过去的命令。"
+      ],
+      [
+        "You should have called me.",
+        "你当时本该给我打电话。",
+        "常用来提醒对方：当时那样做会更合适。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "He must have forgotten the appointment. 主要表达：",
+        "options": [
+          "推测他已经忘了约会",
+          "命令他过去必须忘记",
+          "证明他一定没忘",
+          "他未来必须忘掉"
+        ],
+        "answer": 0,
+        "why": "这句话是在推测他已经忘记约会，不是命令。",
+        "id": "modal-perfect-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "She may have ____ (pay) already.（她可能已经付了钱）",
+        "answer": [
+          "paid"
+        ],
+        "why": "may have 后用 pay 的过去分词 paid，表示可能已付款。",
+        "id": "modal-perfect-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "关于 needn’t have bought，正确的是：",
+        "options": [
+          "通常表示买了但原本不必",
+          "必然表示没有买",
+          "相当于禁止将来买",
+          "与 didn’t need to buy 的实际发生含义永远相同"
+        ],
+        "answer": 0,
+        "why": "needn’t have bought 通常说已经买了，但本来不用买。",
+        "id": "modal-perfect-2"
+      }
+    ],
+    "related": [
+      "can",
+      "must",
+      "should",
+      "perfect"
+    ],
+    "classification": [
+      "推测以前的事",
+      "回头提出建议或遗憾",
+      "本来不必做"
+    ],
+    "pitfalls": [
+      {
+        "title": "情态动词后接 have",
+        "wrong": "He must has left.",
+        "right": "He must have left.",
+        "text": "must 后用原形 have，不用 has。"
+      },
+      {
+        "title": "have 后用过去分词",
+        "wrong": "She may have went home.",
+        "right": "She may have gone home.",
+        "text": "go 的过去分词是 gone，所以这里用 gone。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "have 后用过去分词",
+        "t": "go 的过去分词是 gone，所以说 may have gone。leave 的过去分词是 left，所以说 must have left。这里不能把 have 改成 has。"
+      },
+      {
+        "h": "should have done 常带提醒或遗憾",
+        "t": "You should have called me. 常表示“你当时本该给我打电话”。needn’t have done 常表示实际做了，但本来没有必要。先用明确的日常场景理解它们。"
+      },
+      {
+        "h": "同一写法也可能有别的意思",
+        "t": "The bus should have come by now. 也可说“按理公交车现在应该已经来了”，不保证它没来。判断这种长写法时，要一起看线索、结果和说话人的意思。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "passive-special",
+    "g": "tenses",
+    "title": "特殊结构的被动与边界",
+    "en": "Special passive structures",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 被动语态·特殊结构；补充讲解与练习",
+    "formula": "He was made to wait.（他被要求等。）",
+    "take": "说“被怎样做”时，还要保留原来的动词搭配。",
+    "steps": [
+      [
+        "先从“照顾孩子”看起",
+        "They look after the child. 是“他们照顾孩子”。换成“孩子被照顾”，说 The child is looked after.。after 是 look after 的一部分，不能丢。"
+      ],
+      [
+        "有些写法需要加回 to",
+        "They made him wait. 是“他们让他等”。换成“他被要求等”，说 He was made to wait.。这个常见写法要把 to 加回来。"
+      ],
+      [
+        "不是每个动词都能直接变被动",
+        "They clean the room. 可以换成 The room is cleaned.。但 arrive“到达”的普通用法不能随便写成 be arrived。先学常见、自然的表达。"
+      ],
+      [
+        "有时形式一样，意思要看场景",
+        "The door is closed. 可以是在说“门关着”，不一定在叙述关门动作。要分清动作和状态，需要看前后文，不能只看 be 加一个过去分词。"
+      ]
+    ],
+    "examples": [
+      [
+        "The child is looked after by Mom.",
+        "孩子由妈妈照顾。",
+        "look after 要完整保留，after 不能丢。"
+      ],
+      [
+        "He was made to wait.",
+        "他被要求等候。",
+        "was made 后的动作要写成 to wait。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "The children were looked ____ by Mom.（由妈妈照顾）",
+        "options": [
+          "after",
+          "at to",
+          "off to",
+          "零介词"
+        ],
+        "answer": 0,
+        "why": "照顾是 look after；换成被动后 after 也不能丢。",
+        "id": "passive-special-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "He was made ____ (leave) the room.",
+        "answer": [
+          "to leave"
+        ],
+        "why": "was made 后接 to leave，表示被要求离开。",
+        "id": "passive-special-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "哪一个普通用法不能直接套 be + 过去分词？",
+        "options": [
+          "repair the roof",
+          "write a letter",
+          "arrive at the station",
+          "check the tickets"
+        ],
+        "answer": 2,
+        "why": "arrive 普通到达用法不这样变成被动，不能写成 was arrived。",
+        "id": "passive-special-2"
+      }
+    ],
+    "related": [
+      "passive",
+      "object-complement",
+      "phrasal",
+      "modal-perfect"
+    ],
+    "classification": [
+      "保留完整搭配",
+      "有的 to 要加回来",
+      "分清动作和状态"
+    ],
+    "pitfalls": [
+      {
+        "title": "这种被动写法要保留 to",
+        "wrong": "He was made wait.",
+        "right": "He was made to wait.",
+        "text": "主动句常说 made him wait；被动句常说 was made to wait。"
+      },
+      {
+        "title": "“照顾”要保留 after",
+        "wrong": "The child was looked by Mom.",
+        "right": "The child was looked after by Mom.",
+        "text": "这里想表达“被妈妈照顾”，需要完整的 look after。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "有些写法需要加回 to",
+        "t": "They made him wait. 是“他们让他等”。换成“他被要求等”，说 He was made to wait.。这个常见写法要把 to 加回来。"
+      },
+      {
+        "h": "不是每个动词都能直接变被动",
+        "t": "They clean the room. 可以换成 The room is cleaned.。但 arrive“到达”的普通用法不能随便写成 be arrived。先学常见、自然的表达。"
+      },
+      {
+        "h": "有时形式一样，意思要看场景",
+        "t": "The door is closed. 可以是在说“门关着”，不一定在叙述关门动作。要分清动作和状态，需要看前后文，不能只看 be 加一个过去分词。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "clause-basics",
+    "g": "sentence",
+    "title": "从句、分句与连接层级",
+    "en": "Clause foundations",
+    "level": "基础",
+    "source": "参考《英语语法知识体系详解》· 从句与连接结构概述；补充讲解与练习",
+    "formula": "I know [she is happy].",
+    "take": "一句话里还可以放进一个带“谁、怎样”的小句。",
+    "steps": [
+      [
+        "先看一个最简单的例子",
+        "I know she is happy. 是“我知道她很开心”。I know 是外面的主要部分；she is happy 是里面的小句，告诉我们“知道什么”。这种依靠外层结构来表达意思的小句，叫“从句”。"
+      ],
+      [
+        "同一个词可以带出不同任务",
+        "I know where she lives. 是“我知道她住哪里”，where 后的小句说知道的内容。Stay where you are. 是“待在原地”，小句说待在哪里。不要只看 where 就给它固定名称。"
+      ],
+      [
+        "连接词有时还在小句里做事",
+        "I know that she left. 的 that 帮忙引出“她走了”这个内容。I know what she likes. 的 what 还表示“她喜欢的东西”，和 likes 有直接关系。"
+      ],
+      [
+        "遇到长句，先分小块",
+        "I know [she said [she was tired]]. 可以先读成“我知道／她说／她累了”。逐层弄清谁在说什么，比先数句子里有几个动词更有用。"
+      ]
+    ],
+    "examples": [
+      [
+        "I know she is happy.",
+        "我知道她很开心。",
+        "she is happy 说明我知道的内容，是里面的一小句。"
+      ],
+      [
+        "I stayed home because I was tired.",
+        "我因为累了而待在家里。",
+        "because I was tired 说明为什么待在家里。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "I know where the keys are. 中 where 从句整体作：",
+        "options": [
+          "宾语",
+          "地点先行词",
+          "并列主句",
+          "形容词"
+        ],
+        "answer": 0,
+        "why": "整段 where the keys are 是 know 的内容，也就是“知道什么”。",
+        "id": "clause-basics-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "I wonder where she ____ (be) now.",
+        "answer": [
+          "is"
+        ],
+        "why": "里面用 where she is 的顺序；she 后用 is。",
+        "id": "clause-basics-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "I think she knows him. 中多个动词为何可以共存？",
+        "options": [
+          "省略 that 的从属结构合法",
+          "因为一个句子可任意连动词",
+          "所有动词都属于一个完成时",
+          "knows 是形容词"
+        ],
+        "answer": 0,
+        "why": "think 后可以接 she knows him 这个小句，中间的 that 在这种句子里可省。",
+        "id": "clause-basics-2"
+      }
+    ],
+    "related": [
+      "objects",
+      "relative-adverbs",
+      "sentence-elements"
+    ],
+    "classification": [
+      "主句",
+      "从句",
+      "连接词与小句的作用"
+    ],
+    "pitfalls": [
+      {
+        "title": "里面的小句也要按顺序说",
+        "wrong": "I know where is she.",
+        "right": "I know where she is.",
+        "text": "这里不是单独提问，里面用 she is 的普通语序。"
+      },
+      {
+        "title": "说明原因也别漏掉 be",
+        "wrong": "I stayed home because I tired.",
+        "right": "I stayed home because I was tired.",
+        "text": "“我累了”需要 I was tired，不能只把 I 和 tired 放一起。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "同一个词可以带出不同任务",
+        "t": "I know where she lives. 是“我知道她住哪里”，where 后的小句说知道的内容。Stay where you are. 是“待在原地”，小句说待在哪里。不要只看 where 就给它固定名称。"
+      },
+      {
+        "h": "连接词有时还在小句里做事",
+        "t": "I know that she left. 的 that 帮忙引出“她走了”这个内容。I know what she likes. 的 what 还表示“她喜欢的东西”，和 likes 有直接关系。"
+      },
+      {
+        "h": "遇到长句，先分小块",
+        "t": "I know [she said [she was tired]]. 可以先读成“我知道／她说／她累了”。逐层弄清谁在说什么，比先数句子里有几个动词更有用。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "place-manner-clauses",
+    "g": "adverbial",
+    "title": "地点与方式状语从句",
+    "en": "Place & manner clauses",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 状语从句·地点与方式；补充讲解与练习",
+    "formula": "where（在哪里）；as（按……的方式）",
+    "take": "用一个小句说明在哪里做，或怎样做。",
+    "steps": [
+      [
+        "where 后的小句可以说位置",
+        "Stay where you are. 是“待在你现在的地方”。where you are 不是一个地点单词，而是一小句；它整体说明待在哪里。"
+      ],
+      [
+        "as 后的小句可以说做法",
+        "Do as I do. 是“照我这样做”。as I do 说明按照什么方式做，可以先把它理解成“按……的样子”。"
+      ],
+      [
+        "as if 表示“好像”",
+        "He acts as if he knows me. 是“他表现得好像认识我”。如果认为这种情况可能是真的，可以按事实选择形式，不必每次都用过去式。"
+      ],
+      [
+        "想表达“不是真的”时再学过去形式",
+        "He acts as if he knew me. 也可表示“他表现得像认识我，其实不认识”。形式和场景有关；初学先分清是在说明位置、做法，还是假想的样子。"
+      ]
+    ],
+    "examples": [
+      [
+        "Stay where you are.",
+        "待在你现在的地方。",
+        "where you are 说明待在哪里。"
+      ],
+      [
+        "Do as I do.",
+        "照我这样做。",
+        "as I do 说明做法，不是说明地点。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "Put the chair where the light is strongest. 中 where 从句主要说明：",
+        "options": [
+          "放椅子的位置",
+          "chair 的复数",
+          "过去完成的次数",
+          "说话人的身份"
+        ],
+        "answer": 0,
+        "why": "where 后的整句说明椅子应放在哪里。",
+        "id": "place-manner-clauses-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "Do exactly ____ I showed you.（用方式连词，表示照我演示的做）",
+        "answer": [
+          "as"
+        ],
+        "why": "题目要求“按照示范的方式”，用方式连词 as。",
+        "id": "place-manner-clauses-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "关于 as if 从句，合理的是：",
+        "options": [
+          "所有情况必须用过去时",
+          "可按现实可能或非真实假设选择形式",
+          "所有情况必须用将来完成时",
+          "只可能表示时间"
+        ],
+        "answer": 1,
+        "why": "as if 可以说可能真实的印象，也可以说假想，不能只套一个时态。",
+        "id": "place-manner-clauses-2"
+      }
+    ],
+    "related": [
+      "relative-adverbs",
+      "unreal",
+      "required-adverbials"
+    ],
+    "classification": [
+      "在哪里做",
+      "按什么方式做",
+      "好像怎样"
+    ],
+    "pitfalls": [
+      {
+        "title": "where 后的小句要完整",
+        "wrong": "Stay where you.",
+        "right": "Stay where you are.",
+        "text": "这里的小句要说“你在哪里”，需要把 are 也写出来。"
+      },
+      {
+        "title": "先按要表达的意思选形式",
+        "wrong": "He acts as if he know me.",
+        "right": "He acts as if he knew me.",
+        "text": "这句设定他其实不认识我，用 knew 表假想；know 也不能直接配这里的 he。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "先问“在哪里”",
+        "t": "Stay where you are. 是“待在你现在的地方”。where you are 这一小句一起回答“待在哪里”，不是只看一个 where 单词。"
+      },
+      {
+        "h": "as 后的小句可以说做法",
+        "t": "Do as I do. 是“照我这样做”。as I do 说明按照什么方式做，可以先把它理解成“按……的样子”。"
+      },
+      {
+        "h": "分清“在哪里”和“怎么做”",
+        "t": "Sit where I can see you. 是“坐在我能看见你的地方”，说的是位置。Do as I do. 是“照我这样做”，说的是做法。先用这两个问题分清意思。"
+      },
+      {
+        "h": "as if 表示“好像”",
+        "t": "He acts as if he knows me. 是“他表现得好像认识我”。如果认为这种情况可能是真的，可以按事实选择形式，不必每次都用过去式。",
+        "advanced": true
+      },
+      {
+        "h": "想表达“不是真的”时再学过去形式",
+        "t": "He acts as if he knew me. 也可表示“他表现得像认识我，其实不认识”。形式和场景有关；初学先分清是在说明位置、做法，还是假想的样子。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "comparison-clauses",
+    "g": "adverbial",
+    "title": "比较从句与比较对象",
+    "en": "Comparison clauses",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 状语从句·比较；比较结构；补充讲解与练习",
+    "formula": "as tall as（一样高）；taller than（比……高）",
+    "take": "比较时，要看比的是谁、比的是什么。",
+    "steps": [
+      [
+        "先学“一样高”",
+        "Tom is as tall as me. 是“汤姆和我一样高”。两个 as 中间用 tall 这样的基本形式，不改成 taller。"
+      ],
+      [
+        "再学“比……更高”",
+        "Tom is taller than me. 是“汤姆比我高”。taller 表示更高，than 引出和他比较的人。别把 as 和 than 乱换。"
+      ],
+      [
+        "比较的东西要对得上",
+        "The weather here is colder than that there. 是“这里的天气比那里的冷”。that 替代前面说过的 weather，比较的是两处天气，不是天气和一个地方。"
+      ],
+      [
+        "两个变化还可以联系起来",
+        "The more you read, the more you learn. 是“读得越多，学得越多”。这是两个变化互相对应的写法，可以在学会简单比较后再掌握。"
+      ]
+    ],
+    "examples": [
+      [
+        "Tom is as tall as me.",
+        "汤姆和我一样高。",
+        "as ... as 中间用 tall，不用 taller。"
+      ],
+      [
+        "This bag is bigger than mine.",
+        "这个包比我的大。",
+        "mine 代替“我的包”，所以比较的是两个包。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "The weather here is colder than ____ in my town.",
+        "options": [
+          "that",
+          "my hometown",
+          "those",
+          "it is the city"
+        ],
+        "answer": 0,
+        "why": "that 代替 weather，让句子比较两处天气。",
+        "id": "comparison-clauses-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "She is as ____ (patient) as her teacher.",
+        "answer": [
+          "patient"
+        ],
+        "why": "as ... as 中间用原级 patient，也就是基本形式。",
+        "id": "comparison-clauses-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "The more you read, the more you discover. 表达：",
+        "options": [
+          "两种变化之间的对应关系",
+          "唯一的最高级对象",
+          "直接疑问",
+          "过去反事实条件"
+        ],
+        "answer": 0,
+        "why": "两个 the more... 说的是“越……，就越……”的对应变化。",
+        "id": "comparison-clauses-2"
+      }
+    ],
+    "related": [
+      "comparison",
+      "pronouns",
+      "degree-order"
+    ],
+    "classification": [
+      "一样怎样",
+      "比……更怎样",
+      "比较的对象要一致"
+    ],
+    "pitfalls": [
+      {
+        "title": "as ... as 中用基本形式",
+        "wrong": "Tom is as taller as me.",
+        "right": "Tom is as tall as me.",
+        "text": "as ... as 表示一样，用 tall，不加比较级词尾。"
+      },
+      {
+        "title": "比较级常和 than 搭配",
+        "wrong": "Tom is taller as me.",
+        "right": "Tom is taller than me.",
+        "text": "taller than 表示“比……更高”，这里不用 as。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "先说“一样高”",
+        "t": "Tom is as tall as me. 是“汤姆和我一样高”。两个 as 中间用 tall 这样的基本形式，不写 taller。"
+      },
+      {
+        "h": "再学“比……更高”",
+        "t": "Tom is taller than me. 是“汤姆比我高”。taller 表示更高，than 引出和他比较的人。别把 as 和 than 乱换。"
+      },
+      {
+        "h": "先把比较的两个东西都说清",
+        "t": "This bag is bigger than my bag. 是“这个包比我的包大”。两边都在说包，比较才清楚。初学时可以先重复 bag，不急着学省略和替代。"
+      },
+      {
+        "h": "比较的东西要对得上",
+        "t": "The weather here is colder than that there. 是“这里的天气比那里的冷”。that 替代前面说过的 weather，比较的是两处天气，不是天气和一个地方。",
+        "advanced": true
+      },
+      {
+        "h": "两个变化还可以联系起来",
+        "t": "The more you read, the more you learn. 是“读得越多，学得越多”。这是两个变化互相对应的写法，可以在学会简单比较后再掌握。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "ellipsis",
+    "g": "sentence",
+    "title": "省略、替代与可恢复信息",
+    "en": "Ellipsis & substitution",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 特殊句式·省略与替代；补充讲解与练习",
+    "formula": "I can swim. She can too.",
+    "take": "前面说清楚的内容，有时后面可以不再重复。",
+    "steps": [
+      [
+        "先看一个短对话",
+        "I can swim. She can too. 是“我会游泳。她也会”。第二句省掉了 swim，因为前面已经说清楚。这样的省去叫“省略”。"
+      ],
+      [
+        "有些小词仍要留着",
+        "Would you like to come? — I’d love to. 是“你想来吗？——我很想来”。后面的 come 不再重复，但 to 通常保留。"
+      ],
+      [
+        "不能把不清楚的内容也省掉",
+        "省略要让人能从前文补回去。比如 She can too. 离开前文可能不知道“她也会什么”，所以要一起看上下文，不是越短越好。"
+      ],
+      [
+        "缩短句子时别把动作主体弄错",
+        "While reading, I fell asleep. 是“我看书时睡着了”，看书的人是 I。如果写 While reading, the phone rang，容易变成电话在看书，要把真正看书的人补清楚。"
+      ]
+    ],
+    "examples": [
+      [
+        "I can swim. She can too.",
+        "我会游泳。她也会。",
+        "第二句不重复 swim，意思仍能从前面补出来。"
+      ],
+      [
+        "Would you like to come? — I’d love to.",
+        "你想来吗？——我很想来。",
+        "简短回答保留 to，不再重复 come。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "Would you like to join us? — I’d love ____.（保留不定式标记）",
+        "options": [
+          "to",
+          "that I",
+          "joining to",
+          "do to"
+        ],
+        "answer": 0,
+        "why": "题目要求保留不定式标记，要填 to。",
+        "id": "ellipsis-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "He can speak Spanish, and I ____ too.（保留表示能力的相同情态动词）",
+        "answer": [
+          "can"
+        ],
+        "why": "沿用前面表示能力的 can，后面的 speak Spanish 可以不重复。",
+        "id": "ellipsis-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "压缩 While reading, the phone rang 的问题通常是：",
+        "options": [
+          "reading 的主体与 the phone 不合",
+          "while 必须永远删除",
+          "phone 不能作主语",
+          "所有省略结构都错误"
+        ],
+        "answer": 0,
+        "why": "普通缩短写法中，看书的人应和主句说的人对应，不能让电话成了读书者。",
+        "id": "ellipsis-2"
+      }
+    ],
+    "related": [
+      "coordination",
+      "relative-omit",
+      "participles"
+    ],
+    "classification": [
+      "省去已知内容",
+      "保留需要的词",
+      "不能省掉重要连接"
+    ],
+    "pitfalls": [
+      {
+        "title": "保留的动词后别再乱接",
+        "wrong": "I can swim, and she can swims too.",
+        "right": "I can swim, and she can too.",
+        "text": "can 后不接 swims；这里可以直接省掉已知的 swim。"
+      },
+      {
+        "title": "简短不定式回答保留 to",
+        "wrong": "I’d love come.",
+        "right": "I’d love to come.",
+        "text": "love 后的这个动作常用 to come；若前文已说清，也可只说 I’d love to。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "有些小词仍要留着",
+        "t": "Would you like to come? — I’d love to. 是“你想来吗？——我很想来”。后面的 come 不再重复，但 to 通常保留。"
+      },
+      {
+        "h": "不能把不清楚的内容也省掉",
+        "t": "省略要让人能从前文补回去。比如 She can too. 离开前文可能不知道“她也会什么”，所以要一起看上下文，不是越短越好。"
+      },
+      {
+        "h": "缩短句子时别把动作主体弄错",
+        "t": "While reading, I fell asleep. 是“我看书时睡着了”，看书的人是 I。如果写 While reading, the phone rang，容易变成电话在看书，要把真正看书的人补清楚。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "formal-it",
+    "g": "sentence",
+    "title": "形式主语、形式宾语与 it",
+    "en": "Formal it",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 常用结构·it 的用法；补充讲解与练习",
+    "formula": "It is fun to play.（玩耍很有趣。）",
+    "take": "it 有时先占位置，真正想说的内容放在后面。",
+    "steps": [
+      [
+        "先把长内容放到后面",
+        "It is fun to play. 是“玩耍很有趣”。真正想说的是 to play“玩耍这件事”；it 先放在句首帮忙占位置，这种 it 叫“形式主语”。"
+      ],
+      [
+        "it 不一定指一个具体东西",
+        "It is clear that he is tired. 是“很明显，他累了”。这里的 it 不是“那个东西”，后面的 that he is tired 才是要说明的内容。"
+      ],
+      [
+        "放在 find 后也可以占位置",
+        "I find it hard to run. 是“我觉得跑步很难”。it 先接在 find 后面，to run 说明究竟做什么难。这种 it 叫“形式宾语”，也可以先理解为“占位的 it”。"
+      ],
+      [
+        "先记一个常用搭配",
+        "It takes me ten minutes to walk home. 是“我走回家要十分钟”。常见顺序是 It takes + 人 + 时间 + to do。学会日常用法后，再比较它和 it 强调句的区别。"
+      ]
+    ],
+    "examples": [
+      [
+        "It is fun to play.",
+        "玩耍很有趣。",
+        "it 先放在句首，to play 说明真正谈的事情。"
+      ],
+      [
+        "I find it hard to run.",
+        "我觉得跑步很难。",
+        "it 先占一个位置，to run 说明觉得什么难。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "I find ____ hard to concentrate in this room.",
+        "options": [
+          "it",
+          "that it to",
+          "what",
+          "零成分"
+        ],
+        "answer": 0,
+        "why": "常见写法是 find it hard to do，用 it 先占宾语位置。",
+        "id": "formal-it-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "It takes us twenty minutes ____ (walk) to the station.",
+        "answer": [
+          "to walk"
+        ],
+        "why": "It takes sb. time to do，动作部分用 to walk。",
+        "id": "formal-it-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "It is clear that she knows the answer. 中 it 通常是：",
+        "options": [
+          "形式主语",
+          "指前文另一支笔",
+          "宾语补足语",
+          "强调句中被强调的人"
+        ],
+        "answer": 0,
+        "why": "it 先占句首位置，that 后面才是实际要说的内容。",
+        "id": "formal-it-2"
+      }
+    ],
+    "related": [
+      "subject-clause",
+      "emphasis",
+      "infinitive"
+    ],
+    "classification": [
+      "先占主语位置",
+      "先占宾语位置",
+      "常见 takes 写法"
+    ],
+    "pitfalls": [
+      {
+        "title": "这种 find 写法要保留 it",
+        "wrong": "I find hard to run.",
+        "right": "I find it hard to run.",
+        "text": "按 find it + 形容词 + to do 来说，不要漏掉占位置的 it。"
+      },
+      {
+        "title": "It 和 takes 配合",
+        "wrong": "It take ten minutes to walk home.",
+        "right": "It takes ten minutes to walk home.",
+        "text": "这里用 It 作主语，一般现在时的 take 要加 s，写成 takes。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "it 不一定指一个具体东西",
+        "t": "It is clear that he is tired. 是“很明显，他累了”。这里的 it 不是“那个东西”，后面的 that he is tired 才是要说明的内容。"
+      },
+      {
+        "h": "放在 find 后也可以占位置",
+        "t": "I find it hard to run. 是“我觉得跑步很难”。it 先接在 find 后面，to run 说明究竟做什么难。这种 it 叫“形式宾语”，也可以先理解为“占位的 it”。"
+      },
+      {
+        "h": "先记一个常用搭配",
+        "t": "It takes me ten minutes to walk home. 是“我走回家要十分钟”。常见顺序是 It takes + 人 + 时间 + to do。学会日常用法后，再比较它和 it 强调句的区别。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "absolute-with",
+    "g": "nonfinite",
+    "title": "独立主格与 with 复合结构",
+    "en": "Absolute & with constructions",
+    "level": "拓展",
+    "source": "参考《英语语法知识体系详解》· 特殊句式·独立主格与 with；补充讲解与练习",
+    "formula": "with + 人或物 + 对它的说明",
+    "take": "先说旁边的人或东西怎样，再说主要事情。",
+    "steps": [
+      [
+        "先从开着的门看起",
+        "With the door open, I felt cold. 是“门开着，我觉得冷”。with 后先说 the door，再用 open 说明门怎样。整组词交代主要事情发生时的情况。"
+      ],
+      [
+        "人自己在做，用 -ing",
+        "With the baby sleeping, we were quiet. 是“宝宝睡着，我们很安静”。sleeping 说明 baby 自己在睡觉。这里不再额外加入一个 is。"
+      ],
+      [
+        "东西被做了，用过去分词",
+        "With the work done, we went home. 是“活做完了，我们回家了”。work 是被完成的，用 done。With work to do 则常说还有工作要做，不要一律改成被动形式。"
+      ],
+      [
+        "不带 with 的写法留到以后再学",
+        "Time permitting, we will go. 是“时间允许的话，我们就去”。这种组合有自己的说明对象，叫“独立主格”。它比日常短句更书面，先认懂和 with 写法的区别即可。"
+      ]
+    ],
+    "examples": [
+      [
+        "With the door open, I felt cold.",
+        "门开着，我觉得冷。",
+        "open 说明门的状态，整组词交代当时的情况。"
+      ],
+      [
+        "With the baby sleeping, we were quiet.",
+        "宝宝睡着，我们很安静。",
+        "sleeping 说明 baby 自己在做的事，这里不加 is。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "With the children ____, we spoke softly.（孩子们正在睡觉）",
+        "options": [
+          "sleeping",
+          "slept by",
+          "to sleeping",
+          "are sleeping"
+        ],
+        "answer": 0,
+        "why": "孩子们自己在睡觉，用 sleeping，不能在这个 with 结构里加 are。",
+        "id": "absolute-with-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "With all the books ____ (sell), we went home.（书已经卖完）",
+        "answer": [
+          "sold"
+        ],
+        "why": "书是被卖出的，而且已经卖完，所以用过去分词 sold。",
+        "id": "absolute-with-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "with my classmates 与 with my classmates waiting 的区别是：",
+        "options": [
+          "后者有说明宾语状态的补足部分",
+          "前者必定是独立限定主句",
+          "二者都必须有谓语 are",
+          "with 后不能使用人称对象"
+        ],
+        "answer": 0,
+        "why": "后者多了 waiting，说明这些同学正在怎样；前者只表示“和同学们一起”。",
+        "id": "absolute-with-2"
+      }
+    ],
+    "related": [
+      "participles",
+      "ellipsis",
+      "punctuation-analysis"
+    ],
+    "classification": [
+      "with 说明周围情况",
+      "主动用 -ing",
+      "被动或完成用过去分词",
+      "独立主格先认懂"
+    ],
+    "pitfalls": [
+      {
+        "title": "with 里面不要多放 is",
+        "wrong": "With the door is open, I felt cold.",
+        "right": "With the door open, I felt cold.",
+        "text": "with 后用“门 + 门的状态”作补充，不再放一个 is。"
+      },
+      {
+        "title": "睡觉用 sleeping",
+        "wrong": "With the baby sleepings, we were quiet.",
+        "right": "With the baby sleeping, we were quiet.",
+        "text": "-ing 形式 sleeping 不再另外加 s。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "先说门或灯的状态",
+        "t": "With the door open, I felt cold. 是“门开着，我觉得冷”。the door 是门，open 是开着；它们一起说明当时的情况。"
+      },
+      {
+        "h": "人自己在做，用 -ing",
+        "t": "With the baby sleeping, we were quiet. 是“宝宝睡着，我们很安静”。sleeping 说明 baby 自己在睡觉。这里不再额外加入一个 is。"
+      },
+      {
+        "h": "再找句子主要说的事情",
+        "t": "With the light on, I can read. 是“灯亮着，我可以看书”。先读 I can read“我可以看书”，再把“灯亮着”这个背景加回去。"
+      },
+      {
+        "h": "东西被做了，用过去分词",
+        "t": "With the work done, we went home. 是“活做完了，我们回家了”。work 是被完成的，用 done。With work to do 则常说还有工作要做，不要一律改成被动形式。",
+        "advanced": true
+      },
+      {
+        "h": "不带 with 的写法留到以后再学",
+        "t": "Time permitting, we will go. 是“时间允许的话，我们就去”。这种组合有自己的说明对象，叫“独立主格”。它比日常短句更书面，先认懂和 with 写法的区别即可。",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "punctuation-analysis",
+    "g": "sentence",
+    "title": "标点、完整句与长句分析",
+    "en": "Punctuation & sentence analysis",
+    "level": "进阶",
+    "source": "参考《英语语法知识体系详解》· 语序 标点与句子分析；补充讲解与练习",
+    "formula": "先找谁和动作，再看每一小句怎样连接",
+    "take": "长句不用一口气猜，先拆成几个小块。",
+    "steps": [
+      [
+        "先用简单句找主干",
+        "Tom likes dogs. 主要说 Tom，动作是 likes，喜欢的对象是 dogs。这些撑起主要意思的部分叫“主干”。长句也可以先这样找。"
+      ],
+      [
+        "把附加说明先放一边",
+        "The boy in red likes dogs. 中先看 The boy likes dogs“那个男孩喜欢狗”。再加回 in red“穿红衣服的”，就更容易读懂整句。"
+      ],
+      [
+        "两个完整意思之间要有连接",
+        "I like cats. I like dogs. 可以分成两句，也可说 I like cats, and I like dogs.。普通正式写作中，不要只用一个逗号就把两个完整句子粘起来。"
+      ],
+      [
+        "最后检查谁指谁、动作全不全",
+        "看到 he、she、it，问它指谁或什么。看到 waiting 这样的词，问前面是否还需要 are 等词。检查时按小块进行，不必一开始就记住所有复杂名称。"
+      ]
+    ],
+    "examples": [
+      [
+        "The boy in red likes dogs.",
+        "穿红衣服的男孩喜欢狗。",
+        "先看 The boy likes dogs，再把 in red 加回去说明是哪一个男孩。"
+      ],
+      [
+        "I like cats, and my sister likes dogs.",
+        "我喜欢猫，我姐姐喜欢狗。",
+        "and 把两个完整的小句连起来，连接关系清楚。"
+      ]
+    ],
+    "quiz": [
+      {
+        "type": "mc",
+        "prompt": "哪一句避免了普通正式写作中的逗号拼接？",
+        "options": [
+          "It was dark, we stopped.",
+          "It was dark; we stopped.",
+          "It was dark, however we stopped.",
+          "It was dark we stopped."
+        ],
+        "answer": 1,
+        "why": "分号可连接相关的两个完整分句，不能只把两句随便粘在一起。",
+        "id": "punctuation-analysis-0"
+      },
+      {
+        "type": "fill",
+        "prompt": "The students near the gate ____ waiting.（用 be 构成完整进行谓语）",
+        "answer": [
+          "are"
+        ],
+        "why": "students 是复数，完整的“正在等”要写成 are waiting。",
+        "id": "punctuation-analysis-1"
+      },
+      {
+        "type": "mc",
+        "prompt": "分析长句时，最可靠的第一步通常是：",
+        "options": [
+          "先圈限定谓语组合并找外层主干",
+          "把每个逗号都当句号",
+          "把每个 and 都切成两个独立句",
+          "见到最后一个名词就认定为主语"
+        ],
+        "answer": 0,
+        "why": "先找句子说谁、主要动作是什么，再逐层看旁边的说明。",
+        "id": "punctuation-analysis-2"
+      }
+    ],
+    "related": [
+      "clause-basics",
+      "sentence-elements",
+      "coordination"
+    ],
+    "classification": [
+      "找句子主干",
+      "划出小句",
+      "检查连接和标点"
+    ],
+    "pitfalls": [
+      {
+        "title": "两个完整句子别直接粘一起",
+        "wrong": "I like cats I like dogs.",
+        "right": "I like cats, and I like dogs.",
+        "text": "可以用 and 连接，也可分成两个句子写。"
+      },
+      {
+        "title": "正式写作别只靠逗号接两句",
+        "wrong": "She is happy, she has a dog.",
+        "right": "She is happy because she has a dog.",
+        "text": "这里用 because 把开心和养狗的原因关系说清楚；也可以把两句分开。"
+      }
+    ],
+    "usage": [
+      {
+        "h": "把附加说明先放一边",
+        "t": "The boy in red likes dogs. 中先看 The boy likes dogs“那个男孩喜欢狗”。再加回 in red“穿红衣服的”，就更容易读懂整句。"
+      },
+      {
+        "h": "两个完整意思之间要有连接",
+        "t": "I like cats. I like dogs. 可以分成两句，也可说 I like cats, and I like dogs.。普通正式写作中，不要只用一个逗号就把两个完整句子粘起来。"
+      },
+      {
+        "h": "最后检查谁指谁、动作全不全",
+        "t": "看到 he、she、it，问它指谁或什么。看到 waiting 这样的词，问前面是否还需要 are 等词。检查时按小块进行，不必一开始就记住所有复杂名称。"
+      }
+    ]
+  }
+];
+  for(const l of entries)add(l.g,l.id,l.title,l.en,l.level,l.source,l.formula,l.take,l.steps,l.examples,l.quiz,l.related);
+  window.LESSON_DETAILS={...(window.LESSON_DETAILS||{}),...Object.fromEntries(entries.map(l=>[l.id,{
+    definition:l.steps[0][1],classification:l.classification,usage:l.usage,
+    pitfalls:l.pitfalls,examples:l.examples.map(([en,zh,note])=>({en,zh,note}))
+  }]))};
+  window.TOPIC_BEGINNER={...(window.TOPIC_BEGINNER||{}),...{
+  "constituents": {
+    "definition": "词可以合成一小组，一小组又可以在句子里做一个任务。先把意思相连的词放在一起看，再问它们在说谁、做什么，或补充什么。",
+    "usage": [
+      {
+        "h": "先看一个词组",
+        "t": "a red bag 是“一个红色的包”。a、red、bag 虽然是三个词，却一起在说一个包，这就叫“短语”。"
+      },
+      {
+        "h": "再看它在句子里做什么",
+        "t": "The red bag is mine. 是“那个红色的包是我的”。The red bag 是句子主要说的东西，整组作“主语”。"
+      },
+      {
+        "h": "名称可以慢慢学",
+        "t": "词性说单个词是哪一类，句子成分说它在这句话里做什么。同一个词或词组，换一句话就可能做不同的任务。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "The red bag is mine.",
+        "zh": "那个红色的包是我的。",
+        "note": "The red bag 合起来说一个包，是句子主要谈的东西。"
+      },
+      {
+        "en": "I want a red bag.",
+        "zh": "我想要一个红色的包。",
+        "note": "a red bag 在这里表示想要的东西，不是句子里做动作的人。"
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "“她很开心”不要漏掉 is",
+        "wrong": "She very happy.",
+        "right": "She is very happy.",
+        "text": "普通完整句需要 She is very happy，is 帮助说明她的状态。"
+      }
+    ]
+  },
+  "basic-patterns": {
+    "definition": "英语句子常先说谁，再说做什么或怎么样。不同动词后需要的信息不同，先把意思说完整，再记句型的名字。",
+    "usage": [
+      {
+        "h": "先学最短的两种",
+        "t": "Birds fly. 是“鸟飞”。I like apples. 是“我喜欢苹果”。后一种多了“喜欢什么”，apples 就是动作的对象。"
+      },
+      {
+        "h": "说状态时常需要 be",
+        "t": "She is happy. 是“她很开心”。is 把 She 和 happy 连起来。不能因为中文里没有“是”，就把英语里的 is 删掉。"
+      },
+      {
+        "h": "看动词还需要哪些信息",
+        "t": "She gave me a book. 说给谁、给什么。We made Tom happy. 说让汤姆怎么样。She put the book in the bag. 还要说放在哪里。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Birds fly.",
+        "zh": "鸟飞。",
+        "note": "Birds 是要说的东西，fly 是它们做的动作。"
+      },
+      {
+        "en": "I like apples.",
+        "zh": "我喜欢苹果。",
+        "note": "apples 说喜欢什么，是 like 的对象。"
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "说明状态要保留 be",
+        "wrong": "She happy.",
+        "right": "She is happy.",
+        "text": "想写普通完整陈述，要用 is 把她和开心的状态连起来。"
+      }
+    ]
+  },
+  "sentence-kinds": {
+    "definition": "一句话可以用来说事情、问问题、请人做事，或表达感叹。先看说话人想做什么，再学习相应写法。",
+    "usage": [
+      {
+        "h": "说事情或问问题",
+        "t": "She is at home. 是“她在家”。Is she at home? 是“她在家吗？”两句用词相近，但问句要调整顺序。"
+      },
+      {
+        "h": "请人做事或表达感叹",
+        "t": "Open the door. 是“开门”。What a nice dog! 是“多可爱的狗啊！”前者叫祈使句，后者叫感叹句。"
+      },
+      {
+        "h": "想说“不”，要看否定的范围",
+        "t": "Not every child likes milk. 是“不是每个孩子都喜欢牛奶”，不是“所有孩子都不喜欢”。不要只看到 not 就忽略它否定哪一部分。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Is she at home?",
+        "zh": "她在家吗？",
+        "note": "Is 放到 she 前面，把普通陈述改成问题。"
+      },
+      {
+        "en": "Please sit down.",
+        "zh": "请坐。",
+        "note": "用 sit 开头请对方做事，please 表示礼貌。"
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "否定请求不加 to",
+        "wrong": "Don’t to run.",
+        "right": "Don’t run.",
+        "text": "让别人别跑时，用 Don’t 加原形 run。"
+      }
+    ]
+  },
+  "sentence-structure": {
+    "definition": "有的句子只说一件完整的事，有的把几件事连起来，还有的把一个小句放进另一个句子里。先分成小块，长句就更容易读。",
+    "usage": [
+      {
+        "h": "一个完整意思",
+        "t": "I am tired. 是“我累了”。它说清楚谁怎样，可以单独表达完整意思。"
+      },
+      {
+        "h": "把两件事并排连起来",
+        "t": "I am tired, and I want to rest. 是“我累了，而且想休息”。and 把两个意思连起来，不是只把单词堆在一起。"
+      },
+      {
+        "h": "一个小句也能作说明",
+        "t": "I stayed home because I was tired. 是“我因为累了而待在家里”。because I was tired 说明原因，是依靠前面主要内容的小句，也就是一种从句。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I am tired, and I want to rest.",
+        "zh": "我累了，而且想休息。",
+        "note": "and 连接两个相互配合的意思。"
+      },
+      {
+        "en": "I stayed home because I was tired.",
+        "zh": "我因为累了而待在家里。",
+        "note": "because 后面的小句解释为什么待在家里。"
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "别只用一个逗号粘两句",
+        "wrong": "I am tired, I want to rest.",
+        "right": "I am tired, and I want to rest.",
+        "text": "普通正式写作中，可用 and 把两句连起来，也可分成两句。"
+      }
+    ]
+  },
+  "special-syntax": {
+    "definition": "英语有一些很常用的特别写法，用来介绍有什么、突出谁，或避免重复。先把它们当成日常句型学习，不必一开始就记住复杂名称。",
+    "usage": [
+      {
+        "h": "介绍某处有什么",
+        "t": "There is a cat. 是“有一只猫”。There be 这组写法常用来把新的人或东西介绍出来。"
+      },
+      {
+        "h": "突出你真正想强调的部分",
+        "t": "It was Tom who called. 是“打电话的人是汤姆”。这里特别突出 Tom，而不是重新解释电话是什么。"
+      },
+      {
+        "h": "把长内容放后面，或不再重复",
+        "t": "It is fun to play. 是“玩耍很有趣”。I can swim. She can too. 的第二句不再重复 swim，因为前面已经说清楚。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "There is a cat.",
+        "zh": "有一只猫。",
+        "note": "there is 一起用来介绍有什么。"
+      },
+      {
+        "en": "It is fun to play.",
+        "zh": "玩耍很有趣。",
+        "note": "it 先放句首，to play 说明真正谈的事情。"
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "单数和复数要配合",
+        "wrong": "There is two cats.",
+        "right": "There are two cats.",
+        "text": "这里说两只猫，普通书面表达中用 are。"
+      }
+    ]
+  },
+  "fragments": {
+    "definition": "有时只写了原因、时间或一段说明，还没把主要事情说出来。写普通完整陈述时，要让读者知道谁做了什么或怎么样。",
+    "usage": [
+      {
+        "h": "先找最主要的意思",
+        "t": "I stayed home. 是“我待在家里”，可以单独说完整。because I was tired 只是“因为我累了”，通常还在等着解释一件主要事情。"
+      },
+      {
+        "h": "把原因接回主要事情",
+        "t": "I stayed home because I was tired. 把结果和原因都说出来。也可写 Because I was tired, I stayed home.。"
+      },
+      {
+        "h": "区分完整写作和简短回答",
+        "t": "回答“为什么”时，口语可以只说 Because I was tired.。但写一段普通完整陈述时，通常要补上主要事情，不能照搬所有口语省略。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I stayed home because I was tired.",
+        "zh": "我因为累了而待在家里。",
+        "note": "主要事情和原因都说清楚了。"
+      },
+      {
+        "en": "When it rained, we went home.",
+        "zh": "下雨时，我们回家了。",
+        "note": "When it rained 说时间，we went home 说主要事情。"
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "普通完整陈述别只剩原因",
+        "wrong": "Because I was tired.",
+        "right": "I stayed home because I was tired.",
+        "text": "如果要独立写一个完整陈述，需要把因为累而做的主要事情补出来。"
+      }
+    ]
+  },
+  "runons": {
+    "definition": "两个已经能独立表达意思的句子，不能在普通正式写作中随便粘成一个。用句号分开，或用合适的词连接。",
+    "usage": [
+      {
+        "h": "先找两句各自的意思",
+        "t": "I am tired. 和 I want to rest. 都能单独说清楚。把它们合起来时，需要说明两件事怎样联系。"
+      },
+      {
+        "h": "初学优先用句号或 and",
+        "t": "可以写 I am tired. I want to rest.。也可写 I am tired, and I want to rest.。先掌握这些常见写法。"
+      },
+      {
+        "h": "连接词要符合意思",
+        "t": "because 常说原因，so 常说结果，but 常说转折。不要只为了连句子就随便选一个词；先问两件事是什么关系。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I am tired, so I will rest.",
+        "zh": "我累了，所以会休息。",
+        "note": "so 说前面情况带来的结果。"
+      },
+      {
+        "en": "It rained. We stayed home.",
+        "zh": "下雨了。我们待在家里。",
+        "note": "用句号把两件完整的事分开，也是清楚的写法。"
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "正式写作不要只用逗号连接",
+        "wrong": "It rained, we stayed home.",
+        "right": "It rained, so we stayed home.",
+        "text": "so 把下雨和待在家里的结果关系说清楚；也可以写成两句。"
+      }
+    ]
+  },
+  "article-errors": {
+    "definition": "说“一个”“这个”或一类东西时，名词前的小词可能不同。先看这个东西能不能一个个数，再看是在泛指还是特指。",
+    "usage": [
+      {
+        "h": "先认 a、an 和 the",
+        "t": "a book 是“一本书”，the book 常说双方知道的“那本书”。a、an、the 叫“冠词”，放在名词前帮助说清所指对象。"
+      },
+      {
+        "h": "单数可数名词别随便裸着用",
+        "t": "说她是一名老师，用 She is a teacher.。teacher 在这里是一个一个可数的普通名词，单数通常需要 a 等词。"
+      },
+      {
+        "h": "a 和 an 先听声音",
+        "t": "an apple 是“一个苹果”，a book 是“一本书”。看紧接着的词怎样发音，不只是看第一个字母。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "She is a teacher.",
+        "zh": "她是一名老师。",
+        "note": "teacher 在这里为单数可数名词，前面用 a。"
+      },
+      {
+        "en": "I have an apple.",
+        "zh": "我有一个苹果。",
+        "note": "apple 的开头是元音音素，所以用 an。"
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "单数职业名词别漏掉 a",
+        "wrong": "She is teacher.",
+        "right": "She is a teacher.",
+        "text": "这里说她是老师中的一员，单数 teacher 前用 a。"
+      }
+    ]
+  },
+  "pronoun-errors": {
+    "definition": "he、she、it 等词常代替前面的人或东西。读者应该能看清它到底指谁；如果可能指两个人，就把名字说出来。",
+    "usage": [
+      {
+        "h": "先找它指谁",
+        "t": "Tom has a dog. He likes it. 中 He 指 Tom，it 指狗。不能只认识 he、it 的中文意思，还要找到它们对应的人或东西。"
+      },
+      {
+        "h": "两个人都可能被指时要改清楚",
+        "t": "Tom saw Ben. He was sad. 里的 He 可能是 Tom，也可能是 Ben。需要读者猜时，可以直接重复名字。"
+      },
+      {
+        "h": "放的位置也影响形式",
+        "t": "He likes me. 中 He 是做动作的人，me 是被喜欢的对象。换成 me 或 him 时，要一起看它在句中做什么。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Tom has a dog. He likes it.",
+        "zh": "汤姆有一只狗。他喜欢它。",
+        "note": "He 指汤姆，it 指狗。"
+      },
+      {
+        "en": "Tom was sad when he saw Ben.",
+        "zh": "汤姆看到本时很难过。",
+        "note": "明确说 Tom 难过，不让读者猜 He 指谁。"
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "想说清 Tom 难过，就直接点明",
+        "wrong": "Tom saw Ben. He was sad.",
+        "right": "Tom was sad when he saw Ben.",
+        "text": "原句不一定有语法错误，但 He 可能指两个人；改写能把想表达的人说清楚。"
+      }
+    ]
+  },
+  "tense-errors": {
+    "definition": "说事情发生在现在、过去还是将来，要让动词形式和想表达的时间配合。先把时间想清楚，再选写法。",
+    "usage": [
+      {
+        "h": "看到过去时间，先想过去的事",
+        "t": "Yesterday I went home. 是“昨天我回家了”。这里的 yesterday 已说明是过去，go 就用过去式 went。"
+      },
+      {
+        "h": "同一段叙述要把时间交代清楚",
+        "t": "写昨天先去学校、再见到朋友时，两个动作都在过去，通常一起用过去形式。需要换到现在时，就让读者明白时间为什么变了。"
+      },
+      {
+        "h": "不要只靠一个中文词选时态",
+        "t": "中文的“了”不能直接等于某一种英语形式。先问什么时候发生、现在是否还相关，再学习一般过去或现在完成等不同写法。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Yesterday I went home.",
+        "zh": "昨天我回家了。",
+        "note": "yesterday 说过去，所以 go 用 went。"
+      },
+      {
+        "en": "I am at home now.",
+        "zh": "我现在在家。",
+        "note": "now 说现在，be 用 am。"
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "说昨天的动作要检查过去形式",
+        "wrong": "Yesterday I go home.",
+        "right": "Yesterday I went home.",
+        "text": "这里讲昨天发生的事，普通叙述用 go 的过去式 went。"
+      }
+    ]
+  },
+  "wordform-errors": {
+    "definition": "两个动词放在一起时，后一个动词有时要加 to，有时要加 -ing。先学常用搭配，再比较意思。",
+    "usage": [
+      {
+        "h": "先记 enjoy doing",
+        "t": "I enjoy reading. 是“我喜欢读书”。enjoy 后面的动作常用 -ing 形式，不用 to read。"
+      },
+      {
+        "h": "再记 want to do",
+        "t": "I want to read. 是“我想读书”。want 后面的动作常用 to 加原形。不要把每个中文“做某事”都写成同一种形式。"
+      },
+      {
+        "h": "一个词也可能有不同搭配",
+        "t": "有些动词后既能接 to do，也能接 doing，但意思可能不同。初学先把一组常用写法放进短句里练，再学差别。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I enjoy reading.",
+        "zh": "我喜欢读书。",
+        "note": "enjoy 后用 reading。"
+      },
+      {
+        "en": "I want to read.",
+        "zh": "我想读书。",
+        "note": "want 后用 to read。"
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "enjoy 后通常用 -ing",
+        "wrong": "She enjoys to read.",
+        "right": "She enjoys reading.",
+        "text": "“她喜欢读书”这个常见表达，用 enjoys reading。"
+      }
+    ]
+  },
+  "agreement-errors": {
+    "definition": "句子说一个人或东西，和说多个人或东西时，动词有时会跟着变。先找句子主要说谁，再决定用 is、are 或是否加 s。",
+    "usage": [
+      {
+        "h": "先看最短的对照",
+        "t": "The boy is happy. 是“男孩很开心”。The boys are happy. 是“男孩们很开心”。从一个变成多个，is 也换成 are。"
+      },
+      {
+        "h": "别被旁边的复数带跑",
+        "t": "The box of apples is big. 主要说一个 box“箱子”，不是那些 apples“苹果”，所以用 is。"
+      },
+      {
+        "h": "先练常见配合，再学特殊情况",
+        "t": "He likes cats. 和 They like cats. 也是常见对照。集体名词等特别情况要结合意思和使用习惯慢慢学，不能只看最近的一个词。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "The boy is happy.",
+        "zh": "男孩很开心。",
+        "note": "说一个男孩，用 is。"
+      },
+      {
+        "en": "The box of apples is big.",
+        "zh": "那箱苹果很大。",
+        "note": "主要说一个箱子，所以用 is。"
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "句子主要说 box",
+        "wrong": "The box of apples are big.",
+        "right": "The box of apples is big.",
+        "text": "of apples 说明是什么箱子；主语中心仍是单数 box，因而用 is。"
+      }
+    ]
+  }
+}};
 })();

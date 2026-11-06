@@ -181,10 +181,7 @@
   const semanticTopic=nodes.get(topicKey('noun-semantic'));
   semanticTopic.classificationLinks={'具体名词':lesson('noun-concrete'),'抽象名词':lesson('noun-abstract')};
   for(const t of topics){
-    const childNodes=t.children.map(k=>nodes.get(k));
-    t.usage=[...t.usage,...childNodes.slice(0,6).map(n=>({h:n.title,t:n.usage[0]?.t||n.usage[0]}))];
-    const pairs=childNodes.flatMap(n=>n.pitfalls.filter(p=>p.wrong&&p.right)).slice(0,3);
-    t.pitfalls=[...t.pitfalls,...pairs];
+    Object.assign(t,window.TOPIC_BEGINNER?.[t.id]);
   }
   const parent = new Map(), owner = new Map();
   function visit(key, mod, ancestry=new Set()) {

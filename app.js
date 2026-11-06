@@ -4,6 +4,14 @@
   const lessons=window.GRAMMAR.lessons,byId=new Map(lessons.map(l=>[l.id,l]));
   const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const terms=window.GRAMMAR_TERMS||{};
+  const termPattern=new RegExp('('+Object.keys(terms).sort((a,b)=>b.length-a.length).join('|')+')','g');
+  function explainText(value){
+    const used=new Set();return String(value??'').split(termPattern).map(part=>{
+      if(!terms[part]||used.has(part)||used.size>=2)return esc(part);
+      used.add(part);return `<button class="term-help" type="button" data-term="${esc(part)}" title="点开看${esc(part)}是什么意思" aria-label="解释${esc(part)}">${esc(part)}</button>`;
+    }).join('');
+  }
   const ICONS={
     sidebar:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16m4-11h4m-4 6h4"/>',
     collapse:'<path d="m14 6-6 6 6 6"/>',
@@ -125,27 +133,33 @@
   function renderCard(keepScroll=false){
     const key=state.cardKey,n=A.get(key);if(!n)return;
     const scroll=keepScroll?$('.card-body')?.scrollTop||0:0,storage=A.storageKey(key),l=n.lesson;
+    const openDetails=keepScroll?$$('#knowledge-card details').map((el,i)=>el.open?i:-1).filter(i=>i>=0):[];
+    const horizontalScroll=keepScroll?$$('#knowledge-card .grammar-table-wrap').map(el=>el.scrollLeft):[];
     const source=l?(l.source.includes('英语语法知识体系详解')?l.source:'参考《英语语法知识体系详解》；原课程索引：'+l.source):'';
     const children=n.children.map(k=>A.get(k)),examples=A.examplesFor(key);
     const next=children.find(c=>!learned(c.key)),scopePool=questionPool(key),inPractice=state.page==='practice'&&state.session&&!state.session.done;
     const crumbs=state.cardTrail.slice(0,-1).map((k,i)=>`<button data-card-ancestor="${esc(k)}" data-trail-index="${i}">${esc(A.get(k).title)}</button>`).join('<i>/</i>');
-    const useBlocks=n.usage.map(s=>typeof s==='string'?`<div class="usage-block"><p>${esc(s)}</p></div>`:`<div class="usage-block"><h3>${esc(s.h)}</h3><p>${esc(s.t)}</p></div>`).join('');
-    const errors=n.pitfalls.map(p=>typeof p==='string'?`<div class="pitfall"><p>${esc(p)}</p></div>`:`<div class="pitfall"><strong>${esc(p.title)}</strong>${p.wrong&&p.right?`<div class="correction-pair"><p class="correction-wrong"><span>原句</span><span lang="en">${esc(p.wrong)}</span></p><p class="correction-right"><span>改写</span><span lang="en">${esc(p.right)}</span></p></div>`:''}<p>${esc(p.text)}</p></div>`).join('');
-    const table=n.referenceTable,reference=table?`<details class="grammar-reference"><summary>时态结构对照 · 16种教学组合</summary><div class="grammar-table-wrap" tabindex="0" role="region" aria-label="时态结构对照，可横向滚动"><table><caption>${esc(table.caption)}</caption><thead><tr>${table.headers.map(h=>`<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${table.rows.map(row=>`<tr>${row.map((cell,i)=>i?`<td lang="en">${esc(cell)}</td>`:`<th scope="row">${esc(cell)}</th>`).join('')}</tr>`).join('')}</tbody></table></div><p>${esc(table.note)}</p></details>`:'';
+    const usageBlock=s=>typeof s==='string'?`<div class="usage-block"><p>${explainText(s)}</p></div>`:`<div class="usage-block"><h3>${esc(s.h)}</h3><p>${explainText(s.t)}</p></div>`;
+    const useBlocks=n.usage.filter(s=>!s.advanced).map(usageBlock).join('');
+    const advanced=n.usage.filter(s=>s.advanced);
+    const more=advanced.length?`<details class="beginner-more"><summary>再了解一点 <small>可以稍后再看</small></summary><div>${advanced.map(usageBlock).join('')}</div></details>`:'';
+    const errors=n.pitfalls.map(p=>typeof p==='string'?`<div class="pitfall"><p>${explainText(p)}</p></div>`:`<div class="pitfall"><strong>${esc(p.title)}</strong>${p.wrong&&p.right?`<div class="correction-pair"><p class="correction-wrong"><span>原句</span><span lang="en">${esc(p.wrong)}</span></p><p class="correction-right"><span>改写</span><span lang="en">${esc(p.right)}</span></p></div>`:''}<p>${explainText(p.text)}</p></div>`).join('');
+    const structure=l?`<details class="beginner-more grammar-structure"><summary>看结构写法</summary><div><p>${explainText(n.formula||l.formula)}</p>${/\b(?:do|doing|done|sb|sth)\b/.test(n.formula||l.formula)?'<p class="structure-help">结构中，do 常代表动词原形，doing 代表 -ing 形式，done 代表过去分词。sb. 表示某人，sth. 表示某事或某物。</p>':''}</div></details>`:'';
+    const table=n.referenceTable,reference=table?`<details class="grammar-reference"><summary>以后再看：时态结构对照</summary><div class="grammar-table-wrap" tabindex="0" role="region" aria-label="时态结构对照，可横向滚动"><table><caption>${esc(table.caption)}</caption><thead><tr>${table.headers.map(h=>`<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${table.rows.map(row=>`<tr>${row.map((cell,i)=>i?`<td lang="en">${esc(cell)}</td>`:`<th scope="row">${esc(cell)}</th>`).join('')}</tr>`).join('')}</tbody></table></div><p>${esc(table.note)}</p></details>`:'';
     const classes=n.classification.map(label=>n.classificationLinks?.[label]?`<button class="class-link" data-next-key="${esc(n.classificationLinks[label])}" aria-label="查看${esc(label)}详解">${esc(label)}${icon('arrow')}</button>`:`<span>${esc(label)}</span>`).join('');
     const nextMarkup=children.length?`<section class="card-section" id="card-next"><h2>下一级知识点</h2><div class="next-points">${children.map(c=>`<button class="next-point ${learned(c.key)?'is-lit':''}" data-next-key="${esc(c.key)}"><span>${esc(c.title)}</span>${icon(learned(c.key)?'check':'arrow')}</button>`).join('')}</div></section>`:'';
     const related=!children.length&&l?.related.length?`<section class="card-section"><h2>相关知识点</h2><div class="next-points">${l.related.map(id=>A.get('lesson:'+id)).filter(Boolean).slice(0,4).map(c=>`<button class="next-point" data-open-card="${esc(c.key)}">${esc(c.title)}${icon('arrow')}</button>`).join('')}</div></section>`:'';
     $('#knowledge-card').innerHTML=`<header class="card-header"><div class="card-topline"><div class="card-breadcrumb"><button data-action="card-root">总地图</button>${crumbs?'<i>/</i>'+crumbs:''}</div><div class="card-tools"><button class="icon-button" id="card-toggle-size" data-action="toggle-card-size" aria-label="全屏阅读知识讲解" aria-pressed="false">${icon('maximize')}</button><button class="icon-button" data-action="bookmark" data-active="${data.bookmarks.includes(storage)}" aria-label="${data.bookmarks.includes(storage)?'取消收藏':'收藏知识点'}">${icon('bookmark')}</button><button class="icon-button" data-action="note" aria-label="写学习笔记">${icon('note')}</button><button class="icon-button" data-action="close-card" aria-label="关闭知识卡片">${icon('close')}</button></div></div><h1 id="card-title" tabindex="-1">${esc(n.title)}</h1><p class="card-en">${esc(n.en)}</p></header>
-      <nav class="card-anchors" aria-label="知识卡片内容">${[['definition','定义'],['classes','分类'],['examples','例句'],['usage','用法'],['pitfalls','易错点']].map(([id,title])=>`<button data-jump="${id}" class="${state.activeAnchor===id?'active':''}">${title}</button>`).join('')}</nav>
-      <div class="card-body"><section class="card-section" id="card-definition"><h2>${n.id==='nouns'?'名词是什么':'定义'}</h2><p>${esc(n.definition)}</p>${l?`<div class="formula-box">${esc(l.formula)}</div>`:''}</section>
+      <nav class="card-anchors" aria-label="知识卡片内容">${[['definition','是什么'],['classes','分类'],['examples','例句'],['usage','怎么用'],['pitfalls','易错点']].map(([id,title])=>`<button data-jump="${id}" class="${state.activeAnchor===id?'active':''}">${title}</button>`).join('')}</nav>
+      <div class="card-body"><section class="card-section" id="card-definition"><h2>${n.id==='nouns'?'名词是什么':'先看懂'}</h2><p>${explainText(n.definition)}</p></section>
       <section class="card-section" id="card-classes"><h2>${n.id==='nouns'?'名词的分类':'分类与结构'}${n.classificationLinks?' <small class="class-hint">点击继续展开</small>':''}</h2><div class="class-tags">${classes}</div>${reference}</section>
-      <section class="card-section" id="card-examples"><h2>例句</h2>${examples.map((e,i)=>`<article class="card-example"><button class="icon-button" data-speak="${i}" aria-label="朗读第${i+1}个例句">${icon('sound')}</button><strong>${esc(e.en)}</strong><p>${esc(e.zh)}</p><small>${esc(e.note)}</small></article>`).join('')}</section>
-      <section class="card-section" id="card-usage"><h2>${n.id==='nouns'?'用法与常见考点':'用法'}</h2>${useBlocks}</section>
+      <section class="card-section" id="card-examples"><h2>看例句</h2>${examples.map((e,i)=>`<article class="card-example"><button class="icon-button" data-speak="${i}" aria-label="朗读第${i+1}个例句">${icon('sound')}</button><strong lang="en">${esc(e.en)}</strong><p>${esc(e.zh)}</p><small>${explainText(e.note)}</small></article>`).join('')}</section>
+      <section class="card-section" id="card-usage"><h2>怎么用</h2>${useBlocks}${more}${structure}</section>
       <section class="card-section" id="card-pitfalls"><h2>易错点</h2>${errors}</section>${nextMarkup}${related}
       ${scopePool.length?`<section class="card-section" id="card-practice"><h2>小练习</h2><div class="mini-practice"><p>${esc(scopePool[0].q.prompt)}</p><button data-practice-scope="${esc(key)}" data-practice-count="3">练习「${esc(n.title)}」 ${icon('arrow')}</button></div></section>`:''}
       ${l?`<div class="source-note">${esc(source)}</div>`:''}</div>
       <footer class="card-footer"><button class="learn-button ${learned(key)?'is-lit':''}" data-action="mark-learned" aria-pressed="${learned(key)}">${icon('stars')}${learned(key)?'星星已点亮':'已学会，点亮星星'}</button>${inPractice?`<button class="primary-button" data-action="close-card">继续当前练习${icon('arrow')}</button>`:next?`<button class="primary-button" data-next-key="${esc(next.key)}">继续：${esc(next.title)}${icon('arrow')}</button>`:`<button class="primary-button" data-practice-scope="${esc(key)}" data-practice-count="3">进入练习${icon('arrow')}</button>`}</footer>`;
-    syncUI();if(keepScroll)$('.card-body').scrollTop=scroll;
+    syncUI();if(keepScroll){const details=$$('#knowledge-card details');openDetails.forEach(i=>{if(details[i])details[i].open=true;});$$('#knowledge-card .grammar-table-wrap').forEach((el,i)=>el.scrollLeft=horizontalScroll[i]||0);$('.card-body').scrollTop=scroll;}
   }
   function markLearned(){
     if(!state.cardKey)return;
@@ -220,8 +234,8 @@
   function answerText(q){return q.type==='mc'?q.options[q.answer]:q.answer[0];}
   function questionMarkup(q){
     const submitted=!!state.feedback;
-    return `<div class="quiz-prompt">${esc(q.prompt)}</div>${q.type==='mc'?`<div class="quiz-options" role="radiogroup" aria-label="选择答案">${q.options.map((option,i)=>`<button class="quiz-option ${state.choice===i?'selected':''} ${submitted&&q.answer===i?'correct':''} ${submitted&&!state.feedback.ok&&state.choice===i?'wrong':''}" role="radio" aria-checked="${state.choice===i}" tabindex="${(state.choice===null?i===0:state.choice===i)?0:-1}" data-choice="${i}" ${submitted?'disabled':''}><span class="option-letter">${'ABCD'[i]}</span><span>${esc(option)}</span></button>`).join('')}</div>`:`<input id="quiz-answer" class="quiz-input" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="填写答案" value="${esc(state.answer)}" ${submitted?'disabled':''}>`}
-      ${submitted?`<div class="quiz-feedback ${state.feedback.ok?'':'is-wrong'}"><strong>${state.feedback.ok?'回答正确':'再看一下这个知识点'}</strong>${!state.feedback.ok?`<p>参考答案：${esc(answerText(q))}</p>`:''}<p>${esc(q.why)}</p></div><button class="primary-button" data-action="next-question">${state.session.index+1===state.session.items.length?'查看结果':'下一题'}${icon('arrow')}</button>`:`<button class="primary-button" data-action="submit-answer" ${(q.type==='mc'?state.choice===null:!state.answer.trim())?'disabled':''}>提交答案</button>`}`;
+    return `<div class="quiz-prompt">${explainText(q.prompt)}</div>${q.type==='mc'?`<div class="quiz-options" role="radiogroup" aria-label="选择答案">${q.options.map((option,i)=>`<button class="quiz-option ${state.choice===i?'selected':''} ${submitted&&q.answer===i?'correct':''} ${submitted&&!state.feedback.ok&&state.choice===i?'wrong':''}" role="radio" aria-checked="${state.choice===i}" tabindex="${(state.choice===null?i===0:state.choice===i)?0:-1}" data-choice="${i}" ${submitted?'disabled':''}><span class="option-letter">${'ABCD'[i]}</span><span>${esc(option)}</span></button>`).join('')}</div>`:`<input id="quiz-answer" class="quiz-input" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="填写答案" value="${esc(state.answer)}" ${submitted?'disabled':''}>`}
+      ${submitted?`<div class="quiz-feedback ${state.feedback.ok?'':'is-wrong'}"><strong>${state.feedback.ok?'回答正确':'再看一下这个知识点'}</strong>${!state.feedback.ok?`<p>参考答案：${esc(answerText(q))}</p>`:''}<p>${explainText(q.why)}</p></div><button class="primary-button" data-action="next-question">${state.session.index+1===state.session.items.length?'查看结果':'下一题'}${icon('arrow')}</button>`:`<button class="primary-button" data-action="submit-answer" ${(q.type==='mc'?state.choice===null:!state.answer.trim())?'disabled':''}>提交答案</button>`}`;
   }
   function renderSession(){
     const s=state.session;if(!s)return;
@@ -252,6 +266,7 @@
   }
   function closeModal(restore=true){if(!state.modal)return;$('#modal-root').innerHTML='';state.modal=null;syncUI();if(restore){const target=previousModalFocus?.isConnected&&previousModalFocus.getClientRects().length?previousModalFocus:state.cardKey?$('#card-title'):navFocusTarget();target?.focus({preventScroll:true});}}
   function showSearch(){modal('搜索知识点','<input id="knowledge-search" class="search-input" type="search" aria-label="搜索知识点" placeholder="名词、过去完成时、that…"><div class="search-results" id="search-results"></div>');renderSearch('');}
+  function showTerm(key){const term=terms[key];if(!term)return;modal(key,`<p class="term-meaning">${esc(term.text)}</p><article class="card-example term-example"><strong lang="en">${esc(term.en)}</strong><p>${esc(term.zh)}</p><small>${esc(term.note)}</small></article>`);}
   function renderSearch(query){
     const tokens=query.toLowerCase().trim().split(/\s+/).filter(Boolean);
     const list=A.knowledge.filter(n=>tokens.every(t=>(n.title+' '+n.en+' '+n.definition+' '+n.classification.join(' ')).toLowerCase().includes(t))).sort((a,b)=>{const score=n=>tokens.reduce((v,t)=>v+(n.title.includes(t)?10:0)+(n.en.toLowerCase().includes(t)?4:0),0);return score(b)-score(a);});
@@ -270,7 +285,7 @@
   async function importProgress(file){
     if(!file)return;try{if(file.size>5e6)throw Error('Large file');const backup=JSON.parse(await file.text());data=P.merge(data,backup);save();if(state.cardKey)renderCard(true);if(state.page==='practice')renderPractice();else if(state.page==='games')Games.render();else renderActiveGraph(false);closeModal();toast('备份已合并，学习星图已更新');}catch{toast('这不是有效的语法漫游进度备份。');}
   }
-  function showHelp(){modal('图谱操作',`<div class="help-item"><strong>逐层探索</strong><p>点击总地图的模块进入子地图，点击知识点打开卡片；卡片中的“下一级知识点”可继续深入，最后进入对应练习。点击地图中心可返回上一级。</p></div><div class="help-item"><strong>点亮星星</strong><p>阅读后点击“已学会，点亮星星”，或答对该知识点全部练习，对应星星就会点亮。学习星图中可展开模块星座，再点击星星继续学习。</p></div><div class="help-item"><strong>调整阅读空间</strong><p>拖动图谱与讲解之间的蓝色分隔手柄：电脑和平板左右调整，手机上下调整。双击恢复默认；也可用方向键微调。卡片顶部的展开按钮可全屏阅读，再次点击返回分屏。</p></div><div class="help-item"><strong>移动与缩放</strong><p>拖动空白处平移，滚轮或双指手势缩放。左侧边栏中的“适应画面”可恢复总览。键盘 + / − 缩放，方向键平移，0 适应画面；Esc 关闭卡片或返回上一级。</p></div><div class="help-item"><strong>词性积木</strong><p>侧边栏中进入“游戏”，选择词性积木和关卡。拖拽积木或先点词性再点空格，同类可重复使用；放好后检查答案。50 关从短句逐步进入从句与长句，通关星级自动保存。</p></div><div class="help-item"><strong>搜索与备份</strong><p>Ctrl / ⌘ + K 搜索。收藏、笔记和记录备份都在侧边栏中。</p></div><div class="source-note">知识框架参考《英语语法知识体系详解》，并结合原课程索引补充整理。</div>`);}
+  function showHelp(){modal('图谱操作',`<div class="help-item"><strong>第一次学语法</strong><p>先读“先看懂”和简单例句，再看“怎么用”。带点线的术语可以点开看解释；“再了解一点”和结构写法可以以后再看。</p></div><div class="help-item"><strong>逐层探索</strong><p>点击总地图的模块进入子地图，点击知识点打开卡片；卡片中的“下一级知识点”可继续深入，最后进入对应练习。点击地图中心可返回上一级。</p></div><div class="help-item"><strong>点亮星星</strong><p>阅读后点击“已学会，点亮星星”，或答对该知识点全部练习，对应星星就会点亮。学习星图中可展开模块星座，再点击星星继续学习。</p></div><div class="help-item"><strong>调整阅读空间</strong><p>拖动图谱与讲解之间的蓝色分隔手柄：电脑和平板左右调整，手机上下调整。双击恢复默认；也可用方向键微调。卡片顶部的展开按钮可全屏阅读，再次点击返回分屏。</p></div><div class="help-item"><strong>移动与缩放</strong><p>拖动空白处平移，滚轮或双指手势缩放。左侧边栏中的“适应画面”可恢复总览。键盘 + / − 缩放，方向键平移，0 适应画面；Esc 关闭卡片或返回上一级。</p></div><div class="help-item"><strong>词性积木</strong><p>侧边栏中进入“游戏”，选择词性积木和关卡。拖拽积木或先点词性再点空格，同类可重复使用；放好后检查答案。50 关从短句逐步进入从句与长句，通关星级自动保存。</p></div><div class="help-item"><strong>搜索与备份</strong><p>Ctrl / ⌘ + K 搜索。收藏、笔记和记录备份都在侧边栏中。</p></div><div class="source-note">知识框架参考《英语语法知识体系详解》，并结合原课程索引补充整理。</div>`);}
   function speakExample(index){const e=A.examplesFor(state.cardKey)[index];if(!e)return;if(!('speechSynthesis'in window)){toast('当前设备未提供语音朗读。');return;}speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(e.en);utterance.lang='en-GB';utterance.rate=.85;const voice=speechSynthesis.getVoices().find(v=>v.lang==='en-GB')||speechSynthesis.getVoices().find(v=>v.lang.startsWith('en'));if(voice)utterance.voice=voice;utterance.onerror=()=>toast('当前设备暂时没有可用英语语音。');speechSynthesis.speak(utterance);}
   const actions={
     'toggle-nav':toggleNav,'close-sidebar':()=>closeNav(true),'close-card':()=>closeCard(),'close-modal':()=>closeModal(),
@@ -291,6 +306,7 @@
     const constellation=e.target.closest('[data-progress-module]');if(constellation){if(Date.now()<suppressGraphClickUntil)return;openConstellation(constellation.dataset.progressModule);return;}
     const action=e.target.closest('button[data-action]');if(action){actions[action.dataset.action]?.();return;}
     const route=e.target.closest('button[data-route]');if(route){navigate(route.dataset.route);return;}
+    const term=e.target.closest('[data-term]');if(term){showTerm(term.dataset.term);return;}
     const next=e.target.closest('[data-next-key]');if(next){nextCard(next.dataset.nextKey);return;}
     const open=e.target.closest('[data-open-card]');if(open){openCard(open.dataset.openCard);return;}
     const ancestor=e.target.closest('[data-card-ancestor]');if(ancestor){const key=ancestor.dataset.cardAncestor,i=Number(ancestor.dataset.trailIndex);A.get(key).kind==='module'?goMap(key,state.cardTrail.slice(0,i+1)):openCard(key,state.cardTrail.slice(0,i+1));return;}

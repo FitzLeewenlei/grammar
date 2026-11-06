@@ -1,390 +1,1464 @@
-/* Refined explanations informed by 英语语法知识体系详解; examples are newly written. */
+/* Beginner-first explanations. Existing lesson IDs and exercises stay unchanged. */
 (() => {
-  const detail=(definition,classification,usage,pitfalls,examples)=>({
-    definition,classification,
-    usage:usage.map(([h,t])=>({h,t})),
-    pitfalls:pitfalls.map(([title,wrong,right,text])=>({title,wrong,right,text})),
-    examples:examples.map(([en,zh,note])=>({en,zh,note}))
-  });
-  const details={
-    skeleton:detail(
-      '句子成分是词、短语或从句在句中的任务；词性是词的类别。分析句型时，先确定谓语的完整结构，再找主语，以及该动词用法所需要的宾语、表语或补足语。',
-      ['主语与谓语','主谓宾','主系表','双宾语与宾语补足语','必需与附加成分'],[
-        ['先找完整谓语','has been repaired、may have left 都是由多个词组成的谓语动词结构，不能按动词词数数出多个独立谓语。He enjoys reading 中 enjoys 是限定谓语，reading 是它支配的非谓语成分。'],
-        ['用动词用法识别骨架','Birds fly 是主谓；She likes music 是主谓宾；She seems tired 是主系表。感官动词的性质取决于用法：look tired 是系表，look at the picture 则表示看的动作。'],
-        ['区分两个宾语与宾补','She gave me a map 中 me 与 a map 是接收者和物品；They called her captain 中 captain 说明 her 的身份，是宾补。后一个成分是否在描述前一个宾语，是重要线索。'],
-        ['不要任意删除必需补足成分','She put the key on the shelf 中地点是 put 这个用法通常要求的信息；She read on the train 中地点只是附加信息。五种基本句型是学习框架，不能据此把所有地点短语都视为可删状语。']
-      ],[
-        ['系表结构缺少系动词','The children very excited.','The children are very excited.','excited 是形容词，不能独自承担这句完整陈述的谓语；需要 are 连接主语与状态。'],
-        ['把 explain 套成双宾语结构','Please explain me the rule.','Please explain the rule to me.','标准用法是 explain something to someone；不能因为 give me a book 可用，就把所有传递信息的动词都套成双宾语。']
-      ],[
-        ['The old bridge has been repaired.','那座旧桥已经修好了。','The old bridge 整体作主语；has been repaired 是完成式被动谓语，没有另一个独立分句。'],
-        ['We found the classroom surprisingly quiet.','我们发现教室安静得出奇。','the classroom 是宾语，surprisingly quiet 整体说明宾语状态，是宾补；quiet 的词性仍是形容词。']
-      ]),
-    questions:detail(
-      '疑问句通过句型或疑问词询问信息。判断语序时，要先分清它是独立问句还是嵌入其他句子中的疑问从句，再看疑问词本身是否已经作主语。',
-      ['一般疑问句','特殊疑问句','主语与宾语提问','选择疑问句','反意疑问句'],[
-        ['先找助动词','有 be、情态动词或完成式助动词时，通常把相应成分置于主语前。一般现在、过去时的普通实义动词用 do、does、did 帮助提问，后面的实义动词恢复原形。'],
-        ['主语提问不重复添加主语','Who opened the box? 中 who 就是 opened 的主语，普通肯定问句不再加 did。Who did you invite? 中 who 是宾语，you 才是主语，因此需要 did。'],
-        ['间接疑问使用陈述语序','I wonder where she works 中 where she works 是嵌入从句，采用主语在谓语前的语序。外层即使是 Could you tell me…? 这样的问句，内部也不照搬直接问句倒装。'],
-        ['按交际目的和事实回答','Tea or coffee? 通常直接选择一项。Didn’t she come? 若她确实来了，答 Yes, she did；若没来，答 No, she didn’t。反意问句还需检查 never、seldom 等否定含义。']
-      ],[
-        ['把直接问句语序搬进从句','Could you tell me where is the station?','Could you tell me where the station is?','where 从句是 tell 的内容，内部用 the station is；疑问发生在外层 Could you…?。'],
-        ['did 后仍用过去式','Who did you invited?','Who did you invite?','过去时已由 did 表达，后面的 invite 用原形。这里 who 是 invite 的宾语，you 才是主语。']
-      ],[
-        ['Who sent you these photos?','谁给你发了这些照片？','who 本身作 sent 的主语，不需要额外的 did。'],
-        ['Do you know which train we should take?','你知道我们该坐哪班火车吗？','外层 Do you know 提问；which train 是嵌入从句的宾语，内部保持 we should take 的陈述语序。']
-      ]),
-    coordination:detail(
-      '并列把句法地位能够对应的词、短语或分句连接起来。并列可以共用主语、助动词等成分；有几个动词或连词，并不能直接决定句子包含几个独立分句。',
-      ['词与短语并列','并列谓语','独立分句并列','共同成分与省略'],[
-        ['先确认并列发生的层级','apples and oranges 是名词并列；in the library and at home 是介词短语并列；She opened the window and sat down 是同一主语下的并列谓语。不要把后两种自动算成两个独立句。'],
-        ['分句之间需要合法连接','两个独立分句可用句号、分号，或 and、but、so 等并列连词连接。however 是连接性副词，通常不能仅靠一个逗号把两个独立句连在一起。'],
-        ['逻辑关系与结构一起检查','and 表添加，but 表转折，or 可表选择或否则，so 表结果。复杂句可以包含多个连词，只要它们分别连接不同层级；不能机械规定“一个句子只能有一个连词”。'],
-        ['省略必须能够还原','She has checked the figures and written the report 中第二部分共用 has。还原后各部分都应结构成立；不要删掉只有某一动词需要的介词、宾语或其他必要成分。']
-      ],[
-        ['只用逗号粘连独立句','The room was cold, we closed the window.','The room was cold, so we closed the window.','两边各有独立主谓结构，普通正式书面语需要连词或更强的句界标点。'],
-        ['把 however 当作并列连词','I checked twice, however, I missed the error.','I checked twice; however, I missed the error.','however 表句间转折，但不是 but 那样的并列连词；分号先建立两个独立分句的边界。']
-      ],[
-        ['Maya unlocked the door and switched on the lights.','玛雅打开门锁，并打开了灯。','两个动作共用主语 Maya，是并列谓语。'],
-        ['I stayed because it was raining, but Leo went out.','因为下雨，我留了下来，但利奥出去了。','but 连接两个主干；because 从句只依附 I stayed，两个连词各有自己的连接层级。']
-      ]),
-    reported:detail(
-      '间接引语从转述者的视角重述他人的话。转换时既要处理陈述、提问或要求的句型，也要检查人物指向、时间地点和语序，不能只删去引号。',
-      ['陈述内容转述','一般与特殊疑问转述','请求与命令转述','人称、时间与视角'],[
-        ['按言语行为选择结构','陈述常用 say that… 或 tell someone that…；疑问用 ask if/whether… 或保留疑问词；要求可用 tell/ask someone to do，否定要求用 not to do。suggest 通常不套 suggest someone to do。'],
-        ['间接疑问恢复陈述语序','“Where are you staying?” 可转为 He asked where I was staying。一般疑问需要 if 或 whether，不能把原问句的助动词倒装和问号机械保留在从句里。'],
-        ['时态后移要看参照时间','过去的转述常把 is 变 was、will 变 would、has done 变 had done；但普遍真理、仍然成立的事实或保持当前视角时，可不机械后移。重点是转述时间与原话所指时间的关系。'],
-        ['人称和时空表达按真实关系调整','I、you 对应谁取决于原说话人、听话人和转述者。today、here、this 等只有在指称视角改变时才相应改写，不能无条件替换成 that day、there、that。']
-      ],[
-        ['tell 后遗漏人物对象','She told that the meeting was over.','She told us that the meeting was over.','tell 在这类转述中通常需要人物对象；也可改为 She said that the meeting was over。'],
-        ['间接疑问保留倒装','He asked where did I live.','He asked where I lived.','where I lived 是 ask 的内容从句，内部用陈述语序，不再使用 did I live。']
-      ],[
-        ['Nora said that she would call me the next morning.','诺拉说她第二天早上会给我打电话。','would 表示从过去转述立足点看将来；she、me 和 the next morning 按转述者视角组织。'],
-        ['The guide asked us not to touch the paintings.','导游请我们不要触碰画作。','转述否定请求用 ask someone not to do，不照搬原祈使句的 Don’t。']
-      ]),
-    'there-be':detail(
-      'there be 用来引入某处或某时存在的人、物或情况。there 在这里承担存在句的结构作用，不等于地点副词“在那里”；存在对象通常放在 be 后面。',
-      ['肯定、否定与疑问','存在对象与数的一致','时态与情态变化','存在与拥有'],[
-        ['先表达存在，再补充位置','There is a note on the desk 的存在对象是 a note，on the desk 说明地点。have 通常表达某个主语拥有或具有某物，不能在同一个简单结构中把 there 和 have 混拼。'],
-        ['根据对象及表达场合选择 be','There is a chair 与 There are three chairs 分别对应单复数。并列存在对象常受就近因素影响；正式表达可把同类对象归组或改写，避免仅依赖口语 there’s 加复数的形式。'],
-        ['时间变化主要体现在 be 结构','过去可用 there was/were，将来用 there will be，完成形式用 there has/have been。情态动词后保持 be 原形，如 there may be a delay。'],
-        ['后置修饰不是第二个独立谓语','There is a student waiting outside 中 waiting outside 修饰 student；There is a student who is waiting outside 用定语从句表达。两种结构不要随意混接。']
-      ],[
-        ['把存在句与 have 混拼','There have two windows in the room.','There are two windows in the room.','此处要表达房间里存在两扇窗，用 there are；也可说 The room has two windows。'],
-        ['将来结构遗漏 be','There will a new library here.','There will be a new library here.','will 是情态助动词，后面需要 be 原形，不能直接跟存在对象。']
-      ],[
-        ['There has been a change to the timetable.','时刻表发生了变化。','has been 是存在句的现在完成形式，a change 为单数存在对象。'],
-        ['Are there any seats near the window?','窗边有座位吗？','一般疑问把 are 放在 there 前；seats 为复数，使用 are。']
-      ]),
-    parallelism:detail(
-      '平行结构要求并列成分能够在同一层级履行相称的句法功能。判断依据是动词搭配、成分功能和表达逻辑，而不是机械要求所有单词具有相同词尾。',
-      ['名词性成分并列','非谓语并列','谓语与短语并列','关联结构的对应位置'],[
-        ['先看共同支配成分','enjoy reading and swimming 中两个动名词都作 enjoy 的宾语；be interested in reading and writing 中两个动名词共同受介词 in 支配。不能把 to do 随意接到这类位置。'],
-        ['把成对连接词放在对应成分前','not only A but also B、either A or B 的两个标记应引出同一层级、功能相称的部分。先确认到底在比较人物、动作还是完整分句，再安排连接词的位置。'],
-        ['共同部分可以省略','She wants to learn and improve 中两个动词共用 to。She has planned the trip and booked the tickets 中两个分词共用 has。省略后的结构必须能按原义还原。'],
-        ['不要把表面一致当作唯一标准','a doctor and a skilled teacher 可以并列，名词短语长度不同不构成错误。真正要排查的是某一项是否违反共同动词、介词或句型对其形式的要求。']
-      ],[
-        ['enjoy 后混入不定式','She enjoys reading and to swim.','She enjoys reading and swimming.','enjoy 在此支配动名词宾语；and 后的第二项也须满足这一搭配要求。'],
-        ['介词后的并列项目形式不成立','He is interested in drawing and to paint.','He is interested in drawing and painting.','drawing 与 painting 共同作 in 的宾语，不能把不定式直接放在同一个介词宾语位置。']
-      ],[
-        ['The course teaches planning, editing and presenting.','这门课教授策划、编辑和展示。','三个动名词在同一层级作 teaches 的宾语。'],
-        ['The new library is not only quiet but also easy to reach.','新图书馆不但安静，而且交通方便。','quiet 与 easy to reach 都是描述主语的形容词性表语，长度不同但功能相称。']
-      ]),
-    auxiliaries:detail(
-      '助动词帮助中心动词表达时态、语态、疑问、否定或强调。be、do、have 也能独立作系动词或实义动词，必须结合后面的结构判断，不能见到一个词就给整句定时态。',
-      ['be 与进行、被动','have 与完成','do 与疑问、否定、强调','实义用法与组合顺序'],[
-        ['用后续词形识别功能','be + doing 常构成进行；be + done 可构成被动；have + done 构成完成。She is calm 是 be 作系动词，She has a bike 是 have 作实义动词，都不能按外形误判。'],
-        ['一般时实义动词借助 do','Do they agree?、She doesn’t agree、He did agree 中，do 的形式承载相应人称或过去信息，中心动词 agree 用原形。有 be 或情态助动词的相关结构不再额外叠加普通 do。'],
-        ['组合次序与词形相互约束','may have been repaired 中，may 后接原形 have，have 后接过去分词 been，be 的过去分词 been 后再接 repaired 构成被动。不是把几个助动词随意相加。'],
-        ['助动词可以保留以避免重复','“Can she swim?”“Yes, she can.” 中省去已知的 swim，但 can 仍保留情态信息。疑问和否定通常作用于第一个相应助动词，如 Has she been waiting?。']
-      ],[
-        ['does 后重复第三人称单数','Does she knows the answer?','Does she know the answer?','does 已标示第三人称单数，后面的 know 采用原形。'],
-        ['have 后误用过去式','They have wrote the report.','They have written the report.','完成结构要求过去分词 written，不能因为 wrote 也表示过去就替代它。']
-      ],[
-        ['The files may have been deleted.','这些文件可能已经被删除了。','may 表可能，have been deleted 组合完成与被动；多个词共同构成一个谓语动词结构。'],
-        ['I do understand your concern.','我确实理解你的担心。','do 在肯定句中加强语气，understand 仍用原形。']
-      ]),
-    can:detail(
-      'can 可表达能力、许可和一般可能性；could 可用于过去能力、较委婉的请求或假设等。情态过去形式不一定表示过去时间，选择时应先判断说话目的。',
-      ['能力与 be able to','许可与请求','一般可能性','could 的过去与委婉用法'],[
-        ['能力与具体成功分开判断','can 描述目前有能力做某事。could 可描述过去一般能力；肯定句中某一次实际克服困难做到的事，常用 was able to 或 managed to 更清楚，但否定、感官等用法有各自情况。'],
-        ['请求的委婉度不是时间变化','Could you open the window? 是现在的委婉请求，不是询问过去。Can I…? 可询问许可；can 还可表示事物有时会出现的情况，如 Roads can be slippery。'],
-        ['组合能力结构适配其他时态','will be able to、has been able to 可表达 can 本身不具备的某些时态组合。普通情态助动词之间不能写成 will can，也不能用 to can 表达对应不定式。'],
-        ['否定和推测依语境判断','can’t 可表示不能、不允许，或根据证据判断不可能。It can’t be his bag 是推测，不是在说某人的能力；不能只按一个中文译词理解。']
-      ],[
-        ['can 后添加 to','My brother can to drive.','My brother can drive.','can 后接动词原形，不带不定式符号 to。'],
-        ['把两个情态助动词直接叠加','We will can finish tomorrow.','We will be able to finish tomorrow.','需要将来能力时用 will be able to；不能在标准英语中组合 will can。']
-      ],[
-        ['Could you check this number for me?','你能帮我核对一下这个数字吗？','could 表现在的委婉请求，不表示核对发生在过去。'],
-        ['After several attempts, we managed to open the lock.','试了几次后，我们终于打开了锁。','managed to 明确表示这一次实际成功，区别于泛指过去具备的能力。']
-      ]),
-    must:detail(
-      'must 常表示必须做的要求，或根据证据作较有把握的推断。mustn’t 表禁止，而“不必”通常用 needn’t 或 don’t have to；否定改变的不只是语气强弱。',
-      ['义务与必要','禁止与不必','现在推测','过去推测与过去义务'],[
-        ['要求的来源只是常见倾向','must 常突出说话人的要求，have to 常突出实际条件，但两者并非绝对划界。普通过去的必要性通常用 had to，不能给 must 简单加 -ed。'],
-        ['禁止不同于没有必要','You mustn’t enter 表不许进入；You don’t have to enter 表没有必要进入，并不禁止。选词前先明确想表达禁令还是免除要求。'],
-        ['推测看证据及所指时间','He must be tired 是对当前状态的推测；He must have forgotten 是对过去的推测，不是“过去必须忘记”。否定推测通常可用 can’t/couldn’t，而非一律套 mustn’t。'],
-        ['结构内部仍需原形','must 后接原形；推测过去时用 must have + done，推测进行中的情况可用 must be doing。不要把主语单复数重复加到后面的动词上。']
-      ],[
-        ['must 后加 to','You must to wear a helmet.','You must wear a helmet.','must 是情态助动词，后面直接接动词原形 wear。'],
-        ['给 must 机械添加过去式词尾','We musted leave before six.','We had to leave before six.','过去的普通必要性用 had to；must 没有 musted 这种过去式。']
-      ],[
-        ['You must not share this password.','你不得分享这个密码。','must not 表禁止，不是“可以不分享”。'],
-        ['The lights are off. They must have gone home.','灯都关了。他们一定已经回家了。','must have gone 根据当前线索推测过去已发生的动作。']
-      ]),
-    should:detail(
-      'should 常表达建议、责任或对事情的合理预期。should have done 可表达过去本应做而未做，也可表达按时间推断应该已经完成，具体含义由语境决定。',
-      ['建议与责任','合理预期','should have done','否定与相关结构'],[
-        ['建议并不等于强制命令','You should rest 建议休息，通常比 must 的要求弱。ought to、had better 等也能提出建议，但结构和语气不同：had better 后接原形，常暗示不这样做会有后果。'],
-        ['根据语境区分预期与义务','The train should arrive soon 表按安排预计快到了；Everyone should check the figures 可表示应尽的责任。不要见到 should 就统一翻成“本应该却没有”。'],
-        ['完成形式不总表示遗憾','You should have called 常可批评过去没打电话；The parcel should have arrived by now 常表达应该已到的预期，是否实际到达尚待核实。先看上下文是否说明事实。'],
-        ['与虚拟建议从句建立联系','I suggest that she (should) check it again 中的 should 属于建议类内容从句的结构选择；这里的 check 不随 she 加 -s。它与独立句中的日常建议可分开学习。']
-      ],[
-        ['should 后添加 to','You should to check the label.','You should check the label.','should 后直接接动词原形，不能照搬 ought to 的形式。'],
-        ['完成结构误用 has','He should has finished by now.','He should have finished by now.','should 后用原形 have；完成结构再由 have 与过去分词 finished 组成。']
-      ],[
-        ['You should back up your notes regularly.','你应该定期备份笔记。','should 提出日常建议，back up 用原形。'],
-        ['The bus should have reached the airport by now.','公交车现在应该已经到机场了。','这句可表达对已完成情况的预期，并不自行断定公交车没有到达。']
-      ]),
-    countable:detail(
-      '可数性说明名词在某个具体词义和用法中能否按个体计数。它不是只靠中文意思或词尾就能确定的永久标签；同一个词可因表示物质、个体、份数或种类而改变用法。',
-      ['可数单数与复数','不可数用法','单位数量表达','词义变化与用法转换'],[
-        ['单数可数名词通常需要限定','普通单数可数名词常用 a、the、my、this 等限定。复数名词可泛指一类事物；不可数名词通常不直接与 a/an 或普通数词搭配。the 则可用于多种数和可数性。'],
-        ['把单位变复数','advice、information、equipment 在常见义中不可数，计数可说 two pieces of advice。发生复数变化的是 piece 等单位，不是把 advice 直接改成 advices。'],
-        ['同一名词可在不同义项间转换','chicken 可指鸡肉或一只鸡；coffee 常指饮品，two coffees 在点单语境中可指两份咖啡。转换有真实语义和语境依据，不能据此给任何不可数名词任意添加 a。'],
-        ['检查数量词与主谓一致','many/few 常接复数可数名词，much/little 常接不可数名词；不可数名词作主语通常配单数谓语。数量单位短语作主语时还要看单位中心词，如 two bottles of water are…。']
-      ],[
-        ['把 advice 直接计数','She gave me two advices.','She gave me two pieces of advice.','advice 在表示建议的常见用法中不可数，使用 pieces 等单位来表达条数。'],
-        ['把 furniture 当普通复数','The furniture are new.','The furniture is new.','furniture 是不可数集合称谓，并非由形式隐含复数就配 are；这句使用单数谓语 is。']
-      ],[
-        ['There is little information about the route.','关于这条路线的信息很少。','information 为不可数用法，与 little 和 is 搭配。'],
-        ['We ordered two coffees and a sandwich.','我们点了两份咖啡和一个三明治。','coffees 在点单语境中表示两份饮品，是有语境支持的可数用法。']
-      ]),
-    articles:detail(
-      '冠词位于名词短语中，帮助建立泛指、特指等指称关系。选择 a/an、the 或零冠词时，要结合名词的可数性、单复数以及听话人能否识别所指对象。',
-      ['a 与 an','the 与可识别对象','零冠词与泛指','专有名词与固定搭配'],[
-        ['a/an 根据紧接词的发音','a university 的 university 以辅音音素开头，an hour 的 hour 以元音音素开头。名词前有形容词时，也看紧接冠词的词，如 an unusual idea。'],
-        ['特指不只来自前面提到过','前文提到、共同知识、现场语境或后置限定，都可能让对象可识别，从而使用 the。the 可与单数、复数、不可数名词搭配，不只用于单数。'],
-        ['泛指要与名词数配合','A tiger is a wild animal、Tigers are wild animals 都可在合适语境中泛指。复数可数名词及不可数名词泛指常用零冠词，如 Music helps me relax。普通单数可数名词通常不能直接裸用。'],
-        ['固定表达与限定词不能机械叠加','go to school 与 go to the school 的指向可能不同；at night、in the morning 按搭配学习。the、my、this 通常不能直接叠加到同一名词前，不能写 the my book。']
-      ],[
-        ['仅按首字母选择 a/an','She studies at an university.','She studies at a university.','university 的开头发音为辅音音素 /j/，因此用 a，不按字母 u 单独判断。'],
-        ['单数可数名词缺少限定','He is engineer.','He is an engineer.','engineer 在此是单数可数普通名词，介绍职业身份需要相应限定；按起始元音音素使用 an。']
-      ],[
-        ['I found a key. The key was under the sofa.','我找到了一把钥匙。那把钥匙在沙发下面。','先用 a 引入某把钥匙，再用 the 指向已经建立的对象。'],
-        ['The water in this bottle is warm.','这只瓶子里的水是温的。','water 虽然不可数，但由 in this bottle 限定为可识别对象，可以使用 the。']
-      ]),
-    possession:detail(
-      '名词所有格及相关结构表达所属、人物关系、来源等关联，不只限于实际拥有。选择 ’s、of 或名词前置修饰，要看中心词、语义关系和自然搭配。',
-      ['单数与复数所有格','共同与分别所有','of 结构','双重所有格与名词修饰'],[
-        ['根据原名词的形式添加所有格','单数名词一般加 ’s；规则 -s 复数一般只加 ’，如 the students’ room；不规则复数仍加 ’s，如 the children’s room。不要把所有格标记误当复数词尾。'],
-        ['共有与各有要说清楚','Tom and Maya’s office 常表达两人共用的办公室；Tom’s and Maya’s offices 表达各自的办公室。标记位置还要和中心名词的数以及真实关系协调，不能脱离语境判错。'],
-        ['of 与 ’s 都不只表示财产','the roof of the house 表部件关系；today’s meeting 表时间关联；a friend of my brother’s 常表示我兄弟的某一位朋友。of 后出现所有格在这种双重所有格中有自己的意义。'],
-        ['名词修饰与所有格不是一回事','a school bus 用 school 说明类别或用途；a student’s bag 说明某位学生相关的包。前置名词常用单数但存在 sports 等固定形式，不能一律加所有格或一律改单数。']
-      ],[
-        ['单数人物所属缺少标记','My sister bicycle is outside.','My sister’s bicycle is outside.','表达“我姐姐的自行车”需要在 sister 后标出所有格关系，不能把人物词组直接无标记拼在名词前。'],
-        ['不规则复数误套仅加撇号','The childrens’ books are here.','The children’s books are here.','children 本身已是不规则复数，并不以复数 -s 结尾；所有格用 children’s。']
-      ],[
-        ['The students’ projects are on display.','学生们的项目正在展出。','students 是以 -s 结尾的规则复数，所有格在词尾加撇号。'],
-        ['A friend of my aunt’s designed this garden.','我姨妈的一位朋友设计了这座花园。','a friend of my aunt’s 是双重所有格，常表示朋友中的一位。']
-      ]),
-    pronouns:detail(
-      '代词可以指代人物、事物或内容，也可用于疑问、不定指和从句连接。既要判断形式在句中的作用，也要确保读者能清楚识别它指向谁或什么。',
-      ['人称与物主形式','反身与相互代词','指示与不定代词','连接与关系代词','指代衔接'],[
-        ['先看句法位置，再选形式','I/he/we 等通常作主语，me/him/us 等作动词或介词宾语。my 后需有被限定的名词，mine 可独立替代相应物主名词短语。反身代词用于主语自身或强调，不是普通主格的正式替代。'],
-        ['不定指要核对范围和数','both/either/neither 常关联两者；all/none 等指向的范围由语境确定。someone、nothing 等复合不定代词通常配单数谓语，形容词后置，如 something useful。单个人性别未知时可用单数 they。'],
-        ['限定与代替分开分析','This book 中 this 限定 book；This is useful 中 This 独立指物。传统教学把某些形式归为代词，按名词前功能又可称限定词，两种分类角度有交叉。'],
-        ['避免替代对象不清','it 常指同一具体对象，one/ones 可代替同类可数对象，that/those 可在比较中替代相关名词。Tom told Jack that he was late 可能指代不明，需要语境或改写明确，而不是只检查人称形式。']
-      ],[
-        ['介词后误用主格','The message is for she.','The message is for her.','介词 for 后使用宾格 her，不使用主格 she。'],
-        ['把独立物主形式放到名词前','This is mine notebook.','This is my notebook.','名词 notebook 前用物主限定形式 my；mine 可独立使用，如 This notebook is mine。']
-      ],[
-        ['Someone has left their umbrella by the door.','有人把伞落在门边了。','someone 配 has；their 可作为性别未知的单个人的指代形式，不必强制改为 his。'],
-        ['I lost my pen, so I bought a new one.','我把笔弄丢了，所以又买了一支。','one 代替同类可数名词 pen，并不指丢失的同一支笔。']
-      ]),
-    quantifiers:detail(
-      '数量词限定事物的数量、程度或范围。选择时既要核对名词的可数性，也要区分“有一些”与“几乎没有”等语气，不能只把不同形式视为同义替换。',
-      ['many 与 much','few/a few 与 little/a little','some 与 any','all、both、each 等范围'],[
-        ['数量形式与名词类型对应','many、(a) few 常接复数可数名词；much、(a) little 常接不可数名词；a lot of、plenty of 可接两类。单位表达中的数要看中心单位，如 several bottles of water。'],
-        ['a 的有无改变信息重点','a few/a little 表有一些，常偏肯定；few/little 表很少、几乎不够，常偏否定。两种形式不只是正式程度不同，选词应与真实数量和说话人的评价一致。'],
-        ['some/any 不只由问号决定','some 常见于肯定陈述，也用于期待肯定回答的邀请或请求，如 Would you like some tea?。any 可见于疑问、否定，也可在肯定句中表示任一，如 Choose any seat。'],
-        ['名词短语的限定方式影响结构','many books 与 many of the books 结构不同，of 后常指向一个已经限定的范围。each、every 等与谓语数的关系还需结合整个主语中心；不要只看最近的名词。']
-      ],[
-        ['much 与可数复数直接搭配','There are much chairs here.','There are many chairs here.','chairs 为可数复数，表达许多用 many；much 通常限定不可数名词。'],
-        ['用 few 限定不可数名词','We have a few information.','We have a little information.','information 为不可数用法，少量使用 a little；也可用 a few pieces of information 表示几条。']
-      ],[
-        ['We still have a few minutes before the train leaves.','火车开动前，我们还有几分钟。','a few 表示仍有一些时间；minutes 是可数复数。'],
-        ['Would you like some more water?','你想再喝点水吗？','邀请通常期待对方接受，可以在疑问句中使用 some；water 是不可数名词。']
-      ]),
-    adjadv:detail(
-      '形容词常描述名词或通过系动词说明状态；副词常修饰动作、形容词、副词或整句。选择词形要看实际修饰关系和句型，不能仅凭中文含义或 -ly 词尾。',
-      ['定语、表语与宾补','方式与程度副词','同形词','-ly 词的例外'],[
-        ['描述人或物时看形容词位置','a careful driver 中 careful 作定语；The driver seems careful 中作表语；We found him careful 中作宾补。表语和宾补是句子成分名称，careful 的词性仍是形容词。'],
-        ['描述动作方式时通常用副词','She drives carefully 中 carefully 说明开车的方式；very carefully 中 very 再修饰副词。方式副词通常放在动词或宾语之后，不随意隔开动词和较短宾语。'],
-        ['系动词后不因出现动词就用副词','The soup smells good 中 smells 是系动词，good 描述汤。He smelled the soup carefully 中 smelled 表闻的动作，carefully 描述动作方式。'],
-        ['同形和词尾例外需要结合用法','fast、hard、early 可既作形容词也作副词；friendly、lovely 通常是形容词。hardly 常指几乎不，不能把它当作 hard 的普通方式副词形式。']
-      ],[
-        ['把副词误作系动词后的状态表语','The plan sounds reasonably.','The plan sounds reasonable.','sounds 在此为系动词，后面用形容词 reasonable 说明 plan 的性质；reasonably 不能单独作这个表语。'],
-        ['动作方式误用形容词','She answered the question careful.','She answered the question carefully.','要说明 answered 这个动作的方式，通常使用副词 carefully，而不是形容词 careful。']
-      ],[
-        ['The instructions are clear, and the guide speaks clearly.','说明很清楚，导游也讲得很清楚。','clear 通过 are 描述说明的性质；clearly 修饰 speaks 的方式。'],
-        ['The early train arrived early.','早班火车早早地到了。','第一个 early 修饰 train，是形容词；第二个 early 修饰 arrived，是副词，词形相同。']
-      ]),
-    'ing-ed':detail(
-      '许多由分词发展来的形容词用 -ing 描述引起某种感受的特征，用 -ed 描述感受或受影响的状态。区别依据是语义关系，不是“人一律用 -ed，物一律用 -ing”。',
-      ['引发感受的特征','感受与受影响状态','形容词与动词结构','常见介词搭配'],[
-        ['先问它在描述什么关系','an exciting story 指故事令人兴奋；an excited reader 指读者感到兴奋。人也可以是 boring 的，因为人的行为可能让别人无聊；动物也可能感到 frightened。'],
-        ['同一对象可以有不同描述','She is interesting 说她有趣、能引起兴趣；She is interested 说她对某事感兴趣。两句都可能正确，不能不看原意就把其中一个判错。'],
-        ['留意形容词的补充成分','interested in、bored with、pleased with 等常见搭配一起学习。补充对象帮助明确是谁对什么产生感受，不能随意按中文“对”统一换成同一介词。'],
-        ['相同词形不等于相同句法作用','The lecture is interesting 中 interesting 作表语形容词；The speaker is explaining 中 explaining 参与进行时谓语。be + -ing 的外形不能自动决定分析。']
-      ],[
-        ['interested 的介词搭配错误','She is interested on astronomy.','She is interested in astronomy.','表达对某领域感兴趣，常用 interested in，而不是按中文“在某方面”随意选 on。'],
-        ['感受形容词缺少相应词形','They were very interest in the exhibition.','They were very interested in the exhibition.','这里要用描述感受的形容词 interested 作表语；interest 的名词或动词原形不能直接放在 very 后承担这个任务。']
-      ],[
-        ['The documentary was fascinating, and we were fascinated by it.','这部纪录片很吸引人，我们都被它吸引了。','fascinating 描述影片的吸引力；fascinated 描述观众受影响的状态。'],
-        ['He is an interesting teacher who is interested in history.','他是一位有趣而且对历史感兴趣的老师。','同一个人既可用 interesting 描述其特征，也可用 interested 描述其感受。']
-      ]),
-    comparison:detail(
-      '比较结构表达对象在性质、数量或程度上的关系。除了比较级词形，还要核对比较的是同类对象、比较范围是否包括本人，以及省略后是否保留原意。',
-      ['原级同级比较','比较级与 than','最高级与范围','关联比较与对象替代'],[
-        ['构成形式避免重复标记','短词常用 -er/-est，较长词常用 more/most；good/well → better → best 等要单记。通常不把 more 与 taller 叠加，也不用 very 直接修饰普通比较级；可用 much、far、a little 等。'],
-        ['同级比较用原级','as…as… 中间通常放原级，如 as carefully as。名词数量的 many/much 要与可数性一致；as good a teacher as 这种结构里，a 的位置也要一起掌握。'],
-        ['最高级必须有清楚范围','one of the best books 中 books 用复数，整体中心是 one。已有 my 等限定词时不再添加 the，如 my best friend。副词最高级前 the 有时可以省略，不按形容词名词短语一刀切。'],
-        ['比较对象保持同类','The weather here is warmer than that in my hometown 用 that 替代 weather。和同一组其他成员比较时常需 other 排除本人，如 taller than any other student in the class；倍数比较优先用 twice as long as 等避免总量与增量歧义。']
-      ],[
-        ['重复使用比较级标记','This route is more shorter.','This route is shorter.','shorter 已有 -er 比较标记，不再叠加 more。若强调程度可说 much shorter。'],
-        ['one of 后误用单数名词','This is one of the most useful tool.','This is one of the most useful tools.','one of 表示在一组对象中取其一，of 后的可数名词使用复数 tools。']
-      ],[
-        ['The more carefully you plan, the fewer mistakes you make.','计划得越仔细，犯的错误就越少。','carefully 修饰 plan；fewer 限定可数复数 mistakes，两个 the 标示关联比较。'],
-        ['This bridge is twice as long as the old one.','这座桥的长度是旧桥的两倍。','twice as long as 明确比较总长度，one 替代同类名词 bridge。']
-      ]),
-    'degree-order':detail(
-      '副词的位置由修饰对象、句型和信息重点决定。频率、方式、时间、地点和程度副词各有常见位置；这些是使用倾向，不能把所有副词固定放到同一个地方。',
-      ['频率副词','方式、地点、时间','程度副词','enough、too 与比较级修饰'],[
-        ['频率副词先找 be 与助动词','often、usually 等常在普通实义动词前、be 后或第一个助动词后，如 often reads、is usually ready、has often helped。强调和不同副词可能改变位置，不把口诀当作绝对禁令。'],
-        ['方式副词不要随意拆开短宾语','She checked the answer carefully 中 carefully 说明检查的方式。多个句末状语常按方式—地点—时间组织，但为了衔接和强调可调整，并非只有一个合法顺序。'],
-        ['程度副词看修饰对象与习惯搭配','very useful、extremely slowly 中程度词在被修饰词前；enough 修饰形容词、副词时通常后置，如 warm enough。enough 限定名词时则前置，如 enough time。'],
-        ['比较级和原级使用不同修饰语','much better、a little faster 是自然组合；very 通常修饰原级，不直接套在普通比较级前。too…to… 表示超过合适程度，要结合整体结构理解其结果。']
-      ],[
-        ['enough 修饰形容词时位置错误','The room is enough warm.','The room is warm enough.','enough 说明形容词 warm 的程度时通常放在后面；与 enough water 等名词结构的位置不同。'],
-        ['very 直接修饰普通比较级','This version is very better.','This version is much better.','better 是比较级，表示程度差可用 much；通常不能用 very 直接修饰。']
-      ],[
-        ['She has always checked the address carefully.','她一向都仔细核对地址。','always 位于第一个助动词 has 后；carefully 在宾语后说明动作方式。'],
-        ['We have enough time to make the explanation clear enough.','我们有足够的时间，把解释说得足够清楚。','第一个 enough 在名词 time 前；第二个 enough 修饰形容词 clear，放在其后。']
-      ]),
-    prepositions:detail(
-      '介词与其名词性宾语组成介词短语，表示时间、地点、方向、方式或逻辑关系。短语整体可作定语、状语或表语，具体作用取决于它在上层句子中的关系。',
-      ['时间、地点与方向','方式、工具与对象','介词宾语与短语功能','介词、连词、副词的区别'],[
-        ['按实际关系选择介词','at six、on Monday、in June 是常见时间搭配；into 表进入内部，through 常表从内部穿过。by bus 表方式，with a knife 表工具；不要按中文“在”“用”统一选择一个介词。'],
-        ['宾语使用名词性成分','介词后可接名词、宾格代词、动名词等，如 after class、with her、by practising。look forward to 中的 to 是介词，后接 doing；want to 中的 to 则引出不定式原形。'],
-        ['根据后续结构区别相同词形','after the lesson 中 after 是介词；after the lesson ended 中它引入分句，按传统教学分析为连词。Come in 中 in 可单独作副词，in the room 中则带宾语构成介词短语。'],
-        ['找出短语真正修饰的对象','the girl in blue 中介词短语修饰名词；She waited in the hall 中说明动作地点。带望远镜看男孩之类表达可能存在修饰歧义，应通过改写说明是工具还是人物特征。']
-      ],[
-        ['介词后直接接普通动词原形','We look forward to meet you.','We look forward to meeting you.','look forward to 的 to 是介词，后面的动词使用具有名词性作用的 -ing 形式。'],
-        ['because of 后误接完整分句','We stayed because of it was raining.','We stayed because it was raining.','because 引导原因分句；because of 通常接名词性成分，可说 because of the rain。']
-      ],[
-        ['The folder on the desk contains the answers.','桌上的文件夹里装着答案。','on the desk 在名词短语内部修饰 folder，不能把 desk 当作主语中心。'],
-        ['She solved the problem by drawing a diagram.','她通过画示意图解决了问题。','by 后接动名词短语 drawing a diagram，整体说明解决问题的方式。']
-      ]),
-    phrasal:detail(
-      '短语动词由动词与小品词或介词等组合而成，整体表达一个用法。它不等于所有多词谓语；宾语能否插入、代词放哪里，都要按具体组合判断。',
-      ['可分的动词—小品词结构','不可分的介词型搭配','无直接宾语用法','三词组合'],[
-        ['整体意义与字面义一起辨认','give up 可表示放弃，put off 可表示推迟，look after 表照料；含义不能总逐词拼接。同一组合也可能有字面义和引申义，需要例句提供具体场景。'],
-        ['可分结构中的代词通常放中间','turn off the light 与 turn the light off 都可使用普通名词宾语；宾语是 it 时通常说 turn it off。选择位置不能仅凭中文语序。'],
-        ['不可分组合不拆开','look after the child、look after him 中，介词 after 与宾语保持关系，不能把 him 插到 look 与 after 之间。put up with 这类更长组合也按整体搭配掌握。'],
-        ['区分多词谓语与短语动词','has been working 是由助动词组织的谓语动词组，不是本卡片意义上的短语动词。work out 则可能组成“算出、解决”等词汇性组合，分析角度不同。']
-      ],[
-        ['可分组合的代词位置不当','Please turn off it.','Please turn it off.','turn off 为可分结构，这里的代词宾语 it 通常放在动词与小品词之间。'],
-        ['把不可分结构拆开','Could you look the baby after?','Could you look after the baby?','look after 的介词型搭配不能照搬 turn the light off 的分离方式。']
-      ],[
-        ['Please write the number down before you forget it.','趁你还没忘，请把这个号码记下来。','write down 在这里可分，普通名词宾语 the number 放在中间。'],
-        ['We had to put up with the noise all night.','我们不得不整夜忍受噪声。','put up with 作为整体表示忍受，后接宾语 the noise。']
-      ]),
-    'noun-types':detail(
-      '名词表示人、事物、地点、物质或抽象概念。专有与普通、个体与集合、具体与抽象、可数与不可数是不同分类角度，同一个名词可以同时具有其中多种特征。',
-      ['专有与普通名词','个体与集合名词','物质与抽象名词','分类角度与可数性'],[
-        ['专有名词给特定对象命名','Nora、London 是特定人物或地点的名称，通常按书写习惯大写；teacher、city 表示对象所属类别，是普通名词。专有名称前是否用 the 还要看名称惯例。'],
-        ['集合名称与语法数分开看','team、family 等用一个名词表示一组成员。作主语时可按整体或成员理解，英美用法也有差异；不能因为“里面有很多人”就一律配复数谓语。'],
-        ['抽象、物质并不自动等于永远不可数','freedom、gold 常为不可数用法，但名词可数性仍受具体词义和搭配影响。experience 表经历时可数，表经验时常不可数；分类名称不能取代实际用法判断。'],
-        ['名词类别不同于句子成分','A student asked a question 中 student 与 question 都是名词，却分别在短语中构成主语和宾语。判断“是什么词类”与“在句中做什么”要分两步。']
-      ],[
-        ['专有城市名称未按惯例大写','We visited london last spring.','We visited London last spring.','London 是城市专有名称，英语书写中首字母大写。'],
-        ['物质名词的常见用法误配复数谓语','Gold are expensive.','Gold is expensive.','gold 在这里泛指黄金，是不可数物质名词，用单数谓语 is；不能按“有很多黄金”改用 are。']
-      ],[
-        ['Experience is valuable, and this journey was a valuable experience.','经验很宝贵，这次旅行也是一次宝贵的经历。','第一个 experience 表经验，为不可数用法；第二个表示一次经历，可以与 a 搭配。'],
-        ['The library in Oxford has a large collection of maps.','牛津的那座图书馆收藏了大量地图。','Oxford 是专有名词；library、collection、maps 为普通名词，各自承担不同句子任务。']
-      ]),
-    'noun-plurals':detail(
-      '可数名词通常用单数和复数区别一个与多个个体。复数变化包括规则词尾、不规则变化和单复数同形；不可数用法不能只为了表达“很多”就直接加 -s。',
-      ['-s 与 -es','辅音字母 + y','不规则与同形复数','复合名词与单位表达'],[
-        ['规则变化结合词尾条件','大多数名词加 -s；以 s、x、ch、sh 等结尾的常加 -es，如 boxes、watches。辅音字母加 y 通常把 y 改为 ies，如 cities；元音字母加 y 则常直接加 s，如 boys。'],
-        ['不规则形式需要整体记忆','child → children、man → men、tooth → teeth 等不靠普通 -s 形成。sheep 等单复数同形，数量常由限定词和谓语体现，不能凭词尾无 s 就断定单数。'],
-        ['复合名词通常变化中心词','mother-in-law → mothers-in-law，passer-by → passers-by；部分组合变化词尾，如 grown-ups。不是所有组成词都加复数，也不是所有复合词都只改最后一个词。'],
-        ['单位词承担计数任务','two pieces of equipment 中 pieces 为复数，equipment 保持不可数形式。a five-year-old child 这样的前置复合修饰语中 year 通常用单数，与 five years old 的表语结构不同。']
-      ],[
-        ['不规则复数仍套用 -s','The childs are waiting outside.','The children are waiting outside.','child 的复数是 children，不是 childs；谓语 are 与复数主语配合。'],
-        ['辅音字母加 y 未改变词尾','These citys are connected by rail.','These cities are connected by rail.','city 以辅音字母 t 加 y 结尾，复数通常改 y 为 ies。']
-      ],[
-        ['Two sheep are standing beside the fence.','两只羊正站在围栏旁。','sheep 单复数同形；two 和 are 明确这里为复数。'],
-        ['The mothers-in-law arrived together.','几位婆婆或岳母一起到了。','复合名词 mother-in-law 的中心名词为 mother，复数变化为 mothers-in-law。']
-      ]),
-    numerals:detail(
-      '数词表示数量或顺序，包括基数词、序数词及相关分数、百分数等表达。数词可以限定名词，也可以在对象清楚时独立使用；数字形式不能单独决定整个主语的谓语数。',
-      ['基数词与序数词','具体数量与约数','分数、百分数与倍数','年龄、编号与复合修饰语'],[
-        ['基数与序数对应不同问题','three 回答多少，third 回答第几。序数词修饰普通名词常有 the 或其他限定词，如 the third chapter、my first visit；有 my 时不再叠加 the。复合数通常只把末位改为序数形式。'],
-        ['hundred 等区分明确数量与泛指','two hundred students 表明确数量，hundred 不加复数 -s，也不加 of；hundreds of students 表数百名，使用 -s 和 of。thousand、million 的相关用法也要按结构区分。'],
-        ['分数和百分数看所指名词','two thirds of the cake 与 two thirds of the students 指向不同对象，谓语须结合所指内容判断。倍数表达最好明确总量，如 twice as long as，避免“增加几倍”的中文歧义。'],
-        ['单位名词在不同结构中形式不同','a ten-minute walk 是前置复合修饰，minute 通常为单数；The walk takes ten minutes 则是数量名词短语，使用复数。Room 203 等编号常用基数词，不等同于序数排名。']
-      ],[
-        ['具体数量后的 hundred 错加 s','There are two hundreds students.','There are two hundred students.','two 表明具体数量，hundred 在这种结构中不用复数 -s，也不直接添加 of。'],
-        ['前置复合修饰语单位名词误用复数','We took a ten-minutes break.','We took a ten-minute break.','ten-minute 作为整体前置修饰 break，单位 minute 通常用单数并以连字符连接。']
-      ],[
-        ['The twenty-first lesson takes about thirty minutes.','第二十一课大约需要三十分钟。','twenty-first 是复合序数词，只变末位；thirty 为基数词，minutes 用复数。'],
-        ['Hundreds of visitors attended the two-day exhibition.','数百名参观者参加了为期两天的展览。','hundreds of 为概数；two-day 是名词前的复合修饰语，day 用单数。']
-      ]),
-    interjections:detail(
-      '感叹词直接表达惊讶、喜悦、疼痛或领悟等情绪，通常不承担后面句子的主语、谓语或宾语。它是一种词类，不能与 what/how 引导的感叹句这种句子类型画等号。',
-      ['惊讶与赞叹','疼痛与遗憾','独立表达与句首表达','感叹词和感叹句'],[
-        ['情绪由语境与语调共同确定','oh 可表示惊讶、理解或失望；wow 常表示赞叹；ouch 常表示疼痛。不要把一个感叹词固定等同于一种中文情绪，也不把所有情绪表达都归为感叹词。'],
-        ['独立成句或用标点分隔','Wow! 可以单独作为情绪反应，也可说 Wow, the view is wonderful!。后面若继续完整陈述，该陈述仍须有自己的主谓结构，感叹词不能代替系动词。'],
-        ['what/how 感叹句按其结构分析','What a useful map! 中 what 引出名词性部分；How useful this map is! 中 how 引出形容词。它们表达感叹，但不能因此把整句或所有开头词都按 oh 的独立词类处理。'],
-        ['语体需要与场景协调','感叹词常见于对话、故事和直接反应。正式说明文字中应按表达目的使用，少用无信息的重复感叹号；这属于语体选择，不是把所有感叹词判为不正式或错误。']
-      ],[
-        ['用感叹词替代谓语','I wow very happy.','Wow, I am very happy.','Wow 表情绪并独立于后面主干；I 与 happy 之间仍需要系动词 am。'],
-        ['what 感叹结构的单数名词遗漏','What a beautiful!','What a beautiful view!','what a beautiful 后需要单数可数名词中心，如 view；若直接感叹程度，可用 How beautiful!。']
-      ],[
-        ['Oh, now I understand the difference.','哦，我现在明白这个区别了。','Oh 表示领悟，是独立情绪成分；后面的 I understand 仍有完整主谓。'],
-        ['Wow! What a detailed map you have made!','哇！你做了一张多么详细的地图呀！','Wow 是感叹词；What a detailed map… 是感叹句，两种分类角度不同。']
-      ]),
-    'conjunction-types':detail(
-      '连词连接词、短语或分句，建立并列或从属关系。判断分类时要看它实际连接的层级及后面结构，而不是只看相同中文译义。',
-      ['并列连词','从属连词','关联连词','连接性副词的区别'],[
-        ['并列可以发生在多个层级','and、but、or 等可连接地位相当的成分：books and pens 连接词，worked and rested 连接谓语，I stayed, but she left 连接分句。功能相称比表面词尾相同更重要。'],
-        ['从属连词引入有依附关系的分句','because、although、if 等通常引入原因、让步或条件从句；that、whether 等也可引出内容从句。一个复杂句可包含多层连接，不是只允许出现一个连词。'],
-        ['成对结构要核对连接位置','both…and…、either…or…、not only…but also… 的对应部分应处于同一层级。连接主语时还需学习主谓一致；引出倒装分句时又有特殊语序，不能混成同一条规则。'],
-        ['连接性副词不能照搬 but 的标点','however、therefore 可表达句间逻辑，但通常不能仅凭逗号连接两个独立分句。because of 后接名词性成分，because 后接从句，也体现不同词类的结构要求。']
-      ],[
-        ['because 后误接无谓语的名词短语','We left because the heavy rain.','We left because of the heavy rain.','要保留名词短语 the heavy rain，使用 because of；若用 because，需补成分句，如 because it was raining heavily。'],
-        ['把 therefore 当普通并列连词','The path was blocked, therefore we turned back.','The path was blocked; therefore, we turned back.','therefore 是连接性副词；在这种正式书面结构中用分号建立句界，而不是只用逗号粘连。']
-      ],[
-        ['Either ask the guide or check the map.','要么问导游，要么查看地图。','either…or… 连接两个功能对应的动词短语，共同构成选择建议。'],
-        ['Although the instructions were short, they were clear.','虽然说明很短，但很清楚。','although 引导让步从句；主句不再为同一直接对应关系重复添加 but。']
-      ]),
-    emphasis:detail(
-      '强调通过特定结构突出主语、宾语或状语等信息，也可用 do/does/did 加强谓语。识别时应把突出成分还原到普通句中，而不是只凭句首出现 it 就判断为强调句。',
-      ['It is/was…that/who…','疑问与嵌入形式','not until 强调','do/does/did 强调谓语'],[
-        ['强调框架应能还原原陈述','It was Nora who sent the message 对应 Nora sent the message；It was yesterday that she called 对应 She called yesterday。强调人可用 who 或 that，其他常用 that。谓语强调通常另用 do 等方式。'],
-        ['强调疑问也受从句语序约束','When was it that she called? 是独立疑问；Do you remember when it was that she called? 把它嵌入从句后恢复 when it was 的陈述关系，不保留 was it 的倒装。'],
-        ['not until 框架后不重复倒装','It was not until noon that we left 的 that 后使用肯定陈述语序。若改成 Not until noon did we leave，才是另一种否定状语前置的部分倒装结构。'],
-        ['do 强调后中心动词用原形','She does understand、They did help 中 does/did 负责相应形式，后面的动词保持原形。It is clear that he left 中 clear 为表语、that 从句是真正主语，不能按强调框架简单删去。']
-      ],[
-        ['强调框架后重复使用疑问倒装','It was yesterday that did she arrive.','It was yesterday that she arrived.','陈述型强调句的 that 后使用正常陈述语序。若要提出疑问，应按整个强调问句的结构组织，不能在此处添加 did she。'],
-        ['does 后重复 -s','She does understands the rule.','She does understand the rule.','does 已标示第三人称单数并承担强调，中心动词 understand 需要原形。']
-      ],[
-        ['It was the final example that helped me understand.','正是最后那个例子帮助我理解了。','突出主语 the final example；还原后为 The final example helped me understand。'],
-        ['It was not until the lesson ended that he asked the question.','直到课结束，他才提出那个问题。','强调 not until 时间状语；that 后是 he asked 的肯定陈述语序。']
-      ])
-  };
+  const details = {
+  "skeleton": {
+    "definition": "学句子，先找两件事：说的是谁或什么，以及它做什么、是什么样。前一部分叫“主语”；说明动作或状态的部分叫“谓语”。",
+    "classification": [
+      "主语：说的是谁或什么",
+      "谓语：做什么或怎么样",
+      "宾语：动作指向谁或什么",
+      "表语：说明主语的样子"
+    ],
+    "usage": [
+      {
+        "h": "先找说的是谁",
+        "t": "Tom runs. 的意思是“汤姆跑步”。Tom 是我们在说的人，所以 Tom 是主语。"
+      },
+      {
+        "h": "再找动作或状态",
+        "t": "Tom runs. 中 runs 是“跑步”，说明 Tom 做什么。Tom is happy. 中 is 把 Tom 和 happy（开心的）连起来，说明他的状态。"
+      },
+      {
+        "h": "动作后面可以有人或东西",
+        "t": "I like cats. 是“我喜欢猫”。cats 是喜欢的对象，叫宾语；先记住“谁做什么，对着谁或什么”就能开始读句子。"
+      },
+      {
+        "h": "再了解一点：有的动词还要补信息",
+        "t": "Mom gives me a book. 说给谁、给什么。I put it on the desk. 还要说放在哪里；不能以为句子里的地点总能删掉。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "说状态时少了 is",
+        "wrong": "Tom happy.",
+        "right": "Tom is happy.",
+        "text": "happy 是“开心的”，不是一个完整的动作说法。介绍 Tom 的状态，要用 is 把两部分连起来。"
+      },
+      {
+        "title": "提问后没有改回基本形式",
+        "wrong": "Does Tom likes cats?",
+        "right": "Does Tom like cats?",
+        "text": "Does 已经帮助我们提问，后面的 like 用最基本的形式，不再加 s。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Tom reads a book.",
+        "zh": "汤姆读一本书。",
+        "note": "Tom 是“谁”，reads 是“做什么”，a book 是读的东西。"
+      },
+      {
+        "en": "The cat is small.",
+        "zh": "这只猫很小。",
+        "note": "The cat 是句子说的对象，is small 说明它是什么样。small 表示“小的”。"
+      }
+    ]
+  },
+  "questions": {
+    "definition": "疑问句就是用来问问题的句子。例如“你喜欢猫吗？”、“谁来了？”。不同问题会用到不同的词序；先学最常见的几种。",
+    "classification": [
+      "问“是不是”",
+      "问“谁、什么、哪里”",
+      "问谁做了这件事",
+      "把问题放进另一句话"
+    ],
+    "usage": [
+      {
+        "h": "有 is 或 are，先把它放前面",
+        "t": "She is happy. 是“她很开心”。想问“她开心吗”，就说 Is she happy?，把 is 放到 she 前面。"
+      },
+      {
+        "h": "普通动作常请 do 帮忙",
+        "t": "You like cats. 变成问题是 Do you like cats?。主语是 he、she、it 时常用 does：Does she like cats?，后面的 like 不加 s。"
+      },
+      {
+        "h": "用疑问词问具体信息",
+        "t": "what 问什么，where 问哪里，who 问谁。Who came? 中 who 本来就是“谁来了”的那个“谁”，不需要再加 did。"
+      },
+      {
+        "h": "再了解一点：转述问题时换回平常词序",
+        "t": "Where is Tom? 是直接问“汤姆在哪”。I know where Tom is. 是“我知道汤姆在哪”，里面要说 Tom is，不说 is Tom。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "did 后面还用过去形式",
+        "wrong": "Did he went home?",
+        "right": "Did he go home?",
+        "text": "did 已表示在问过去的事。后面的 go 用最基本的形式，不再用 went。"
+      },
+      {
+        "title": "把直接问句顺序放进另一句话",
+        "wrong": "I know where is Tom.",
+        "right": "I know where Tom is.",
+        "text": "这里是在说“我知道”，不是直接问“汤姆在哪”。后面用平常的 Tom is 顺序。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Do you like cats?",
+        "zh": "你喜欢猫吗？",
+        "note": "Do 帮助提出问题；you 是“你”，like 是“喜欢”。"
+      },
+      {
+        "en": "Where is my bag?",
+        "zh": "我的包在哪里？",
+        "note": "where 问位置。is 放在 my bag 前面，组成问题。"
+      }
+    ]
+  },
+  "coordination": {
+    "definition": "并列就是把地位相近的两部分放在一起说。最常见的连接词是 and（和、并且）、but（但是）、or（或者）。",
+    "classification": [
+      "连接两个词",
+      "连接两个动作",
+      "连接两句话",
+      "选择合适的关系"
+    ],
+    "usage": [
+      {
+        "h": "用 and 把东西连起来",
+        "t": "cats and dogs 是“猫和狗”。I like cats and dogs. 把两种喜欢的动物放在一起说。"
+      },
+      {
+        "h": "一个人可以做两个动作",
+        "t": "Tom reads and writes. 是“汤姆读书，也写字”。两个动作都由 Tom 做，后面不必再说一次 Tom。"
+      },
+      {
+        "h": "意思不同，选的连接词也不同",
+        "t": "and 加一条信息，but 表示前后有转折，or 给出选择。Tea or milk? 是在问“茶还是牛奶？”。"
+      },
+      {
+        "h": "再了解一点：两句完整的话要连清楚",
+        "t": "I am tired. I will rest. 可以分成两句，也可以用 so（所以）连起来。普通正式写作中，不要只放一个逗号把两句拼在一起。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "两句完整的话只用逗号连接",
+        "wrong": "I am tired, I will rest.",
+        "right": "I am tired, so I will rest.",
+        "text": "前后都能单独说成一句话。加上 so，就说清“累了，所以休息”的关系。"
+      },
+      {
+        "title": "两个选择之间重复加连接词",
+        "wrong": "You can have tea or and milk.",
+        "right": "You can have tea or milk.",
+        "text": "想说“茶或者牛奶”，在两者之间用一个 or 就够了。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I like cats and dogs.",
+        "zh": "我喜欢猫和狗。",
+        "note": "and 把 cats 和 dogs 连在一起，表示两种都喜欢。"
+      },
+      {
+        "en": "It is small, but I like it.",
+        "zh": "它很小，但是我喜欢它。",
+        "note": "but 表示前后有转折：小并没有妨碍我喜欢它。"
+      }
+    ]
+  },
+  "reported": {
+    "definition": "间接引语就是用自己的话，告诉别人某个人说过什么。例如，汤姆说“我累了”，你转告别人时可以说“汤姆说他累了”。",
+    "classification": [
+      "转告一句话",
+      "转告一个问题",
+      "转告要求",
+      "换清人物和时间"
+    ],
+    "usage": [
+      {
+        "h": "先说明是谁说的",
+        "t": "Tom said he was tired. 是“汤姆说他累了”。he 指 Tom；我们从自己的角度转告，不再照抄他说的 I。"
+      },
+      {
+        "h": "转告要求常用 to 加动作",
+        "t": "Mom told me to sit down. 是“妈妈叫我坐下”。me 说明叫的是谁，to sit down 说明要做什么。"
+      },
+      {
+        "h": "转告问题时用平常词序",
+        "t": "Where do you live? 是直接问“你住哪里”。He asked where I lived. 是“他问我住哪里”，里面不再用 do I live 的提问顺序。"
+      },
+      {
+        "h": "再了解一点：时间说法看真实情况",
+        "t": "转告过去的话时，is 常变成 was，will 常变成 would。但如果说的事现在仍成立，就不一定要变；today、here 也只在时间地点变了时才调整。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "told 后少了告诉的人",
+        "wrong": "Tom told that he was tired.",
+        "right": "Tom told me that he was tired.",
+        "text": "这里用 tell，要说明告诉谁，所以加 me。也可以说 Tom said that he was tired。"
+      },
+      {
+        "title": "转告问题时还保留问句顺序",
+        "wrong": "He asked where did I live.",
+        "right": "He asked where I lived.",
+        "text": "这里是在转告他问的内容。用 I lived 的平常顺序，不再加 did I。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Tom said he was tired.",
+        "zh": "汤姆说他累了。",
+        "note": "he 指汤姆。was 把我们带回他说话时的情况。"
+      },
+      {
+        "en": "Mom asked me to sit down.",
+        "zh": "妈妈叫我坐下。",
+        "note": "me 是被叫的人；to sit down 是妈妈让我做的事。"
+      }
+    ]
+  },
+  "there-be": {
+    "definition": "there be 用来告诉别人“某个地方有某人或某物”。例如 There is a cat. 就是“有一只猫”，不是说某个人拥有一只猫。",
+    "classification": [
+      "一个用 there is",
+      "多个用 there are",
+      "没有与有没有",
+      "与 have 的区别"
+    ],
+    "usage": [
+      {
+        "h": "一个人或东西，先用 there is",
+        "t": "There is a cat on the bed. 是“床上有一只猫”。a cat 是一只猫，所以用 is。"
+      },
+      {
+        "h": "多个人或东西，常用 there are",
+        "t": "There are two cats. 是“有两只猫”。two cats 不止一个，所以用 are。"
+      },
+      {
+        "h": "否定和提问也从 is、are 开始",
+        "t": "There is not a cat. 是“没有猫”。想问“有猫吗”，把 is 放前面：Is there a cat?。"
+      },
+      {
+        "h": "再了解一点：有变化的是 be",
+        "t": "过去可以说 There was a cat.；将来可以说 There will be a cat.。have 常表示谁拥有东西，例如 I have a cat.（我有一只猫）。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "把 there 和 have 拼在一起",
+        "wrong": "There have two cats.",
+        "right": "There are two cats.",
+        "text": "想说“有两只猫”，用 There are。若想说“我有两只猫”，则用 I have two cats。"
+      },
+      {
+        "title": "will 后少了 be",
+        "wrong": "There will a bus.",
+        "right": "There will be a bus.",
+        "text": "will 后还需要 be，才能组成“将会有”。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "There is a cat on the bed.",
+        "zh": "床上有一只猫。",
+        "note": "先说 There is a cat，再用 on the bed 说明猫在哪里。"
+      },
+      {
+        "en": "Are there two books?",
+        "zh": "有两本书吗？",
+        "note": "books 是复数。把 are 放到 there 前面，就是问题。"
+      }
+    ]
+  },
+  "parallelism": {
+    "definition": "平行结构就是把同一组里的几部分排得清楚、相互配合。例如“喜欢读书和游泳”，读书与游泳都跟在“喜欢”后面。",
+    "classification": [
+      "同一组里的项目",
+      "动作形式要配合",
+      "成对的连接词",
+      "能省去重复的部分"
+    ],
+    "usage": [
+      {
+        "h": "先看两部分都接在哪个词后面",
+        "t": "I like apples and bananas. 中，apples 与 bananas 都是喜欢的东西。长度可以不同，但要能放进同一个位置。"
+      },
+      {
+        "h": "动词形式要符合前面的词",
+        "t": "She enjoys reading and swimming. 是“她喜欢读书和游泳”。enjoy 后用 reading 这样的 -ing 形式，所以 swimming 也要这样写。"
+      },
+      {
+        "h": "成对的词要接相配的内容",
+        "t": "both cats and dogs 表示“猫和狗都……”。both 和 and 之间、and 后面，要分别放清楚要连的两部分。"
+      },
+      {
+        "h": "再了解一点：重复的词可以共用",
+        "t": "She wants to read and write. 中，read 与 write 共用前面的 to。不必为了看起来一样，机械地把每个词都重复一遍。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "enjoy 后的第二个动作形式不对",
+        "wrong": "I enjoy reading and to swim.",
+        "right": "I enjoy reading and swimming.",
+        "text": "这里两个动作都跟在 enjoy 后面。把 to swim 改为 swimming，就都符合 enjoy 的用法。"
+      },
+      {
+        "title": "介词后混用动词形式",
+        "wrong": "She is good at reading and to write.",
+        "right": "She is good at reading and writing.",
+        "text": "at 后面说动作时用 -ing，所以第二项用 writing。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I like apples and bananas.",
+        "zh": "我喜欢苹果和香蕉。",
+        "note": "两个名词都放在 like 后面，说明喜欢的东西。"
+      },
+      {
+        "en": "She enjoys reading and swimming.",
+        "zh": "她喜欢读书和游泳。",
+        "note": "reading 与 swimming 都是她喜欢做的活动。"
+      }
+    ]
+  },
+  "auxiliaries": {
+    "definition": "助动词像动词的小帮手，帮助我们提问、否定，或说明动作的时间。常见的帮手有 be、do、have；它们有时也会自己表达意思。",
+    "classification": [
+      "be：am、is、are 等",
+      "do：do、does、did",
+      "have：have、has、had",
+      "看后面的词来判断"
+    ],
+    "usage": [
+      {
+        "h": "do 常帮忙提问和否定",
+        "t": "Do you like milk? 是“你喜欢牛奶吗？”。I do not like milk. 是“我不喜欢牛奶”；do 本身不是在说“做牛奶”。"
+      },
+      {
+        "h": "be 可以帮忙说明正在做什么",
+        "t": "She is reading. 是“她正在读书”。is 与 reading 一起说明正在发生的动作；不能只写 She reading。"
+      },
+      {
+        "h": "have 有时表示有，有时是帮手",
+        "t": "She has a cat. 中 has 就是“有”。She has left. 是“她已经走了”，这里 has 帮 left 表达与现在有关的过去动作。"
+      },
+      {
+        "h": "再了解一点：多个帮手有固定顺序",
+        "t": "The door has been painted. 是“门已经刷过漆了”。has、been、painted 要按这个顺序配合，不是随便把几个动词放在一起。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "does 后又给动词加 s",
+        "wrong": "Does she likes cats?",
+        "right": "Does she like cats?",
+        "text": "does 已经负责提问和与 she 配合。后面的 like 用原形。"
+      },
+      {
+        "title": "have 后面用了错误形式",
+        "wrong": "I have ate.",
+        "right": "I have eaten.",
+        "text": "have 后需要动词的“过去分词”形式。eat 的这个形式是 eaten，要把它们当一组记。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Do you like milk?",
+        "zh": "你喜欢牛奶吗？",
+        "note": "Do 是提问的小帮手；主要意思仍由 like（喜欢）表达。"
+      },
+      {
+        "en": "She is reading.",
+        "zh": "她正在读书。",
+        "note": "is 和 reading 合在一起，表示动作正在进行。"
+      }
+    ]
+  },
+  "can": {
+    "definition": "can 常用来表示“能、会、可以”。它后面的动作词用最基本的形式，例如 can swim（会游泳），不加 to，也不因为说的是 he 或 she 就加 s。",
+    "classification": [
+      "会不会做",
+      "可不可以做",
+      "请别人帮忙",
+      "could 的常见用法"
+    ],
+    "usage": [
+      {
+        "h": "说自己会做什么",
+        "t": "I can swim. 是“我会游泳”。She can swim. 中也用 swim，不写 swims。"
+      },
+      {
+        "h": "问别人可不可以",
+        "t": "Can I sit here? 是“我可以坐这里吗？”。Can you help me? 是请对方帮忙。"
+      },
+      {
+        "h": "could 可以让请求更客气",
+        "t": "Could you help me? 也是请人帮忙，常比 Can you help me? 更客气。这里 could 并不是在问过去的事。"
+      },
+      {
+        "h": "再了解一点：过去和将来的能力",
+        "t": "could 可以说过去一般会做的事。强调某一次终于做到了，可用 was able to 或 managed to；说将来能做某事，常用 will be able to。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "can 后多了 to",
+        "wrong": "I can to swim.",
+        "right": "I can swim.",
+        "text": "can 后直接接动作的原形 swim，不加 to。"
+      },
+      {
+        "title": "把 will 与 can 直接放在一起",
+        "wrong": "I will can come.",
+        "right": "I will be able to come.",
+        "text": "说将来能来，用 will be able to come，不把两个情态动词 will 和 can 直接相接。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I can swim.",
+        "zh": "我会游泳。",
+        "note": "can 后面直接接 swim，表示有游泳的能力。"
+      },
+      {
+        "en": "Can you help me?",
+        "zh": "你能帮我吗？",
+        "note": "Can you…? 常用来请求帮助；help 是“帮助”。"
+      }
+    ]
+  },
+  "must": {
+    "definition": "must 常表示“必须”。要特别分清：must not 是“不许”，不是“不必”；“不必”可以用 do not have to。",
+    "classification": [
+      "必须做",
+      "不许做",
+      "不必做",
+      "根据线索作判断"
+    ],
+    "usage": [
+      {
+        "h": "must 表示必须做",
+        "t": "You must go now. 是“你现在必须走”。must 后面接 go 这样的动词原形。"
+      },
+      {
+        "h": "must not 表示禁止",
+        "t": "You must not run here. 是“你不许在这里跑”。这不是说跑不跑都可以，而是说不允许。"
+      },
+      {
+        "h": "不必做是另一种意思",
+        "t": "You do not have to go. 是“你不必去”。意思是不要求你去，但你愿意去仍可以。"
+      },
+      {
+        "h": "再了解一点：must 也能表示推测",
+        "t": "The light is on. Tom must be home. 表示“灯亮着，汤姆一定在家”。must have left 则可猜测过去已经离开；过去真的必须做某事常用 had to。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "must 后多了 to",
+        "wrong": "You must to go.",
+        "right": "You must go.",
+        "text": "must 后直接用动词原形 go，不加 to。"
+      },
+      {
+        "title": "给 must 加上过去词尾",
+        "wrong": "We musted go home.",
+        "right": "We had to go home.",
+        "text": "过去的“不得不回家”常用 had to。英语没有 musted 这个形式。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "You must go now.",
+        "zh": "你现在必须走。",
+        "note": "must 说明这是一项要求，不只是建议。"
+      },
+      {
+        "en": "You must not run here.",
+        "zh": "你不许在这里跑。",
+        "note": "must not 表示禁止；run 是“跑”。"
+      }
+    ]
+  },
+  "should": {
+    "definition": "should 常表示“应该”，用来给建议或说明责任。它后面接动作词的原形，例如 should rest（应该休息）。",
+    "classification": [
+      "给建议",
+      "说明应该做的事",
+      "表示预计",
+      "should have 的用法"
+    ],
+    "usage": [
+      {
+        "h": "先用 should 给一个建议",
+        "t": "You should rest. 是“你应该休息”。它通常比 must（必须）的要求轻一些。"
+      },
+      {
+        "h": "否定建议用 should not",
+        "t": "You should not eat too much. 是“你不应该吃太多”。should not 也可缩写成 shouldn’t。"
+      },
+      {
+        "h": "should 有时表示预计会这样",
+        "t": "The bus should come soon. 是“公交车应该快来了”。这里是在说预计，不是在给公交车提建议。"
+      },
+      {
+        "h": "再了解一点：should have 不总表示后悔",
+        "t": "You should have called. 常是在说“你之前本该打电话”。The bus should have come by now. 也可能只是预计它现在已到，不能只看这个形式就认定事情没做。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "should 后多了 to",
+        "wrong": "You should to rest.",
+        "right": "You should rest.",
+        "text": "should 后直接接 rest，不需要 to。"
+      },
+      {
+        "title": "should 后的 have 变成 has",
+        "wrong": "He should has left.",
+        "right": "He should have left.",
+        "text": "should 后用原形 have，即使前面是 he，也不把 have 改为 has。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "You should rest.",
+        "zh": "你应该休息。",
+        "note": "should 后接 rest，提出休息的建议。"
+      },
+      {
+        "en": "The bus should come soon.",
+        "zh": "公交车应该快来了。",
+        "note": "should 在这里表示预计；soon 是“很快”。"
+      }
+    ]
+  },
+  "countable": {
+    "definition": "看一个名词能不能说“一个、两个、三个”，可以帮助我们学习可数与不可数。英语的习惯有时与中文不同，所以也要记住这个词在句子里的实际意思。",
+    "classification": [
+      "可数：一个、两个",
+      "不可数：通常不直接计个数",
+      "用杯、瓶、条等单位",
+      "同一个词可以换意思"
+    ],
+    "usage": [
+      {
+        "h": "可以数个数的名词有单复数",
+        "t": "a book 是“一本书”，two books 是“两本书”。这类名词叫可数名词；说一个时，普通名词前面通常还要有 a、the、my 等词。"
+      },
+      {
+        "h": "有些东西通常不这样直接数",
+        "t": "water（水）和 rice（米饭）在常见用法中不可数。通常不说 a water 或 two rices 来直接数水和米饭。"
+      },
+      {
+        "h": "想说明数量，就加一个单位",
+        "t": "a cup of water 是“一杯水”，two cups of water 是“两杯水”。变成复数的是 cup，不是 water。"
+      },
+      {
+        "h": "再了解一点：可数性跟意思有关",
+        "t": "chicken 表“鸡肉”时常不可数，表“一只鸡”时可数。点单时 two coffees 可以表示两杯咖啡；不能据此给所有不可数词随便加 s。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "把 advice 直接变成复数",
+        "wrong": "I have two advices.",
+        "right": "I have two pieces of advice.",
+        "text": "advice 表示“建议”时通常不可数。想说“两条建议”，用 two pieces of advice。"
+      },
+      {
+        "title": "把不可数 furniture 当成复数",
+        "wrong": "The furniture are new.",
+        "right": "The furniture is new.",
+        "text": "furniture 是“家具”的总称，通常不可数。这句话用 is，不用 are。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I have two books.",
+        "zh": "我有两本书。",
+        "note": "book 可以按本数，是可数名词；two 后用复数 books。"
+      },
+      {
+        "en": "I need a cup of water.",
+        "zh": "我需要一杯水。",
+        "note": "water 在这里不可数，用 a cup 来说清数量。"
+      }
+    ]
+  },
+  "articles": {
+    "definition": "a、an、the 叫冠词，常放在名词前。a/an 常表示某一个；the 常表示听的人能知道你在说哪一个；有些地方则不用冠词。",
+    "classification": [
+      "a 或 an：某一个",
+      "the：知道是哪一个",
+      "零冠词：不放冠词",
+      "先看发音，再看句意"
+    ],
+    "usage": [
+      {
+        "h": "先学 a 与 an",
+        "t": "a cat 是“一只猫”，an egg 是“一个鸡蛋”。选择 a 还是 an，看后面紧接的发音，不是只看字母。"
+      },
+      {
+        "h": "第二次提到同一个东西，常用 the",
+        "t": "I have a dog. The dog is small. 先介绍一只狗，再说这只狗很小。第二句对方知道说的是哪只狗，所以用 the。"
+      },
+      {
+        "h": "泛说一类东西时，有时不用冠词",
+        "t": "I like cats. 是“我喜欢猫”。这里 cats 泛指猫这类动物，不是在指某几只猫，所以前面没有 a 或 the。"
+      },
+      {
+        "h": "再了解一点：有些搭配要整组记",
+        "t": "an hour（一个小时）中 h 不发音，所以用 an；a university（一所大学）的起始音像 y，所以用 a。go to school（上学）与 go to the school（到那所学校去）的意思也可能不同。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "把 a 放在元音发音前",
+        "wrong": "I have a egg.",
+        "right": "I have an egg.",
+        "text": "egg 的起始发音是元音，所以前面用 an。"
+      },
+      {
+        "title": "介绍一个普通单数名词时少了冠词",
+        "wrong": "I have dog.",
+        "right": "I have a dog.",
+        "text": "dog 在这里表示一只狗，是单数可数普通名词。前面要有 a 等词。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I have a dog.",
+        "zh": "我有一只狗。",
+        "note": "a 表示一只，还没有说明具体是哪只。"
+      },
+      {
+        "en": "The dog is small.",
+        "zh": "那只狗很小。",
+        "note": "the 表示对方能知道我们在说哪只狗。"
+      }
+    ]
+  },
+  "possession": {
+    "definition": "想说“汤姆的书”“妈妈的包”，可以用名词所有格。最常见的做法是在名字或人物词后面加 ’s；它也可以表示人与人、事物之间的关系。",
+    "classification": [
+      "一个人或东西的 ’s",
+      "复数名词的所有格",
+      "两人共有或各有",
+      "用 of 表达关系"
+    ],
+    "usage": [
+      {
+        "h": "一个人的东西，先学 ’s",
+        "t": "Tom’s book 是“汤姆的书”。把 ’s 放在 Tom 后面，不是在 book 后面加。"
+      },
+      {
+        "h": "以 s 结尾的复数，通常只加撇号",
+        "t": "the boys’ room 是“男孩们的房间”。boys 已经有复数的 s，所以所有格通常只在它后面加 ’。"
+      },
+      {
+        "h": "有些复数不以 s 结尾",
+        "t": "children 是“孩子们”，本身已经是复数。说“孩子们的书”，要用 children’s books，仍加 ’s。"
+      },
+      {
+        "h": "再了解一点：共有和各有要分清",
+        "t": "Tom and Ann’s room 常表示两人共用的房间；Tom’s and Ann’s rooms 表示各自的房间。of 也能表达关系，如 the door of the room（房间的门）。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "少了“的”的标记",
+        "wrong": "This is Tom book.",
+        "right": "This is Tom’s book.",
+        "text": "要说“汤姆的书”，在 Tom 后加 ’s。"
+      },
+      {
+        "title": "给 children 用错所有格",
+        "wrong": "These are childrens’ books.",
+        "right": "These are children’s books.",
+        "text": "children 已经是复数，并不以复数 s 结尾。它的所有格是 children’s。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "This is Tom’s book.",
+        "zh": "这是汤姆的书。",
+        "note": "Tom’s 表示“汤姆的”，说明书与谁有关。"
+      },
+      {
+        "en": "The boys’ room is big.",
+        "zh": "男孩们的房间很大。",
+        "note": "boys 是多个男孩；后面的撇号表示“男孩们的”。"
+      }
+    ]
+  },
+  "pronouns": {
+    "definition": "代词可以帮我们少重复一个名字或名词。例如先说 Tom，后面就可以用 he（他）；先说那本书，后面就可以用 it（它）。",
+    "classification": [
+      "人称：I、you、he 等",
+      "所属：my、mine 等",
+      "自己：myself 等",
+      "指这个或那个"
+    ],
+    "usage": [
+      {
+        "h": "先认出它代替谁",
+        "t": "Tom is here. He is happy. 两句中的 Tom 和 He 指同一个人。写代词时，要让别人知道你说的是谁。"
+      },
+      {
+        "h": "做的人与动作对象，用的形式可能不同",
+        "t": "I like him. 是“我喜欢他”。I 是做出喜欢这个动作的人；him 是喜欢的对象。这里不写 I like he。"
+      },
+      {
+        "h": "my 后有东西，mine 可以独立说",
+        "t": "my book 是“我的书”；This book is mine. 是“这本书是我的”。mine 后面不用再加 book。"
+      },
+      {
+        "h": "再了解一点：代词有很多小类",
+        "t": "myself 表“我自己”，this 表“这个”，someone 表“某个人”。不知道一个人的性别时，也可以用 they 指那个人；先学会看清它指向谁。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "动作对象用了 he",
+        "wrong": "I like he.",
+        "right": "I like him.",
+        "text": "he 常放在“谁做事”的位置。这里他是喜欢的对象，所以用 him。"
+      },
+      {
+        "title": "mine 后又接名词",
+        "wrong": "This is mine book.",
+        "right": "This is my book.",
+        "text": "book 前面要用 my。也可以不再说 book，直接说 This is mine。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Tom is here. He is happy.",
+        "zh": "汤姆在这里。他很开心。",
+        "note": "He 代替前面已经提到的 Tom，避免再说一次名字。"
+      },
+      {
+        "en": "This is my book.",
+        "zh": "这是我的书。",
+        "note": "my 表示“我的”，放在 book 前面。"
+      }
+    ]
+  },
+  "quantifiers": {
+    "definition": "数量词帮助我们说“很多、一些、很少”。选择时先看后面的名词是能数个数的，还是通常不能直接数个数的。",
+    "classification": [
+      "many：很多个",
+      "much：很多的量",
+      "a few 与 a little",
+      "some 与 any"
+    ],
+    "usage": [
+      {
+        "h": "能数个数的，常用 many",
+        "t": "many books 是“很多书”。books 可以按本数，many 后面通常接这样的复数名词。"
+      },
+      {
+        "h": "不可数的量，常用 much",
+        "t": "much water 是“很多水”。想说一点水，可以用 a little water；想说几本书，用 a few books。"
+      },
+      {
+        "h": "a few 与 few 的重点不同",
+        "t": "a few books 表示“有几本书”；few books 常强调“书很少，几乎没有”。a little 与 little 也有相似差别。"
+      },
+      {
+        "h": "再了解一点：some 不只用在肯定句",
+        "t": "Would you like some tea? 是请人喝茶，所以问句里也能用 some。any 除了疑问和否定，也可表示“任何一个”，如 Choose any book.。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "用 much 直接数书",
+        "wrong": "I have much books.",
+        "right": "I have many books.",
+        "text": "books 是可以数个数的复数名词，前面用 many。"
+      },
+      {
+        "title": "用 a few 说不可数的水",
+        "wrong": "We need a few water.",
+        "right": "We need a little water.",
+        "text": "water 通常不可数。说“一点水”用 a little water。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I have a few books.",
+        "zh": "我有几本书。",
+        "note": "a few 表示有一些；books 是可以按本数的复数名词。"
+      },
+      {
+        "en": "We need a little water.",
+        "zh": "我们需要一点水。",
+        "note": "a little 说明水的量不多，但确实需要一些。"
+      }
+    ]
+  },
+  "adjadv": {
+    "definition": "形容词常告诉我们人或东西“是什么样”；副词常告诉我们一个动作“怎样做”。例如 a slow bus 是“慢的公交车”，walk slowly 是“慢慢地走”。",
+    "classification": [
+      "形容词：描述人或东西",
+      "副词：说明动作怎样做",
+      "be 后说明状态",
+      "词尾不能决定一切"
+    ],
+    "usage": [
+      {
+        "h": "先看它在描述什么",
+        "t": "a small cat 中 small 描述 cat，所以是形容词。The cat is small. 中 small 仍然描述猫，位置换了，词性没有变。"
+      },
+      {
+        "h": "说明动作的方式，常用副词",
+        "t": "He reads carefully. 是“他读得很仔细”。carefully 说明读的方式，不是在描述他这个人长什么样。"
+      },
+      {
+        "h": "有些动词后面是在说状态",
+        "t": "The soup smells good. 是“汤闻起来很好”。good 描述汤的味道，不是在说明汤怎样闻东西。"
+      },
+      {
+        "h": "再了解一点：不要只认 -ly",
+        "t": "carefully 是副词，但 friendly（友好的）通常是形容词。fast 可以直接表示“快地”，hard（努力地）与 hardly（几乎不）意思也不同。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "说人的状态时用了副词",
+        "wrong": "She is happily.",
+        "right": "She is happy.",
+        "text": "这里要说“她很开心”，用形容词 happy。happily 常说明动作的方式，不能这样单独接在 is 后面。"
+      },
+      {
+        "title": "说明读的方式时用了形容词",
+        "wrong": "He reads careful.",
+        "right": "He reads carefully.",
+        "text": "这里是在说他读得怎样，所以用副词 carefully。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "The cat is small.",
+        "zh": "这只猫很小。",
+        "note": "small 描述猫的样子，是形容词。"
+      },
+      {
+        "en": "He reads carefully.",
+        "zh": "他读得很仔细。",
+        "note": "carefully 说明读这个动作做得怎样，是副词。"
+      }
+    ]
+  },
+  "ing-ed": {
+    "definition": "有些形容词有 -ing 和 -ed 两种样子。先用一个例子记住：a boring book 是“让人无聊的书”，a bored child 是“感到无聊的孩子”。",
+    "classification": [
+      "-ing：让人有某种感觉",
+      "-ed：自己有某种感觉",
+      "要看想表达的意思",
+      "常见词组一起记"
+    ],
+    "usage": [
+      {
+        "h": "-ing 常说是什么让人产生感受",
+        "t": "This book is boring. 是“这本书让人觉得无聊”。boring 在描述书带给人的感觉。"
+      },
+      {
+        "h": "-ed 常说谁感到怎样",
+        "t": "I am bored. 是“我感到无聊”。bored 说明我的感受，不是在说我会让别人无聊。"
+      },
+      {
+        "h": "人也可以让别人有感受",
+        "t": "Tom is interesting. 是“汤姆很有趣”；Tom is interested. 是“汤姆感兴趣”。两句都可能正确，取决于想说什么。"
+      },
+      {
+        "h": "再了解一点：看一整组结构",
+        "t": "be interested in 是“对……感兴趣”，要一起记。She is reading. 中 reading 是动作“正在读”，不属于本卡片的感受形容词用法。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "interested 后用错介词",
+        "wrong": "I am interested on music.",
+        "right": "I am interested in music.",
+        "text": "说“对音乐感兴趣”，用 interested in，不用 interested on。"
+      },
+      {
+        "title": "少了感受形容词的词尾",
+        "wrong": "I am very interest in music.",
+        "right": "I am very interested in music.",
+        "text": "interest 是名词或动词的形式；这里说我的感受，要用 interested。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "This book is boring.",
+        "zh": "这本书很无聊。",
+        "note": "boring 表示书让人觉得无聊。"
+      },
+      {
+        "en": "I am bored.",
+        "zh": "我感到无聊。",
+        "note": "bored 表示我自己有无聊的感觉。"
+      }
+    ]
+  },
+  "comparison": {
+    "definition": "比较就是把人或东西放在一起，看谁更高、谁更小，或两者是否一样。英语常改变形容词，或加上 more 来表达“更……”。",
+    "classification": [
+      "原级：基本的样子",
+      "比较级：更……",
+      "最高级：一组里最……",
+      "as…as：一样……"
+    ],
+    "usage": [
+      {
+        "h": "先学两个东西比较",
+        "t": "tall 是“高的”，taller 是“更高的”。Tom is taller than Ann. 就是“汤姆比安更高”；than 引出比较的另一方。"
+      },
+      {
+        "h": "说一样，用 as…as",
+        "t": "Tom is as tall as Ann. 表示两人一样高。两个 as 中间用 tall 的基本形式，不用 taller。"
+      },
+      {
+        "h": "在一组里说最……",
+        "t": "the smallest cat 是“最小的猫”。通常要让别人知道是在和哪一组比较，不是随便加一个“最”就能说明范围。"
+      },
+      {
+        "h": "再了解一点：有些词要特别记",
+        "t": "good 的比较级是 better，不是 gooder。比较时也要比较同类东西；“这里的天气”和“那里的人”不是同一类比较对象。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "“更”用了两次",
+        "wrong": "This bag is more smaller.",
+        "right": "This bag is smaller.",
+        "text": "smaller 已经表示“更小”，不再在前面加 more。"
+      },
+      {
+        "title": "one of 后用单数",
+        "wrong": "It is one of the best book.",
+        "right": "It is one of the best books.",
+        "text": "one of 是“一组中的一个”。那一组有多本书，所以后面用 books。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Tom is taller than Ann.",
+        "zh": "汤姆比安高。",
+        "note": "taller 表示更高；than 后面是比较的另一方 Ann。"
+      },
+      {
+        "en": "This is the smallest cat.",
+        "zh": "这是最小的猫。",
+        "note": "smallest 表示在谈到的那组猫里最小。"
+      }
+    ]
+  },
+  "degree-order": {
+    "definition": "副词可以说多久做一次、做得怎样、什么时候做。有些常放在动作前，有些常放在动作后；先学常见说法，再看特殊情况。",
+    "classification": [
+      "次数：often、usually",
+      "方式：slowly、carefully",
+      "时间：today、now",
+      "程度：very、enough"
+    ],
+    "usage": [
+      {
+        "h": "often 常放在普通动作前",
+        "t": "I often read. 是“我经常读书”。如果用 be 说明状态，often 常在 be 后，如 He is often late.（他经常迟到）。"
+      },
+      {
+        "h": "说明做得怎样，常放在动作或对象后",
+        "t": "She reads slowly. 是“她慢慢地读”。She reads the book slowly. 中 slowly 也放在读的东西后面。"
+      },
+      {
+        "h": "enough 要看后面说什么",
+        "t": "enough water 是“足够的水”；warm enough 是“足够暖”。enough 说明名词数量时常放前面，说明形容词程度时常放后面。"
+      },
+      {
+        "h": "再了解一点：常见位置不是唯一位置",
+        "t": "为了强调或接上前文，副词位置有时会变。先看清它到底在说明哪个词，不要把所有副词都硬放在同一处。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "enough 说明温度时放反了",
+        "wrong": "The room is enough warm.",
+        "right": "The room is warm enough.",
+        "text": "这里 enough 说明 warm 有多暖，通常放在 warm 后面。"
+      },
+      {
+        "title": "very 放在比较级前",
+        "wrong": "This book is very better.",
+        "right": "This book is much better.",
+        "text": "better 已经是“更好”。想说“好得多”，用 much better，通常不用 very better。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I often read at home.",
+        "zh": "我经常在家读书。",
+        "note": "often 表示经常做，放在普通动作 read 前面。"
+      },
+      {
+        "en": "The room is warm enough.",
+        "zh": "房间足够暖和。",
+        "note": "enough 说明 warm 的程度，所以放在 warm 后面。"
+      }
+    ]
+  },
+  "prepositions": {
+    "definition": "介词常是 in、on、at 这样的小词。它们和后面的词放在一起，可以说清“在哪里、什么时候、用什么”等关系。",
+    "classification": [
+      "地点：in、on、at",
+      "时间：at、on、in",
+      "方向：to、into",
+      "后面接人或东西"
+    ],
+    "usage": [
+      {
+        "h": "用一个位置例子开始",
+        "t": "on the desk 是“在桌上”。The book is on the desk. 中，这一组词说明书在哪里。"
+      },
+      {
+        "h": "时间要按常见搭配记",
+        "t": "at six 是“在六点”，on Monday 是“在周一”，in May 是“在五月”。不要把中文里的“在”都换成同一个英语词。"
+      },
+      {
+        "h": "后面有人时，要选对形式",
+        "t": "with me 是“和我一起”，不是 with I。介词后通常接名词，或 me、him、her 这样的代词形式。"
+      },
+      {
+        "h": "再了解一点：后面结构不同，词的作用也不同",
+        "t": "after school 是“放学后”，after 后接 school；after school ends 是“学校放学以后”，后面有完整动作关系。look forward to（盼望）中的 to 后用 -ing，不能套 want to（想要）的用法。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "介词后用错代词",
+        "wrong": "Come with I.",
+        "right": "Come with me.",
+        "text": "with 后面表示“我”时用 me，不用 I。"
+      },
+      {
+        "title": "because of 后直接放一句完整的话",
+        "wrong": "We stayed because of it rained.",
+        "right": "We stayed because it rained.",
+        "text": "because 后可以接“下雨了”这句话。because of 后通常接一个名词说法，例如 the rain。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "The book is on the desk.",
+        "zh": "书在桌上。",
+        "note": "on the desk 是一组位置说法，说明书在哪里。"
+      },
+      {
+        "en": "I go to school at eight.",
+        "zh": "我八点去学校。",
+        "note": "to school 说明去哪里；at eight 说明几点去。"
+      }
+    ]
+  },
+  "phrasal": {
+    "definition": "有些动词会和旁边的小词组成一个常用说法，要放在一起理解。例如 turn off 是“关掉”，look after 是“照顾”。",
+    "classification": [
+      "整组词一起记",
+      "有些可以拆开放",
+      "有些不能拆开",
+      "代词放在哪里"
+    ],
+    "usage": [
+      {
+        "h": "先记一个常见动作",
+        "t": "Turn off the light. 是“关灯”。不要把 turn 和 off 分开逐字翻译，要把 turn off 当成一组学。"
+      },
+      {
+        "h": "有些组合可以把东西放在中间",
+        "t": "Turn the light off. 也能表示关灯。如果用 it 代替灯，通常说 Turn it off.。"
+      },
+      {
+        "h": "有些组合不能这样拆",
+        "t": "look after the cat 是“照顾猫”。这里 look after 要连着用，不把 cat 放进它们中间。"
+      },
+      {
+        "h": "再了解一点：同一组合可能有不同意思",
+        "t": "work out 可表示算出来，也可表示锻炼，意思要看句子。has been working 是说明动作时间的一组动词，不是本卡片说的这种固定词组。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "it 放在可拆词组的后面",
+        "wrong": "Please turn off it.",
+        "right": "Please turn it off.",
+        "text": "用 it 代替灯等东西时，通常把 it 放在 turn 与 off 之间。"
+      },
+      {
+        "title": "拆开 look after",
+        "wrong": "Please look the cat after.",
+        "right": "Please look after the cat.",
+        "text": "look after 表示“照顾”，这一组不能照着 turn off 的方式拆开。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Please turn off the light.",
+        "zh": "请关灯。",
+        "note": "turn off 整组表示“关掉”。"
+      },
+      {
+        "en": "I look after the cat.",
+        "zh": "我照顾这只猫。",
+        "note": "look after 整组表示“照顾”，the cat 是照顾的对象。"
+      }
+    ]
+  },
+  "noun-types": {
+    "definition": "名词是给人、东西、地方等起名字的词。比如 Tom 是人名，cat 是动物名，school 是地方名；“快乐、勇气”这类感受和想法也能用名词表示。",
+    "classification": [
+      "专有名词：特定名字",
+      "普通名词：一类的名字",
+      "具体与抽象：看所指意思",
+      "可数性：看能否计个数"
+    ],
+    "usage": [
+      {
+        "h": "先分特定名字与类别名字",
+        "t": "Tom 是某个人的名字，属于专有名词。boy 是“男孩”这一类人的名字，属于普通名词；两种都可以出现在句子里。"
+      },
+      {
+        "h": "普通名词还可以继续分",
+        "t": "a cat 指一个个体，family 指一组家人，water 指一种物质，love 指一种感情。下一级卡片会分别说明这些类别。"
+      },
+      {
+        "h": "分类有不同角度",
+        "t": "book 可以同时是普通名词、具体名词和可数名词。这些标签是在回答不同问题，不是只能挑一个。"
+      },
+      {
+        "h": "再了解一点：不要用一个标签推断所有用法",
+        "t": "抽象名词不一定永远不可数。experience 表“经验”时常不可数，表“一次经历”时可数；集体名词的动词搭配还可能受英美用法影响。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "人名首字母没有大写",
+        "wrong": "tom is my friend.",
+        "right": "Tom is my friend.",
+        "text": "Tom 是人名，英语书写时名字的首字母要大写。"
+      },
+      {
+        "title": "普通物质名词误用 are",
+        "wrong": "Water are cold.",
+        "right": "Water is cold.",
+        "text": "water 在这里表示水，不可数。说明它的状态时用 is，不用 are。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Tom has a cat.",
+        "zh": "汤姆有一只猫。",
+        "note": "Tom 是特定的人名；cat 是一类动物的普通名字。"
+      },
+      {
+        "en": "Love is important.",
+        "zh": "爱很重要。",
+        "note": "love 表示一种感情，看不见也摸不到，常作为抽象名词学习。"
+      }
+    ]
+  },
+  "noun-plurals": {
+    "definition": "说一个时用单数，说两个或更多时，可数名词常用复数。例如 one book 是一本书，two books 是两本书。复数不总是直接加 s。",
+    "classification": [
+      "大多数加 s",
+      "有些加 es",
+      "有些改变拼写",
+      "有些单复数一样"
+    ],
+    "usage": [
+      {
+        "h": "先学最常见的加 s",
+        "t": "book 变 books，cat 变 cats。数词 two、three 等后面，要按实际数量用复数。"
+      },
+      {
+        "h": "再看加 es 与改 y",
+        "t": "box 变 boxes。city 结尾是辅音字母加 y，通常改成 cities；boy 则变成 boys。"
+      },
+      {
+        "h": "有些形式要直接记住",
+        "t": "child 的复数是 children，不是 childs。sheep 的单数和复数都写 sheep，要看 one、two 等词来判断数量。"
+      },
+      {
+        "h": "再了解一点：几个词组成的名词可能改中间",
+        "t": "mother-in-law 的复数是 mothers-in-law。two cups of water 则只把单位 cup 变成 cups；不能把所有组成词都加 s。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "child 的复数写成 childs",
+        "wrong": "Two childs are here.",
+        "right": "Two children are here.",
+        "text": "child 的复数要写 children，不是直接加 s。"
+      },
+      {
+        "title": "city 的复数没有改拼写",
+        "wrong": "These citys are big.",
+        "right": "These cities are big.",
+        "text": "city 的 y 前是辅音字母，复数通常把 y 改成 ies。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I have two cats.",
+        "zh": "我有两只猫。",
+        "note": "cat 变成 cats，表示不止一只。"
+      },
+      {
+        "en": "Two children are here.",
+        "zh": "两个孩子在这里。",
+        "note": "children 是 child 的复数，表示两个孩子。"
+      }
+    ]
+  },
+  "numerals": {
+    "definition": "数词就是说明数量或顺序的词。two 是“两个”，second 是“第二”；先分清在问“多少”还是“第几”。",
+    "classification": [
+      "基数词：一、二、三",
+      "序数词：第一、第二",
+      "具体数量与大概数量",
+      "年龄与时间等说法"
+    ],
+    "usage": [
+      {
+        "h": "数量用 one、two、three",
+        "t": "two cats 是“两只猫”。这类回答“多少”的词，叫基数词。"
+      },
+      {
+        "h": "顺序用 first、second、third",
+        "t": "the first day 是“第一天”。这类回答“第几”的词，叫序数词；my first book 前有 my，就不再加 the。"
+      },
+      {
+        "h": "明确数量与大概数量不同",
+        "t": "two hundred 是“两百”，hundred 不加 s。hundreds of 则是“数百”，表示大概的数量。"
+      },
+      {
+        "h": "再了解一点：放在名词前的整组修饰语",
+        "t": "a ten-minute walk 是“十分钟的步行路程”，里面的 minute 常用单数。说 It takes ten minutes. 时，minutes 则要用复数。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "two hundred 多加了 s",
+        "wrong": "I have two hundreds books.",
+        "right": "I have two hundred books.",
+        "text": "two 已经说清具体数量，这里 hundred 不加 s。"
+      },
+      {
+        "title": "名词前的时间修饰语写错",
+        "wrong": "It is a ten-minutes walk.",
+        "right": "It is a ten-minute walk.",
+        "text": "ten-minute 一起说明 walk，单位 minute 通常用单数，并用连字符连起来。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I have two cats.",
+        "zh": "我有两只猫。",
+        "note": "two 表示数量，回答有多少只猫。"
+      },
+      {
+        "en": "This is my first book.",
+        "zh": "这是我的第一本书。",
+        "note": "first 表示顺序；my 表示“我的”，前面不再加 the。"
+      }
+    ]
+  },
+  "interjections": {
+    "definition": "感叹词是我们直接表达情绪时说的小词。Wow! 常表示“哇”，Ouch! 常表示“哎哟”；后面还可以接一句完整的话。",
+    "classification": [
+      "Wow：赞叹",
+      "Oh：惊讶或明白了",
+      "Ouch：疼痛",
+      "词类与句子类型分开"
+    ],
+    "usage": [
+      {
+        "h": "先听懂感情",
+        "t": "Wow! 常用来表示惊喜或赞叹。Ouch! 常用来表示疼痛，具体语气也要看当时的情况。"
+      },
+      {
+        "h": "可以单独说，也可以接一句话",
+        "t": "Wow! 可以单独说。Wow, it is big! 是“哇，它好大！”，后面的 it is big 仍然是完整的一句话。"
+      },
+      {
+        "h": "感叹词不是句子里的动作",
+        "t": "Wow 不表示“我做了什么”，也不能代替 am、is、are。说“我很开心”仍要用 I am happy。"
+      },
+      {
+        "h": "再了解一点：感叹词和感叹句不同",
+        "t": "Wow 是一个词；What a big cat! 是一种感叹句。它们都能表达感情，但不能因为都有感叹号，就当作同一种语法知识。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "把 wow 放进动作的位置",
+        "wrong": "I wow happy.",
+        "right": "Wow, I am happy.",
+        "text": "wow 表情绪，放在句子外面；“我很开心”仍要有 am。"
+      },
+      {
+        "title": "what a 后少了名词",
+        "wrong": "What a big!",
+        "right": "What a big cat!",
+        "text": "What a big 后要说明什么东西大，例如 cat。若只想说“好大”，可以说 How big!。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "Wow, it is big!",
+        "zh": "哇，它好大！",
+        "note": "Wow 表示赞叹；it is big 说明什么让人赞叹。"
+      },
+      {
+        "en": "Oh, I see.",
+        "zh": "哦，我明白了。",
+        "note": "这里 Oh 表示明白了；I see 是常见的“我懂了”。"
+      }
+    ]
+  },
+  "conjunction-types": {
+    "definition": "连词像连接用的小桥，把词或句子连起来。and 表示“和、并且”，but 表示“但是”，because 表示“因为”。",
+    "classification": [
+      "并列：连接相近的部分",
+      "从属：一部分依靠另一部分",
+      "成对使用的词",
+      "先看想表达的关系"
+    ],
+    "usage": [
+      {
+        "h": "and、but、or 连接相近的部分",
+        "t": "cats and dogs 是“猫和狗”。I like cats, but Tom likes dogs. 用 but 说明两个人的喜好不同。"
+      },
+      {
+        "h": "because 说明原因",
+        "t": "I stayed home because it rained. 是“因为下雨，我待在家里”。because 后面的内容说明为什么待在家。"
+      },
+      {
+        "h": "成对的连接词要一起学",
+        "t": "either tea or milk 是“茶或牛奶二选一”。both cats and dogs 是“猫和狗两种都……”，两头连接的内容要放清楚。"
+      },
+      {
+        "h": "再了解一点：意思相近，结构未必相同",
+        "t": "because 后面常接一句话；because of 后面常接名词。however（然而）也可表示转折，但在正式写作中不能只用一个逗号把两句完整的话接起来。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "because 后直接放一个名词说法",
+        "wrong": "We stayed because the rain.",
+        "right": "We stayed because of the rain.",
+        "text": "保留 the rain 这个名词说法时用 because of。也可以用 because it rained，后面改成一句话。"
+      },
+      {
+        "title": "同一对句子重复用 although 和 but",
+        "wrong": "Although it rained, but we went out.",
+        "right": "Although it rained, we went out.",
+        "text": "同一对直接对应的句子里，although 已说清“虽然”，通常不再加 but。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "I like cats and dogs.",
+        "zh": "我喜欢猫和狗。",
+        "note": "and 把两种动物连在一起。"
+      },
+      {
+        "en": "I stayed home because it rained.",
+        "zh": "因为下雨，我待在家里。",
+        "note": "because 后面的 it rained 说明待在家的原因。"
+      }
+    ]
+  },
+  "emphasis": {
+    "definition": "强调就是把一句话里最想让人注意的部分突出说出来。英语可以用 It is/was…that/who… 这样的框架，也可以用 do 加强“确实做了”的语气。",
+    "classification": [
+      "突出是谁",
+      "突出时间等信息",
+      "do 表“确实”",
+      "先学会还原普通句"
+    ],
+    "usage": [
+      {
+        "h": "先看没有强调时怎么说",
+        "t": "Tom called. 是“汤姆打电话了”。It was Tom who called. 是“是汤姆打的电话”，特别突出打电话的人。"
+      },
+      {
+        "h": "也可以突出时间",
+        "t": "I saw Tom today. 是“我今天看见了汤姆”。It was today that I saw Tom. 特别强调是“今天”。"
+      },
+      {
+        "h": "do 可以表示确实如此",
+        "t": "I do like cats. 是“我确实喜欢猫”。do 后仍用 like，不写 likes；如果是 She does like cats.，like 也不加 s。"
+      },
+      {
+        "h": "再了解一点：不是每个 It is 开头都在强调",
+        "t": "It is clear that he left. 是“很清楚，他走了”，不是本卡片的强调框架。not until 的强调和强调问句也有各自的顺序，可在下级或相关卡片继续学习。",
+        "advanced": true
+      }
+    ],
+    "pitfalls": [
+      {
+        "title": "强调句中多加 did",
+        "wrong": "It was today that did I see Tom.",
+        "right": "It was today that I saw Tom.",
+        "text": "that 后面用平常的 I saw Tom 顺序，不在这里加 did I。"
+      },
+      {
+        "title": "does 后又给 like 加 s",
+        "wrong": "She does likes cats.",
+        "right": "She does like cats.",
+        "text": "does 已帮助表达强调并与 she 配合。后面用原形 like。"
+      }
+    ],
+    "examples": [
+      {
+        "en": "It was Tom who called.",
+        "zh": "是汤姆打的电话。",
+        "note": "这句特别突出 Tom；普通说法是 Tom called。"
+      },
+      {
+        "en": "I do like cats.",
+        "zh": "我确实喜欢猫。",
+        "note": "do 加强“真的喜欢”的语气，后面 like 不变。"
+      }
+    ]
+  }
+};
   window.LESSON_DETAILS={...(window.LESSON_DETAILS||{}),...details};
 })();
