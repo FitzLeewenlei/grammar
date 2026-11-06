@@ -19,7 +19,7 @@ function add(g,id,title,en,level,source,formula,take,steps,examples,quiz,related
  LESSONS.push(l); GROUPS.find(x=>x.id===g).ids.push(id);
 }
 function mc(prompt,options,answer,why){return {type:'mc',prompt,options,answer,why};}
-function fill(prompt,answer,why){return {type:'fill',prompt,answer:Array.isArray(answer)?answer:[answer],why};}
+function fill(prompt,answer,why,caseSensitive=false){return {type:'fill',prompt,answer:Array.isArray(answer)?answer:[answer],why,...(caseSensitive?{caseSensitive:true}:{})};}
 add('sentence','skeleton','句子成分与基本句型','The sentence skeleton','基础','初级 Units 1, 5；高级 Units 21, 28–29','主语 + 谓语；主语 + 系动词 + 表语','先找谓语，再看谁做、做什么、动作指向谁。',[
  ['先找动作或状态的中心','句子的主语通常告诉你“谁或什么”，谓语说明主语“做什么”或“怎么样”。谓语可能是一个词，也可能是 has been finished 这样的一组词。不要把谓语只理解成离主语最近的一个动词。'],
  ['宾语和表语各有任务','及物动词后面的宾语承受动作，例如 read a story。系动词后的表语说明主语的身份或状态，例如 feel tired。tired 不是动作对象，而是主语的状态。'],
@@ -341,7 +341,87 @@ add('emphasis','emphasis','it 强调句与谓语强调','Cleft sentences & empha
  ['疑问和 not until 也可使用强调句','Was it Tom who called? 是一般疑问形式；When was it that you arrived? 强调询问到达时间。It was not until Monday that he replied 表示直到周一他才回复。'],
  ['强调谓语使用 do does 或 did','I do agree with you 强调确实赞同；She does work hard 强调确实努力；He did call yesterday 强调确实打过电话。助动词承担人称和时态，后面的实义动词用原形。']
 ],[['It was Lily who helped me yesterday.','昨天帮助我的是莉莉。','强调主语 Lily，指人时可以用 who。'],['She does work hard.','她确实工作很努力。','does 表示强调，后面的 work 用原形。']],[{...mc('哪一句是强调句？',['It is raining.','It was Tom who called me.','It is cold today.','It has a red cover.'],1,'It was...who... 突出打电话的人 Tom，属于强调结构。'),id:'inversion-2'},fill('He did ____ (call) me yesterday.','call','did 已承担过去时态，用动词原形 call 来强调谓语。'),mc('It was in the library ____ I met her.',['where','when','that','what'],2,'这里是强调地点状语的 it 强调句，连接部分用 that。')],['inversion','relative-pronouns','skeleton']);
-window.GRAMMAR = {groups:GROUPS,lessons:LESSONS,version:2,books:[
+// Additional leaf lessons for the three-level atlas; existing lesson and question IDs stay stable.
+add('parts','noun-types','名词的分类','Types of nouns','基础','补充知识点 · 常见英语语法归纳','普通名词 / 专有名词；具体名词 / 抽象名词','分类角度不同，同一个名词可以同时属于多种类别。',[
+ ['名词用来给人、事物和概念命名','teacher、river、London、freedom 都是名词。名词可以作主语、宾语或表语，但词性和句子成分不是同一件事。'],
+ ['普通名词与专有名词','普通名词表示一类人或物，如 city；专有名词表示特定名称，如 Beijing，通常首字母大写。专有名词的冠词用法仍需看具体名称。'],
+ ['具体、抽象、集体和物质','book 表示具体事物，happiness 表示抽象概念，team 表示群体，water 表示物质。这些是帮助理解意义的分类，不直接决定每种用法能否计数。'],
+ ['分类和可数性要分开判断','paper 作纸张时常不可数，作报纸或论文时可以计数。不要仅凭“抽象名词”或“物质名词”的标签，就断言某词永远不可数。']
+],[['Beijing is a large city.','北京是一个大城市。','Beijing 是专有名词，city 是普通名词。'],['Happiness matters more than fame.','幸福比名气更重要。','happiness 和 fame 在这里都表示抽象概念。']],[mc('下列哪一个是专有名词？',['river','teacher','London','book'],2,'London 是特定城市的名称，属于专有名词。'),fill('The name of the city is ____ (london).（注意大小写）','London','城市专有名称的首字母应大写，写作 London。',true),mc('关于名词分类和可数性，正确的是：',['所有抽象名词永远不可数','具体名词永远可数','要结合名词的实际含义和用法判断','专有名词不能作主语'],2,'分类只是观察角度，可数性还要结合实际含义和语境。')],['countable','noun-plurals','possession']);
+add('parts','noun-plurals','名词单复数变化','Singular & plural nouns','基础','补充知识点 · 常见英语语法归纳','book → books；child → children','先判断能否计数，再选择单数或复数形式。',[
+ ['一般可数名词加 s','一个事物用单数，多个事物通常用复数，如 a book / two books。可数名词单数在句中通常需要限定词。'],
+ ['常见规则变化','以 s、x、ch、sh 等结尾通常加 es，如 boxes。辅音字母加 y 常把 y 改为 ies，如 city → cities；元音字母加 y 通常直接加 s，如 boys。'],
+ ['不规则变化需要单独记忆','child → children，man → men，woman → women，foot → feet。sheep 的单复数形式相同，不能统一加 s。'],
+ ['不可数名词借助单位计数','information、advice 在常见用法中不可数，可说 two pieces of advice。复数变化不是看到数字就给后面的所有名词加 s。']
+],[['There are three boxes on the shelf.','架子上有三个盒子。','box 的复数为 boxes。'],['The children are playing outside.','孩子们正在外面玩。','child 的不规则复数是 children。']],[mc('city 的复数形式是：',['citys','cities','cityes','city'],1,'辅音字母加 y 结尾的 city，复数把 y 改为 ies。'),fill('Two ____ (child) are reading.','children','child 的不规则复数形式是 children。'),mc('哪一种表达正确？',['two advices','two piece of advice','two pieces of advice','an advice'],2,'advice 通常不可数，用 two pieces of advice 表达两条建议。')],['countable','noun-types']);
+add('parts','numerals','基数词、序数词与数量表达','Numbers & ordinals','基础','补充知识点 · 常见英语语法归纳','three books；the third book；two hundred','基数词回答多少，序数词回答第几。',[
+ ['基数词表示数量','one、two、three 等表示数量。three books 中 three 修饰复数可数名词；one book 用单数。'],
+ ['序数词表示顺序','first、second、third 等表示顺序，the third lesson 表示第三课。前面已有物主限定词时不再加 the，如 my first lesson。'],
+ ['hundred 和 thousand 的变化','有明确数字时通常用 two hundred students；泛指许多时可用 hundreds of students。不能把这两个结构机械拼成 two hundreds of students。'],
+ ['分数和百分数看所指对象','one third of the water 中 water 不可数；two thirds of the students 中 students 为复数。谓语形式要结合所指名词。']
+],[['This is my first visit to Shanghai.','这是我第一次来上海。','已有 my，不再加 the。'],['Two hundred students attended the talk.','两百名学生参加了讲座。','明确数字后 hundred 不加 s。']],[mc('“第三本书”应选：',['the three book','the third book','third books','the threes book'],1,'顺序用序数词，第三本书是 the third book。'),fill('There are two ____ (hundred) people here.','hundred','明确数字 two 后用 hundred，不加 s。'),mc('表示“数百名学生”的正确结构是：',['hundreds of students','two hundreds of students','hundred of student','hundreds students'],0,'泛指数量多可用 hundreds of 加复数名词。')],['quantifiers','agreement']);
+add('parts','interjections','感叹词与情绪表达','Interjections','基础','补充知识点 · 常见英语语法归纳','Oh! / Wow! / Ouch!','感叹词直接表达情绪，常独立于句子主干。',[
+ ['感叹词表达即时反应','Oh、wow、ouch 等可表达惊讶、赞叹或疼痛。其具体语气还会受到说话情境和语调影响。'],
+ ['通常独立于主谓结构','Wow, that is beautiful! 中 wow 是感叹词，后面 that is beautiful 才是完整句子。感叹词本身通常不作主语或谓语。'],
+ ['和感叹句区分','What a beautiful day! 是感叹句，what 在这里不能简单视为 wow 那样的独立感叹词。词性与句式属于不同层次。'],
+ ['根据语境选择标点和文体','强烈情绪可用感叹号，较轻的反应可用逗号。正式学术写作通常不需要频繁使用感叹词。']
+],[['Ouch! That hurts.','哎哟！那很疼。','ouch 表达疼痛。'],['Wow, your painting is beautiful!','哇，你的画真漂亮！','wow 表示赞叹，不属于后面句子的主谓结构。']],[mc('哪一个常用来表达疼痛？',['Ouch!','Hello!','Thanks.','Goodbye.'],0,'Ouch 常用于疼痛时的即时反应。'),fill('____! That hurts.（填常见的疼痛感叹词）',['Ouch','ouch'],'Ouch 是表示疼痛的常见感叹词。'),mc('关于感叹词，正确的是：',['必须作句子的谓语','通常可独立表达情绪','所有 what 都是独立感叹词','正式文章必须大量使用'],1,'感叹词常独立于句子主干，直接表达情绪。')],['skeleton','questions']);
+add('parts','conjunction-types','并列与从属连词','Types of conjunctions','基础','补充知识点 · 常见英语语法归纳','and / but / or；because / although / if','先判断连接的是平等成分，还是主句与从句。',[
+ ['并列连词连接同等层级成分','and、but、or 可以连接词、短语或分句。He reads and writes 中连接的是两个并列的动词。'],
+ ['从属连词引出依赖主句的从句','because、although、if 等引出原因、让步或条件从句。Because it rained 在通常的书面语中不能单独代替一个完整主句。'],
+ ['关联结构注意搭配','either ... or ...、neither ... nor ...、not only ... but also ... 常连接结构相称的成分。相关主谓一致要另行判断。'],
+ ['不要重复标记同一逻辑关系','同一层级中表达同一转折关系，通常说 Although it rained, we went out，不再额外加 but。because 和 so 也要注意这一点。']
+],[['I stayed home because it was raining.','因为下雨，我待在家里。','because 引出原因状语从句。'],['She is tired but happy.','她很累，但很开心。','but 连接并列的两个形容词。']],[mc('哪一个通常引出原因从句？',['and','or','because','but'],2,'because 是引出原因状语从句的常用从属连词。'),fill('I wanted to go, ____ I was too tired.（填表示转折的并列连词）','but','两分句意思转折，使用并列连词 but。'),mc('哪一句符合常见书面用法？',['Although it rained, but we left.','Although it rained, we left.','Because it rained, so we left.','Although raining but left.'],1,'although 已引出让步关系，通常不再同时用 but 连接同一层级的主句。')],['coordination','contrast','real-if']);
+add('tenses','active-voice','主动语态','The active voice','基础','补充知识点 · 常见英语语法归纳','执行者 + 动词 + 对象','主动语态通常让动作的执行者作主语。',[
+ ['先找谁执行动作','The chef cooked dinner 中 chef 执行做饭动作，句子使用主动语态。dinner 是动词的宾语。'],
+ ['语态和时态是不同维度','She writes、She wrote、She has written 都可以是主动语态。时态变化不等于主动与被动发生转换。'],
+ ['主动表达通常直接明确','知道执行者且需要强调其责任或动作时，主动语态往往简洁清楚。选择语态应服务于具体表达目的。'],
+ ['转换被动时先检查及物性','有合适宾语的及物结构才能作常见的主被动转换。arrive 等不及物用法不能直接变成 is arrived。']
+],[['The students cleaned the classroom.','学生们打扫了教室。','主语 students 执行打扫动作。'],['She has finished the report.','她已经完成了报告。','完成时仍是主动语态。']],[mc('哪一句是主动语态？',['The room was cleaned.','The room is being cleaned.','The students cleaned the room.','The room has been cleaned.'],2,'students 执行 cleaned 的动作，这一句是主动语态。'),fill('The chef ____ (cook) dinner yesterday.','cooked','执行者 chef 作主语，yesterday 要用一般过去时 cooked。'),mc('She has written a letter. 的语态是：',['被动语态','主动语态','只有完成时没有语态','一般将来时'],1,'has written 是主动的现在完成时，时态与语态要分开判断。')],['passive','skeleton']);
+add('agreement','agreement-meaning','意义一致','Agreement by meaning','进阶','补充知识点 · 常见英语语法归纳','Ten dollars is enough.','主语的意义有时比表面上的复数形式更关键。',[
+ ['数量作为整体时可用单数','Ten dollars is enough 中十美元表示一笔总额，谓语用 is。时间、距离等作为整体衡量时也常这样处理。'],
+ ['集体名词看整体或成员','team、family 等可表示整体，也可强调成员。英美用法存在差异，选择时要结合语境并保持前后一致。'],
+ ['分数百分数看所指名词','Half of the cake is gone；Half of the students are here。前者 cake 单数，后者 students 复数。'],
+ ['不要把整体理解推广到所有并列','Two books are missing 中说的是两本具体书，仍用复数。意义一致不是遇到数量就统一使用单数。']
+],[['Ten minutes is enough for this task.','完成这项任务十分钟就够了。','ten minutes 在这里作为一段整体时间。'],['Half of the students are waiting outside.','一半学生在外面等待。','所指对象 students 为复数，用 are。']],[mc('Ten dollars ____ enough.',['is','are','have','be'],0,'十美元作为一笔整体金额看待，使用单数谓语 is。'),fill('Half of the water ____ (be) gone.','is','water 在这里不可数，使用 is。'),mc('Two books are missing. 中为什么用 are？',['所有数字后都用 are','主语表示两本具体的书','books 在这里不可数','missing 是主语'],1,'主语是具体的复数名词 two books，需要复数谓语 are。')],['agreement','agreement-nearest']);
+add('agreement','agreement-nearest','就近一致','Proximity agreement','进阶','补充知识点 · 常见英语语法归纳','Either you or he is ...','特定并列结构中，谓语常与离它较近的主语一致。',[
+ ['either or 与 neither nor','Either you or he is responsible 中，靠近谓语的是 he，因此用 is。写作中也可调整词序，使表达更自然。'],
+ ['not only but also','Not only Tom but also his friends are coming 中，靠近谓语的是 friends，使用 are。这里 not only 连接主语，不需要主句倒装。'],
+ ['there be 的常见处理','There is a book and two pens on the desk 常按照第一个名词来决定 be。正式写作遇到较复杂并列时，可以改写以避免歧义。'],
+ ['和 with 结构区分','Tom, together with his friends, is coming 中，真正的主语仍是 Tom。不能把 with 附加短语误用成就近一致的依据。']
+],[['Either you or he is responsible.','你或者他需要负责。','he 靠近谓语，使用 is。'],['Not only Tom but also his friends are coming.','不仅汤姆，他的朋友们也会来。','friends 靠近谓语，使用 are。']],[mc('Neither he nor his friends ____ ready.',['is','are','was','has'],1,'靠近谓语的主语是复数 friends，所以用 are。'),fill('Either they or she ____ (be) right.','is','靠近谓语的是 she，一般现在时用 is。'),mc('Tom, along with his friends, ____ here.',['are','is','have','be'],1,'along with 不改变主语中心词 Tom 的单数性质，因此用 is。')],['agreement','agreement-meaning','there-be']);
+add('inversion','inversion-full','完全倒装','Full inversion','进阶','补充知识点 · 常见英语语法归纳','Here comes the bus.','完全倒装把整个谓语放在主语之前。',[
+ ['整个谓语前移','Here comes the bus 中，comes 位于名词主语 the bus 前。不是所有倒装都需要补一个 do。'],
+ ['地点和方向表达前置','On the hill stood a house 中，地点短语在句首，后面使用谓语加主语的语序。这种表达常用于引入景物或场景。'],
+ ['代词主语通常不完全倒装','Here he comes 中 he 是人称代词，通常保持 he comes 的顺序，不能写成 Here comes he。'],
+ ['仍要检查主谓一致和时态','Here come the buses 中主语 buses 为复数，因此用 come；描述过去时还要按语境选择过去形式。']
+],[['Here comes the bus.','公共汽车来了。','谓语 comes 整体位于名词主语前。'],['On the hill stood a small house.','小山上矗立着一座小房子。','地点短语前置后使用完全倒装。']],[mc('哪一句是完全倒装？',['Never have I seen it.','Here comes the bus.','Only then did I know.','I do understand.'],1,'Here comes the bus 把整个谓语 comes 放到主语前，属于完全倒装。'),fill('Here ____ (come) the buses.','come','buses 是复数主语，谓语用 come。'),mc('主语是 he 时，常见正确表达是：',['Here comes he.','Here he comes.','Here does he comes.','Here coming he.'],1,'人称代词作主语时通常不使用这种完全倒装，写作 Here he comes。')],['inversion','inversion-partial']);
+add('inversion','inversion-partial','部分倒装','Partial inversion','进阶','补充知识点 · 常见英语语法归纳','Never have I ...；Only then did I ...','部分倒装把助动词、情态动词或 be 提到主语前。',[
+ ['移动的是助动结构','Never have I seen such a view 中，have 移到 I 前，seen 仍留在主语后。原句的时态和意思要保留。'],
+ ['没有助动词时补 do does did','Only then did I understand 中 did 承担过去时态，后面 understand 要用原形。不能再写 understood。'],
+ ['only 修饰状语时看主句','Only when I arrived did I understand 中，倒装的是主句。Only Tom knows 中 only 修饰主语，则通常不倒装。'],
+ ['not only 前置看连接层级','Not only did she help, but she also encouraged me 中，前一分句部分倒装。not only 仅连接主语时不能套用同一倒装规则。']
+],[['Never have I seen such a clear sky.','我从未见过如此晴朗的天空。','have 放在主语前。'],['Only then did I understand the question.','直到那时我才理解这个问题。','did 提到主语前，understand 使用原形。']],[mc('Only then ____ she realise the problem.',['did','was','has to be','does being'],0,'这里用 did 构成过去时的部分倒装，realise 保持原形。'),fill('Never have I ____ (see) such a view.','seen','have 后需要过去分词 seen。'),mc('Only Tom knows the answer. 通常不倒装，因为：',['Tom 是复数','only 修饰的是主语','knows 不是动词','所有 only 都不倒装'],1,'only 修饰主语时通常不引起部分倒装。')],['inversion','inversion-full']);
+add('inversion','inversion-conditional','省略 if 的条件倒装','Inverted conditionals','进阶','补充知识点 · 常见英语语法归纳','Had I known ... = If I had known ...','条件从句中可将 had、were 或 should 前置并省略 if。',[
+ ['先还原 if 条件句','Had I known 相当于 If I had known。语序像疑问句，但这里表达条件，不是向对方提问。'],
+ ['过去反事实用 had 前置','Had I left earlier, I would have caught the train 表示过去实际没有早点出发。主句通常相应使用 would have done。'],
+ ['were 和 should 的前置','Were I you 相当于 If I were you；Should you need help 相当于 If you should need help。具体假设程度要结合上下文。'],
+ ['并非所有 if 句都可直接删 if','没有 had、were 或 should 的普通条件句，不能只删 if 就变成标准条件倒装。先确认原句结构。']
+],[['Had I known, I would have called you.','如果我当时知道，我就会给你打电话。','相当于 If I had known。'],['Should you need help, please call me.','如果你需要帮助，请给我打电话。','should 前置表达条件。']],[mc('Had I known 相当于：',['If I had known','Have I known','I know now','If I will know'],0,'had 前置并省略 if，可还原为 If I had known。'),fill('____ I you, I would ask for advice.（用 were 倒装）','Were','Were I you 相当于 If I were you。'),mc('关于省略 if 的倒装，正确的是：',['所有 if 都能直接删掉','通常把 had、were 或 should 前置','主句必须改成一般现在时','倒装后一定是问句'],1,'标准条件倒装通常将从句中的 had、were 或 should 前置，并省略 if。')],['unreal','inversion']);
+add('subjunctive','wish','wish 与假设表达','Wish & unreal wishes','进阶','补充知识点 · 常见英语语法归纳','wish + 过去式 / 过去完成式','动词形式要与愿望所指的时间对应。',[
+ ['与现在事实不同的愿望','I wish I knew the answer 表示现在不知道答案。这里过去式不表示愿望发生在过去，而表示距离现实更远。'],
+ ['对过去的遗憾','I wish I had saved the file 表示过去实际没有保存。愿望指向已经发生的过去，用过去完成式。'],
+ ['希望情况改变','I wish it would stop raining 表达希望下雨这种情况改变。would 在这种表达里常带有对变化的期待或不满。'],
+ ['结合 if only 和 as if 判断含义','If only I knew 常表达更强的愿望。as if 后若表示与现实相反的假设，也可采用相应的过去形式；真实可能情况则不必机械虚拟。']
+],[['I wish I knew her address.','真希望我知道她的地址。','通常说明现在不知道。'],['If only I had checked my answer.','要是我当时检查了答案就好了。','had checked 表示对过去的遗憾。']],[mc('I wish I knew his number. 通常谈的是：',['现在未实现的愿望','已经完成的计划','一般真理','未来必然发生'],0,'wish 后的过去式在这里表示与现在事实有距离的愿望。'),fill('I wish I had ____ (save) the file.','saved','过去完成式为 had 加过去分词，save 的过去分词是 saved。'),mc('表达对过去没复习的遗憾，应选：',['I wish I had revised.','I wish I revise now.','I wish I will revised.','I wish I have revise.'],0,'对过去未完成事情的遗憾，常用 wish 加过去完成式。')],['unreal','subjunctive-suggestions']);
+add('sentence','parallelism','写作中的平行结构','Parallel structure','进阶','补充知识点 · 常见英语语法归纳','reading, swimming and cycling','并列内容尽量保持结构和层级一致。',[
+ ['同等功能的成分并列','She likes reading, swimming and cycling 中三个动名词承担同样的功能。平行结构让读者更容易看出对应关系。'],
+ ['不定式也可以平行','She wants to learn, practise and improve 中 to 可以共同支配后面的并列动词。不能据此认定每一个动词前都必须重复 to。'],
+ ['比较和关联连接也要对齐','not only ... but also ... 两边要看作什么成分，如两个名词短语或两个完整分句。连接层次不一致往往使意思模糊。'],
+ ['平行不是机械追求词尾相同','先判断句法功能是否相称，再决定形式。两个不同形态的名词或短语也可以并列，不能只靠词尾判断对错。']
+],[['She enjoys reading, swimming and cycling.','她喜欢阅读、游泳和骑自行车。','三个动名词平行作 enjoy 的宾语。'],['We need to plan carefully and work patiently.','我们需要认真计划并耐心工作。','plan 和 work 在同一不定式结构中并列。']],[mc('哪一个并列结构最自然？',['reading, swimming and cycling','reading, to swimming and cycle','read, swimming and to cycled','reads, swim and cycled'],0,'三个动名词作同一层级的并列成分，结构清楚一致。'),fill('She enjoys reading and ____ (swim).','swimming','enjoys 后并列的宾语采用动名词，与 reading 对齐。'),mc('She wants to learn and improve. 中第二个 to：',['必须重复','可以不重复','证明 improve 是名词','必须改成 improving'],1,'同一不定式结构中的并列动词，可以共用前面的 to。')],['coordination','gerund','infinitive']);
+
+window.GRAMMAR = {groups:GROUPS,lessons:LESSONS,version:3,books:[
  {name:'Essential Grammar in Use',edition:'Fourth Edition · 初级',note:'按 115 个单元的基础主题归类；整本与分册合并处理。'},
  {name:'English Grammar in Use',edition:'Fifth Edition · 中级',note:'以 145 个单元的主题脉络为主要索引。'},
  {name:'Advanced Grammar in Use',edition:'Third Edition · 高级',note:'补充主谓一致、从句、分词、倒装与信息组织。'}

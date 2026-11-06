@@ -3,51 +3,85 @@ import {fileURLToPath} from 'node:url';
 import {resolve} from 'node:path';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
-const content=readFileSync(new URL('../content.js',import.meta.url),'utf8'),app=readFileSync(new URL('../app.js',import.meta.url),'utf8');
-const c=vm.createContext({window:{}});vm.runInContext(content,c);const d=c.window.GRAMMAR;
-const expectedTitles=['词性','句式','时态与语态','主谓一致','状语从句','定语从句','名词性从句','非谓语动词','虚拟语气','倒装','强调'];
-assert.deepEqual(Array.from(d.groups,g=>g.title),expectedTitles);
-assert.equal(new Set(d.groups.map(g=>g.id)).size,expectedTitles.length);
-assert.equal(d.lessons.length,53);
-const ids=new Set(d.lessons.map(l=>l.id));assert.equal(ids.size,d.lessons.length);
-const members=d.groups.flatMap(g=>{assert(g.ids.length,`Empty topic ${g.title}`);return Array.from(g.ids,id=>{assert(d.lessons.some(l=>l.id===id&&l.g===g.id),`Wrong topic for ${id}`);return id;});});
-assert.equal(members.length,ids.size);assert.equal(new Set(members).size,ids.size);
-for(const [id,group] of Object.entries({auxiliaries:'parts',should:'parts',passive:'tenses',agreement:'agreement','real-if':'adverbial',coordination:'sentence',unreal:'subjunctive','subjunctive-suggestions':'subjunctive',inversion:'inversion',emphasis:'emphasis','there-be':'sentence'}))assert.equal(d.lessons.find(l=>l.id===id)?.g,group,`Wrong topic for ${id}`);
+const root=fileURLToPath(new URL('../',import.meta.url));
+const scripts=['content.js','atlas.js','graph.js','games-content.js','progress.js'];
+const context=vm.createContext({window:{}});
+for(const file of scripts)vm.runInContext(readFileSync(resolve(root,file),'utf8'),context,{filename:file});
+const {GRAMMAR:d,ATLAS:a,GrammarGraph:g,GrammarProgress:p,GRAMMAR_GAMES_DATA:games}=context.window;
+assert.deepEqual(Array.from(a.modules,m=>m.title),['词法','句法','时态','语态','从句','非谓语','主谓一致','倒装','虚拟语气','写作常见错误']);
+assert.deepEqual(Array.from(a.get('module:lexis').children,k=>a.get(k).title),['名词','代词','冠词','形容词','副词','介词','连词','动词','数词','感叹词']);
+assert.equal(d.lessons.length,66);assert.equal(a.topics.length,22);assert.equal(a.knowledge.length,88);
+assert.equal(new Set(a.modules.map(m=>m.key)).size,10);assert.equal(new Set(a.topics.map(n=>n.key)).size,22);
+assert.equal(new Set(d.lessons.map(l=>l.id)).size,66);
+assert.equal(a.lessonKeys('root').length,d.lessons.length);
+for(const n of a.nodes.values()){
+ assert.equal(new Set(n.children).size,n.children.length,`Duplicate child in ${n.key}`);
+ for(const child of n.children)assert(a.get(child),`Unknown child ${child}`);
+ assert(a.owner.has(n.key),`Unreachable node ${n.key}`);
+ if(n.kind!=='module'){
+  assert(n.definition.length>10&&n.classification.length&&n.usage.length&&n.pitfalls.length,`Incomplete card ${n.key}`);
+  const examples=a.examplesFor(n.key);assert(examples.length);for(const e of examples)assert(e.en&&e.zh&&e.note,`Incomplete example ${n.key}`);
+ }
+}
 const qids=new Set(),prompts=new Set();let questions=0;
 for(const l of d.lessons){
- assert(d.groups.some(g=>g.id===l.g&&g.ids.includes(l.id)));assert.equal(l.steps.length,4);assert.equal(l.examples.length,2);assert.equal(l.quiz.length,3);assert(l.source&&l.formula&&l.take);
- for(const id of l.related)assert(ids.has(id),`Broken related lesson ${id}`);
- for(const q of l.quiz){assert(!qids.has(q.id));qids.add(q.id);assert(!prompts.has(q.prompt),`Repeated prompt ${q.prompt}`);prompts.add(q.prompt);assert(q.why.length>10);if(q.type==='mc'){assert(q.answer>=0&&q.answer<q.options.length);assert.equal(new Set(q.options).size,q.options.length);}else{assert(q.answer.length&&q.answer.every(a=>a.trim()));}questions++;}
+ assert.equal(l.steps.length,4);assert.equal(l.examples.length,2);assert.equal(l.quiz.length,3);assert(l.source&&l.formula&&l.take);
+ for(const related of l.related)assert(d.lessons.some(n=>n.id===related),`Unknown related lesson ${related}`);
+ for(const q of l.quiz){assert(!qids.has(q.id),q.id);qids.add(q.id);assert(!prompts.has(q.prompt),`Duplicate question: ${q.prompt}`);prompts.add(q.prompt);assert(q.why.length>10);if(q.type==='mc'){assert(q.answer>=0&&q.answer<q.options.length);assert.equal(new Set(q.options).size,q.options.length);}else assert(q.answer.length&&q.answer.every(v=>v.trim()));questions++;}
 }
-assert.equal(questions,159);
-const quizOwners=new Map(d.lessons.flatMap(l=>l.quiz.map(q=>[q.id,l.id])));
-assert.equal(quizOwners.get('should-1'),'subjunctive-suggestions');assert.equal(quizOwners.get('inversion-2'),'emphasis');
-const normalizeCode=app.slice(app.indexOf('function normalizeMistakes('),app.indexOf('data.mistakes=normalizeMistakes'));
-const migration=vm.createContext({quizOwners});vm.runInContext(normalizeCode,migration);
-const migrated=migration.normalizeMistakes({'should-1':{lid:'should',answer:'is'},'inversion-2':{lid:'inversion',answer:'It is raining.'}});
-assert.equal(migrated['should-1'].lid,'subjunctive-suggestions');assert.equal(migrated['inversion-2'].lid,'emphasis');assert.equal(migrated['should-1'].answer,'is');
-const layoutCode=app.slice(app.indexOf('function mapLayout('),app.indexOf('function edgePath'));
+assert.equal(questions,198);
+assert.equal(p.questionOwners.get('inversion-2').lid,'emphasis');assert.equal(p.questionOwners.get('should-1').lid,'subjunctive-suggestions');
+const legacy={schema:1,read:['present','unknown'],correct:{'should-1':true},mistakes:{'inversion-2':{lid:'inversion',qid:'inversion-2',answer:'It is raining.',at:1}},bookmarks:['inversion'],notes:{inversion:'保留旧笔记'},attempts:2,right:1,last:'inversion'};
+const migrated=p.normalize(legacy);
+assert.equal(migrated.read.length,1);assert.equal(migrated.mistakes['inversion-2'].lid,'emphasis');assert.equal(migrated.notes.inversion,'保留旧笔记');assert.equal(migrated.correct['should-1'],true);
+assert(p.learned(migrated,'lesson:present'));assert(!p.learned(migrated,'topic:nouns'));
+assert(p.learn(migrated,'topic:nouns'));assert(!p.learn(migrated,'topic:nouns'));assert(p.learned(migrated,'topic:nouns'));
+assert(p.learn(migrated,'lesson:countable'));assert(migrated.read.includes('countable'));assert(!p.learn(migrated,'module:lexis'));
+const backup={app:'grammar-atlas',progress:legacy},merged=p.merge(migrated,backup);
+assert.equal(JSON.stringify(p.merge(merged,backup)),JSON.stringify(merged),'Import must be idempotent');
+assert.equal(merged.attempts,2);assert(merged.topicRead.includes('topic:nouns'));assert.equal(merged.notes.inversion,'保留旧笔记');
+const corrected=p.merge(merged,{app:'grammar-atlas',progress:{...legacy,correct:{'inversion-2':true}}});assert(!corrected.mistakes['inversion-2']);
+assert.throws(()=>p.merge(merged,{app:'other',progress:legacy}));
+assert.deepEqual(Array.from(a.path('root')),[]);assert.deepEqual(Array.from(a.path('unknown')),[]);
+assert.equal(d.lessons.find(l=>l.id==='noun-types').quiz[1].caseSensitive,true);
+assert.equal(games.levels.length,50);assert.equal(games.stages.length,5);assert.equal(Object.keys(games.types).length,10);
+assert.equal(new Set(games.levels.map(l=>l.sentence)).size,50);
+const introduced=new Set();let longest=0;
+for(const [index,level] of games.levels.entries()){
+ assert.equal(level.id,index+1);assert.equal(level.stage,Math.floor(index/10)+1);assert(level.translation&&level.note);
+ assert(level.words.length>=2);longest=Math.max(longest,level.words.length);
+ for(const word of level.words){assert(word.text&&games.types[word.type]);introduced.add(word.type);assert(level.availableTypes.includes(word.type));}
+ assert.deepEqual(Array.from(level.availableTypes).sort(),[...introduced].sort());
+ const answer=Object.fromEntries(level.words.map((w,i)=>[i,w.type]));
+ assert(games.grade(level,answer).passed);assert.equal(games.grade(level,{}).missing.length,level.words.length);
+ answer[0]=Object.keys(games.types).find(type=>type!==level.words[0].type);
+ assert(!games.grade(level,answer).passed);assert.equal(games.grade(level,answer).wrong.length,1);
+}
+assert(longest>=24);assert.equal(introduced.size,10);
+for(const [level,count] of [[1,2],[3,3],[7,4],[11,5],[14,6],[17,7],[21,8],[26,9],[31,10]])assert.equal(games.levels[level-1].availableTypes.length,count);
+const gameBackup={app:'grammar-atlas',progress:{...legacy,games:{drag:{lastLevel:42,stars:{1:3,20:2,50:1,51:3,bad:2,4:9}}}}};
+const gameMerged=p.merge(migrated,gameBackup);
+assert.deepEqual(Object.keys(gameMerged.games.drag.stars),['1','20','50']);assert.equal(gameMerged.games.drag.lastLevel,42);
+assert.equal(JSON.stringify(p.merge(gameMerged,gameBackup)),JSON.stringify(gameMerged));
 let layouts=0;
-for(const viewport of [{width:288,height:400,compact:true},{width:346,height:760,compact:true},{width:402,height:600,compact:true},{width:739,height:840,compact:true},{width:700,compact:false},{width:1140,compact:false}])for(const size of [90,100,115])for(const space of [85,100,130])for(const focus of [null,...d.groups.map(g=>g.id)]){
- const state={focus,map:{}},ctx=vm.createContext({groups:d.groups,state,data:{view:{size,space}},groupOf:id=>d.groups.find(g=>g.id===id),viewport});vm.runInContext(layoutCode+'\nmapLayout(viewport);',ctx);
- const nodes=state.map.nodes;assert.equal(nodes.filter(n=>n.type==='lesson').length,focus?d.groups.find(g=>g.id===focus).ids.length:0);
- assert.equal(nodes.filter(n=>n.type==='group').length,focus?1:d.groups.length);
- assert(Number.isFinite(state.map.bounds.w)&&state.map.bounds.w>0);assert(Number.isFinite(state.map.bounds.h)&&state.map.bounds.h>0);
- for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
-  const a=nodes[i],b=nodes[j];const overlap=Math.abs(a.x-b.x)<(a.w+b.w)/2&&Math.abs(a.y-b.y)<(a.h+b.h)/2;assert(!overlap,`Node overlap ${focus}: ${a.id}, ${b.id} at ${size}/${space}/${viewport.width}`);
+for(const [width,height] of [[320,568],[390,844],[430,932],[820,1180],[1024,768],[1536,1000],[1920,1080]]){
+ for(const key of ['root',...a.modules.map(m=>m.key),...a.topics.map(n=>n.key)]){
+  const layout=g.mapLayout(a,key,width,height),expected=key==='root'?10:a.get(key).children.length;
+  assert.equal(layout.nodes.length,expected+1);assert.equal(layout.edges.length,expected);
+  assert(Number.isFinite(layout.bounds.w)&&layout.bounds.w>0&&layout.bounds.h>0);
+  for(let i=0;i<layout.nodes.length;i++)for(let j=i+1;j<layout.nodes.length;j++){
+   const x=layout.nodes[i],y=layout.nodes[j];assert(!(Math.abs(x.x-y.x)<(x.w+y.w)/2&&Math.abs(x.y-y.y)<(x.h+y.h)/2),`Overlapping nodes ${key}: ${x.key}/${y.key} at ${width}x${height}`);
+  }
+  const camera=g.fit(layout,width,height);assert(camera.scale>0&&Number.isFinite(camera.x)&&Number.isFinite(camera.y));layouts++;
  }
- if(viewport.compact){const parents=nodes.filter(n=>n.type==='root'||focus&&n.type==='group');const parent=parents[0];for(const child of nodes.filter(n=>n!==parent))assert(child.y-child.h/2>parent.y+parent.h/2);}
- layouts++;
+ const universe=g.universeLayout(a,width,height,null);assert.equal(universe.stars.length,88);assert.equal(new Set(universe.stars.map(s=>s.key)).size,88);
+ for(const m of a.modules){const focused=g.universeLayout(a,width,height,m.id);assert.equal(focused.stars.length,a.knowledge.filter(n=>a.owner.get(n.key)===m.id).length);assert(focused.nodes.every(n=>Number.isFinite(n.x)&&Number.isFinite(n.y)));}
 }
-console.log(`Passed: ${d.groups.length} ordered topics, ${d.lessons.length} lessons, ${d.lessons.reduce((n,l)=>n+l.examples.length,0)} examples, ${questions} unique questions, valid links and migrated mistakes; no node overlaps across ${layouts} phone/tablet/desktop layout configurations.`);
-
-new vm.Script(app,{filename:'app.js'});
-const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
-const root=fileURLToPath(new URL('../',import.meta.url));
-for(const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)){
- const ref=match[1];if(/^(?:data:|https?:)/.test(ref))continue;
- assert(!ref.startsWith('/'),`Expected a relative asset path: ${ref}`);
- assert(existsSync(resolve(root,ref.split('?')[0])),`Missing asset: ${ref}`);
-}
-assert(!/(?:libfile_|appgprj_|art_v2_|chatgpt\.com\/library)/.test(app+html+content),'Export contains a hosting-specific reference.');
-console.log('Passed: JavaScript syntax, relative asset references, and portable export checks.');
+const app=readFileSync(resolve(root,'app.js'),'utf8');new vm.Script(app,{filename:'app.js'});new vm.Script(readFileSync(resolve(root,'games.js'),'utf8'),{filename:'games.js'});
+const html=readFileSync(resolve(root,'index.html'),'utf8');
+for(const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)){const ref=match[1];if(/^(?:data:|https?:)/.test(ref))continue;assert(!ref.startsWith('/'));assert(existsSync(resolve(root,ref.split('?')[0])),`Missing asset ${ref}`);}
+assert(!/(?:libfile_|appgprj_|art_v2_|chatgpt\.com\/library)/.test(app+html),'Hosting-specific reference found');
+console.log(`Passed: 10 modules, 22 topic cards, 66 leaf lessons, ${questions} unique questions, 88 progress stars.`);
+console.log(`Passed: ${layouts} non-overlapping map layouts, constellation coverage, legacy progress migration and idempotent backup merge.`);
+console.log(`Passed: 50 unique game levels, 10 progressively introduced word classes, answer checking and game backup merge.`);
+console.log('Passed: JavaScript syntax and portable relative assets.');

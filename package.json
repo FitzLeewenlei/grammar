@@ -1,9 +1,9 @@
 {
   "name": "grammar-atlas",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
-  "description": "语法漫游：适配手机、平板和电脑的互动英语语法思维导图。",
+  "description": "包含分层语法图谱、知识卡片、学习星图、练习和50关词性积木游戏的英语学习应用。",
   "engines": {
     "node": ">=20"
   },

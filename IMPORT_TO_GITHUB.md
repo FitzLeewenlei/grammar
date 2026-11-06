@@ -13,13 +13,19 @@
 
 ## 方式二：已有的 React / Vite 项目
 
-在现有项目的 `public` 中新建 `grammar-atlas/`，复制下面 6 个文件：
+在现有项目的 `public` 中新建 `grammar-atlas/`，复制下面 12 个文件：
 
 - `index.html`
 - `app.js`
 - `content.js`
+- `atlas.js`
+- `graph.js`
+- `progress.js`
+- `games-content.js`
+- `games.js`
 - `styles.css`
 - `responsive.css`
+- `games.css`
 - `.nojekyll`
 
 现有项目的入口、构建命令和 `package.json` 继续使用原配置。本包的脚本主要用于独立运行时的预览和检查。
@@ -51,13 +57,13 @@ export default function GrammarAtlasPage() {
 
 ## 方式三：已有的纯静态网站
 
-在原网站的发布目录下新建 `grammar-atlas/`，复制同样的 6 个网页文件，再链接到 `grammar-atlas/index.html#map`。资源路径以该页面所在文件夹为起点，知识点导航使用 URL 的 `#` 部分。
+在原网站的发布目录下新建 `grammar-atlas/`，复制同样的 12 个网页文件，再链接到 `grammar-atlas/index.html#map`。资源路径以该页面所在文件夹为起点，知识点导航使用 URL 的 `#` 部分；游戏可直接链接到 `#games` 或 `#games/drag/1`。
 
 ## 交给 Codex 接入
 
 可以把下面这段任务发给项目里的 Codex：
 
-> 将 grammar-atlas 源码接入当前项目。先检查现有技术栈、入口和发布方式。保留现有首页与构建配置；把语法网站作为独立页面接入，并添加导航入口。保留手机、平板、电脑的自适应布局，以及题库、错题本、笔记和进度备份功能。语法内容集中维护在 content.js，响应式样式集中维护在 responsive.css。
+> 将 grammar-atlas 源码接入当前项目。先检查现有技术栈、入口和发布方式。保留现有首页与构建配置；把语法网站作为独立页面接入，并添加导航入口。保留手机、平板、电脑布局、十模块总图谱、知识卡片、学习星图、50 关词性积木游戏、题库、错题、笔记和记录备份。语法内容位于 content.js 与 atlas.js；游戏内容位于 games-content.js；加载入口所引用的全部 12 个静态文件。
 
 ## 参考的官方文档
 
