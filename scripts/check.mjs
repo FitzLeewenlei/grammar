@@ -81,7 +81,7 @@ for(const [width,height] of [[320,568],[390,844],[430,932],[820,1180],[1024,768]
  const universe=g.universeLayout(a,width,height,null);assert.equal(universe.stars.length,121);assert.equal(new Set(universe.stars.map(s=>s.key)).size,121);
  for(const m of a.modules){const focused=g.universeLayout(a,width,height,m.id);assert.equal(focused.stars.length,a.knowledge.filter(n=>a.owner.get(n.key)===m.id).length);assert(focused.nodes.every(n=>Number.isFinite(n.x)&&Number.isFinite(n.y)));}
 }
-const app=readFileSync(resolve(root,'app.js'),'utf8');new vm.Script(app,{filename:'app.js'});new vm.Script(readFileSync(resolve(root,'games.js'),'utf8'),{filename:'games.js'});
+const app=readFileSync(resolve(root,'app.js'),'utf8');new vm.Script(app,{filename:'app.js'});new vm.Script(readFileSync(resolve(root,'games.js'),'utf8'),{filename:'games.js'});new vm.Script(readFileSync(resolve(root,'pane-resize.js'),'utf8'),{filename:'pane-resize.js'});
 const html=readFileSync(resolve(root,'index.html'),'utf8');
 for(const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)){const ref=match[1];if(/^(?:data:|https?:)/.test(ref))continue;assert(!ref.startsWith('/'));assert(existsSync(resolve(root,ref.split('?')[0])),`Missing asset ${ref}`);}
 assert(!/(?:libfile_|appgprj_|art_v2_|chatgpt\.com\/library)/.test(app+html),'Hosting-specific reference found');

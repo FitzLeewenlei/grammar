@@ -1,6 +1,5 @@
 @media(min-width:1100px){
  body.sidebar-open{--sidebar-space:var(--sidebar-w);--nav-inset:0px}
- body.card-open[data-page=map] #map-page,body.card-open[data-page=progress] #progress-page,body.card-open[data-page=practice] #practice-page{width:calc(100% - var(--card-w))}
  .card-scrim{display:none}
 }
 @media(min-width:1600px){:root{--card-w:460px}.card-header{padding:27px 29px 18px}.card-body{padding:23px 29px 30px}.card-anchors{padding:0 29px}.card-footer{padding:17px 29px}.card-section>p,.usage-block p{font-size:15px}}
