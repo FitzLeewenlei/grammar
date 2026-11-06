@@ -19,13 +19,12 @@ function save(){try{localStorage.setItem(STORAGE,JSON.stringify(data));}catch{if
 const correctCount=l=>l.quiz.filter(q=>data.correct[q.id]).length;
 const mastered=l=>data.read.includes(l.id)&&correctCount(l)===l.quiz.length;
 const status=l=>mastered(l)?'mastered':data.read.includes(l.id)||l.quiz.some(q=>data.correct[q.id]||data.mistakes[q.id])?'learning':'unstarted';
-const state={route:'map',focus:null,lesson:byId(data.last)?data.last:'present',tab:'learn',step:0,exampleOpen:new Set(),quizIndex:0,choice:null,answer:'',feedback:null,lessonResults:[],session:null,notebookTab:'bookmarks',tabletSidebarExpanded:false,map:{nodes:[],edges:[],scale:1,x:0,y:0,bounds:null},modal:null};
+const state={route:'map',focus:null,lesson:byId(data.last)?data.last:'present',tab:'learn',step:0,exampleOpen:new Set(),quizIndex:0,choice:null,answer:'',feedback:null,lessonResults:[],session:null,notebookTab:'bookmarks',map:{nodes:[],edges:[],scale:1,x:0,y:0,bounds:null},modal:null};
 let toastTimer, previousFocus;
 function toast(t){$('#toast').textContent=t;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),2600);}
 function counts(){return {mastered:lessons.filter(mastered).length,started:lessons.filter(l=>status(l)!=='unstarted').length};}
 function renderSidebar(){
  $('#category-nav').innerHTML=groups.map(g=>`<div class="category-item ${state.focus===g.id?'expanded':''}"><button class="category-button ${state.focus===g.id?'active':''}" data-group="${g.id}" ${state.focus===g.id?'aria-current="true"':''} title="${g.title}" aria-label="${g.title}">${icon(g.icon)}<span>${g.title}</span><span class="count">${g.ids.length.toString().padStart(2,'0')}</span></button><div class="category-lessons">${g.ids.map(id=>`<button class="sidebar-lesson ${state.lesson===id?'current':''}" data-lesson="${id}"><i style="${mastered(byId(id))?'background:#81988b':''}"></i>${byId(id).title}</button>`).join('')}</div></div>`).join('');
- $('#mobile-category').innerHTML=`<button data-action="overview" class="${!state.focus?'active':''}">全景</button>`+groups.map(g=>`<button data-group="${g.id}" class="${state.focus===g.id?'active':''}">${g.title}</button>`).join('');
  const c=counts();$('#sidebar-count').textContent=`已掌握 ${c.mastered} / ${totals.lessons}`;$('#sidebar-sub').textContent=`已学习 ${c.started} 个知识点`;
 }
 function setRoute(route){
@@ -43,7 +42,7 @@ function openLesson(id,options={}){
  if(deviceLayout()==='desktop')$('#map-card').classList.remove('is-fullscreen');
  const l=byId(id);if(!l)return;state.lesson=id;state.focus=l.g;data.last=id;save();resetLesson();closeModal();
  if(state.route!=='map')setRoute('map');renderSidebar();renderMap();fitMap();renderLesson();$('#sidebar').classList.remove('open');syncBodyLock();
- if(deviceLayout()!=='desktop'&&!options.silent)showLessonPanel();
+ if(!options.silent)showLessonPanel();
 }
 function deviceLayout(){return matchMedia('(max-width:767px)').matches?'phone':matchMedia('(max-width:1279px)').matches?'tablet':'desktop';}
 function showLessonPanel(){
@@ -51,44 +50,49 @@ function showLessonPanel(){
  setTimeout(()=>$('.panel-close')?.focus({preventScroll:true}),0);
 }
 function syncBodyLock(){
- const mode=deviceLayout(),sideOpen=mode==='phone'&&$('#sidebar').classList.contains('open'),panelOpen=$('#lesson-panel').classList.contains('open')&&mode!=='desktop';
- const expanded=mode==='tablet'?state.tabletSidebarExpanded:sideOpen;
- document.body.classList.toggle('tablet-sidebar-expanded',mode==='tablet'&&state.tabletSidebarExpanded);
+ const sideOpen=$('#sidebar').classList.contains('open'),panelOpen=$('#lesson-panel').classList.contains('open');
+ if(sideOpen){$('#sidebar').setAttribute('role','dialog');$('#sidebar').setAttribute('aria-modal','true');}else{$('#sidebar').removeAttribute('role');$('#sidebar').removeAttribute('aria-modal');}
  document.body.style.overflow=state.modal||panelOpen||sideOpen?'hidden':'';
  document.body.classList.toggle('lesson-visible',panelOpen);document.body.classList.toggle('drawer-visible',sideOpen);
  $('#panel-scrim').hidden=!(sideOpen||panelOpen);$('#panel-scrim').setAttribute('aria-label',sideOpen?'关闭目录':'关闭讲解');
- const toggle=$('.mobile-menu'),label=expanded?'收起目录':'展开目录';
- toggle.setAttribute('aria-expanded',String(expanded));toggle.setAttribute('aria-label',label);toggle.title=label;
- toggle.dataset.icon=expanded?'close':'menu';toggle.innerHTML=`<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[expanded?'close':'menu']}</svg>`;
+ const toggle=$('.mobile-menu'),label=sideOpen?'收起目录':'展开目录';
+ toggle.setAttribute('aria-expanded',String(sideOpen));toggle.setAttribute('aria-label',label);toggle.title=label;
+ toggle.dataset.icon=sideOpen?'close':'menu';toggle.innerHTML=`<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[sideOpen?'close':'menu']}</svg>`;
 }
 function toggleSidebar(){
- const mode=deviceLayout();if(mode==='desktop')return;
- if(mode==='tablet'){
-  closePanel();state.tabletSidebarExpanded=!state.tabletSidebarExpanded;syncBodyLock();
- }else{
-  const opening=!$('#sidebar').classList.contains('open');closePanel();$('#sidebar').classList.toggle('open',opening);syncBodyLock();
-  if(opening)setTimeout(()=>$('#category-nav button')?.focus({preventScroll:true}),0);
- }
+ const opening=!$('#sidebar').classList.contains('open');closePanel();$('#sidebar').classList.toggle('open',opening);syncBodyLock();
+ if(opening)setTimeout(()=>$('#category-nav button')?.focus({preventScroll:true}),0);
 }
 function closePanel(){
+ const inSidebar=$('#sidebar').contains(document.activeElement),inLesson=$('#lesson-panel').contains(document.activeElement);
  $('#lesson-panel').classList.remove('open');$('#lesson-panel').removeAttribute('role');$('#lesson-panel').removeAttribute('aria-modal');$('#sidebar').classList.remove('open');syncBodyLock();
+ const target=inSidebar?$('.mobile-menu'):inLesson?$('[data-action="resume-lesson"]'):null;
+ if(target?.getClientRects().length)target.focus({preventScroll:true});
 }
 function overview(){state.focus=null;if(state.route!=='map')setRoute('map');renderSidebar();renderMap();fitMap();closePanel();}
 function nodeHtml(n){
- if(n.type==='root')return `<button class="map-node-button root-node" data-node="root" aria-label="英语语法总览"><strong>英语语法</strong></button>`;
- if(n.type==='back')return `<button class="map-node-button focus-root" data-node="root">${icon('layers')}<span class="node-words"><strong>英语语法</strong><small>返回知识全景</small></span></button>`;
+ if(n.type==='root')return `<button class="map-node-button root-node" data-node="root" aria-label="返回全景"><strong>总览</strong></button>`;
+ if(n.type==='back')return `<button class="map-node-button focus-root" data-node="root">${icon('layers')}<span class="node-words"><strong>总览</strong><small>返回全景</small></span></button>`;
  const g=groupOf(n.type==='group'?n.id:byId(n.id).g);
- if(n.type==='group')return `<button class="map-node-button ${state.focus===g.id?'focus-category':''}" style="--node-color:${g.color}" data-node="g:${g.id}" aria-label="展开${g.title}，${g.ids.length}个知识点"><span class="node-symbol">${icon(g.icon)}</span><span class="node-words"><strong>${g.title}</strong><small>${g.ids.length} 个知识点<span class="node-progress"> · ${g.ids.filter(x=>mastered(byId(x))).length} 已掌握</span></small></span></button>`;
- const l=byId(n.id);return `<button class="map-node-button lesson-node ${state.lesson===l.id?'selected':''}" style="--node-color:${g.color}" data-node="l:${l.id}" aria-label="学习${esc(l.title)}"><span class="node-number">${(g.ids.indexOf(l.id)+1).toString().padStart(2,'0')}</span><span class="node-words"><strong>${esc(l.title)}</strong><small>${esc(l.en)}</small></span><span class="node-tiny-status ${status(l)}"></span></button>`;
+ if(n.type==='group')return `<button class="map-node-button ${state.focus===g.id?'focus-category':''}" style="--node-color:${g.color}" data-node="g:${g.id}" aria-label="展开${g.title}"><span class="node-symbol">${icon(g.icon)}</span><span class="node-words"><strong>${g.title}</strong><small>${esc(g.en)}</small></span></button>`;
+ const l=byId(n.id);return `<button class="map-node-button lesson-node ${state.lesson===l.id?'selected':''}" style="--node-color:${g.color}" data-node="l:${l.id}" aria-label="学习${esc(l.title)}"><span class="node-number">${(g.ids.indexOf(l.id)+1).toString().padStart(2,'0')}</span><span class="node-words"><strong>${esc(l.title)}</strong><small>${esc(l.en)}</small></span></button>`;
 }
-function mapLayout(viewport={width:$('#canvas-wrap').clientWidth,compact:deviceLayout()==='phone'}){
+function mapLayout(viewport={width:$('#canvas-wrap').clientWidth,height:$('#canvas-wrap').clientHeight,compact:deviceLayout()==='phone'}){
  const size=data.view.size/100,space=data.view.space/100,nodes=[],edges=[];
  const addNode=(id,type,x,y,w,h)=>{const n={id,type,x,y,w:w*size,h:h*size};nodes.push(n);return n;};
  if(viewport.compact){
   const width=Math.max(280,viewport.width),cx=width/2,g=state.focus?groupOf(state.focus):null;
-  const entries=g?g.ids:groups.map(g=>g.id),type=g?'lesson':'group',leafW=Math.min(194,(width-44)/2),leafH=g?96:56;
-  const parent=g?addNode(g.id,'group',cx,62,Math.min(252,width-36),70):addNode('root','root',cx,44,180,48);
-  const gap=22*space,dx=(leafW*size+gap)/2,step=leafH*size+(g?22:12)*space,startY=parent.y+parent.h/2+(g?24:16)+leafH*size/2;
+  const shortOverview=!g&&viewport.height>0&&viewport.height<520;
+  const entries=g?g.ids:groups.map(g=>g.id),type=g?'lesson':'group',leafW=Math.min(194,(width-44)/2),leafH=g?96:shortOverview?44:56;
+  const parent=g?addNode(g.id,'group',cx,62,Math.min(252,width-36),70):addNode('root','root',cx,44,180,shortOverview?40:48);
+  const gap=22*space,dx=(leafW*size+gap)/2,rows=Math.ceil(entries.length/2),rootGap=g?24:shortOverview?12:16;
+  let rowGap=(g?22:shortOverview?8:12)*space;
+  if(!g&&viewport.height&&rows>1){
+   const fitScale=Math.min(1.08,Math.max(.72,(width-20)/(2*leafW*size+gap+20)));
+   const contentHeight=(viewport.height-136)/fitScale,parentAndLeaves=parent.h+rootGap+rows*leafH*size;
+   rowGap=Math.max(rowGap,Math.min(64*space,(contentHeight-parentAndLeaves)/(rows-1)));
+  }
+  const step=leafH*size+rowGap,startY=parent.y+parent.h/2+rootGap+leafH*size/2;
   entries.forEach((id,i)=>{const n=addNode(id,type,cx+(i%2?dx:-dx),startY+Math.floor(i/2)*step,leafW,leafH);edges.push({kind:'branch',a:{x:cx,y:n.y,w:0,h:0},b:n,color:g?.color||groupOf(id).color});});
   edges.unshift({kind:'trunk',a:parent,b:{x:cx,y:Math.max(...nodes.map(n=>n.y)),w:0,h:0},color:g?.color||'#9baebb'});
  }else if(!state.focus){
@@ -110,9 +114,9 @@ function edgePath(e){
  return data.view.line==='straight'?`M${x1},${y1} L${x2},${y2}`:`M${x1},${y1} C${(x1+x2)/2},${y1} ${(x1+x2)/2},${y2} ${x2},${y2}`;
 }
 function renderMap(){
- mapLayout();const m=state.map;$('#map-card').classList.toggle('vertical-map',m.compact);
+ mapLayout();const m=state.map;$('#map-card').classList.toggle('vertical-map',m.compact);$('#map-card').classList.toggle('focused-map',!!state.focus);
  $('#map-transform').innerHTML=m.edges.map(e=>`<path class="map-edge" stroke="${e.color}" d="${edgePath(e)}"/>`).join('')+m.nodes.map(n=>`<foreignObject x="${n.x-n.w/2}" y="${n.y-n.h/2}" width="${n.w}" height="${n.h}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:${n.w/(data.view.size/100)}px;height:${n.h/(data.view.size/100)}px;transform:scale(${data.view.size/100});transform-origin:0 0">${nodeHtml(n)}</div></foreignObject>`).join('');
- $('#map-breadcrumb').innerHTML=`${icon('layers')}<button data-action="overview">知识地图</button>${state.focus?`${icon('chevron-right')}<strong>${groupOf(state.focus).title}</strong>`:`<span style="color:#b5c2cd">/</span><strong>全景视图</strong>`}`;
+ $('#map-breadcrumb').innerHTML=state.focus?`<button data-action="overview">${icon('chevron-right')}返回全景</button><strong>${groupOf(state.focus).title}</strong>`:'';
  updateTransform();renderMinimap();
 }
 function updateTransform(){const m=state.map;$('#map-transform').setAttribute('transform',`translate(${m.x},${m.y}) scale(${m.scale})`);$('#zoom-label').textContent=Math.round(m.scale*100)+'%';renderMinimap();}
@@ -121,7 +125,7 @@ function fitMap(){
  const m=state.map;
  if(m.compact){
   m.scale=Math.min(1.08,Math.max(.72,(w-20)/b.w));m.x=w/2-(b.x+b.w/2)*m.scale;
-  const top=Math.min(...m.nodes.map(n=>n.y-n.h/2));m.y=12-top*m.scale;
+  const top=Math.min(...m.nodes.map(n=>n.y-n.h/2));m.y=60-top*m.scale;
   const selected=state.focus?m.nodes.find(n=>n.type==='lesson'&&n.id===state.lesson):null;
   if(selected&&selected.y*m.scale+m.y>h-100)m.y=h*.57-selected.y*m.scale;
  }else{
@@ -212,7 +216,7 @@ async function importProgress(file){
 }
 const actions={
  search:searchModal,sources:showSources,notebook:()=>showNotebook(),progress:showProgress,reader:()=>showReader(),note:showNote,'close-modal':closeModal,'close-panel':closePanel,
- 'resume-lesson':()=>{if(deviceLayout()!=='desktop')showLessonPanel();else $('#lesson-panel').focus();},
+ 'resume-lesson':showLessonPanel,
  menu:toggleSidebar,
  overview,
  'map-help':showHelp,
@@ -283,7 +287,7 @@ $('#minimap-button').addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{
  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();searchModal();return;}
  if(e.key==='Escape'){
-  if(state.modal)closeModal();else if($('#map-card').classList.contains('is-fullscreen')){actions.fullscreen();}else if($('#lesson-panel').classList.contains('open'))closePanel();else if(!$('#view-settings').hidden)$('#view-settings').hidden=true;else if(deviceLayout()==='tablet'&&state.tabletSidebarExpanded){state.tabletSidebarExpanded=false;syncBodyLock();$('.mobile-menu').focus({preventScroll:true});}else{$('#sidebar').classList.remove('open');closePanel();$('.mobile-menu').focus({preventScroll:true});}return;
+  if(state.modal)closeModal();else if($('#lesson-panel').classList.contains('open'))closePanel();else if($('#map-card').classList.contains('is-fullscreen')){actions.fullscreen();}else if(!$('#view-settings').hidden)$('#view-settings').hidden=true;else{closePanel();$('.mobile-menu').focus({preventScroll:true});}return;
  }
  if(!state.modal&&e.key==='Tab'&&($('#lesson-panel').classList.contains('open')||$('#sidebar').classList.contains('open'))){const root=$('#lesson-panel').classList.contains('open')?$('#lesson-panel'):$('#sidebar'),items=[...root.querySelectorAll('button:not(:disabled),input,textarea,select')].filter(el=>el.getClientRects().length);const first=items[0],last=items.at(-1);if(!root.contains(document.activeElement)){e.preventDefault();first?.focus();}else if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}return;}
  if(state.modal&&e.key==='Tab'){
@@ -297,8 +301,7 @@ document.addEventListener('keydown',e=>{
 });
 let resizeTimer,lastMapWidth=0,lastMapHeight=0,lastDevice=deviceLayout();
 function adaptViewport(){
- const mode=deviceLayout();document.body.dataset.device=mode;if(mode!=='phone')$('#sidebar').classList.remove('open');
- if(mode==='desktop'&&lastDevice!=='desktop')closePanel();
+ const mode=deviceLayout();document.body.dataset.device=mode;
  const w=$('#canvas-wrap').clientWidth,h=$('#canvas-wrap').clientHeight,modeChanged=mode!==lastDevice;lastDevice=mode;
  if(state.route==='map'&&w>0&&h>0&&(modeChanged||Math.abs(w-lastMapWidth)>1||Math.abs(h-lastMapHeight)>1)){lastMapWidth=w;lastMapHeight=h;renderMap();fitMap();}
  syncBodyLock();
@@ -309,7 +312,6 @@ document.addEventListener('focusin',e=>{if(e.target.matches('input:not([type=ran
 document.addEventListener('focusout',()=>setTimeout(()=>{if(!document.activeElement?.matches('input:not([type=range]),textarea'))document.body.classList.remove('typing');},0));
 window.addEventListener('hashchange',()=>setRoute(location.hash.slice(1)));
 window.addEventListener('pagehide',()=>{if('speechSynthesis'in window)speechSynthesis.cancel();save();});
-$$('[data-stat]').forEach(el=>{el.textContent=totals[el.dataset.stat];});
 hydrate();syncViewSettings();renderSidebar();renderLesson();setRoute(location.hash.slice(1)||'map');
 adaptViewport();
 if(storageWarning)setTimeout(()=>toast('当前浏览器的保存功能暂不可用，可以导出进度备份。'),1200);

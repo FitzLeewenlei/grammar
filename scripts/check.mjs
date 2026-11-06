@@ -28,7 +28,7 @@ const migrated=migration.normalizeMistakes({'should-1':{lid:'should',answer:'is'
 assert.equal(migrated['should-1'].lid,'subjunctive-suggestions');assert.equal(migrated['inversion-2'].lid,'emphasis');assert.equal(migrated['should-1'].answer,'is');
 const layoutCode=app.slice(app.indexOf('function mapLayout('),app.indexOf('function edgePath'));
 let layouts=0;
-for(const viewport of [{width:288,compact:true},{width:346,compact:true},{width:402,compact:true},{width:739,compact:true},{width:700,compact:false},{width:1140,compact:false}])for(const size of [90,100,115])for(const space of [85,100,130])for(const focus of [null,...d.groups.map(g=>g.id)]){
+for(const viewport of [{width:288,height:400,compact:true},{width:346,height:760,compact:true},{width:402,height:600,compact:true},{width:739,height:840,compact:true},{width:700,compact:false},{width:1140,compact:false}])for(const size of [90,100,115])for(const space of [85,100,130])for(const focus of [null,...d.groups.map(g=>g.id)]){
  const state={focus,map:{}},ctx=vm.createContext({groups:d.groups,state,data:{view:{size,space}},groupOf:id=>d.groups.find(g=>g.id===id),viewport});vm.runInContext(layoutCode+'\nmapLayout(viewport);',ctx);
  const nodes=state.map.nodes;assert.equal(nodes.filter(n=>n.type==='lesson').length,focus?d.groups.find(g=>g.id===focus).ids.length:0);
  assert.equal(nodes.filter(n=>n.type==='group').length,focus?1:d.groups.length);

@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f6f8fa"><meta name="description" content="英语语法思维导图：11个主题、53个知识点，包含中文讲解、双语例句和159道练习。"><title>语法漫游 · Grammar Atlas</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%235a748b'/%3E%3Cpath d='M12 12v16m0-8h16M22 12v16' stroke='%23ffffff' stroke-width='3' fill='none'/%3E%3C/svg%3E"><link rel="stylesheet" href="styles.css?v=6"><link rel="stylesheet" href="responsive.css?v=6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%235a748b'/%3E%3Cpath d='M12 12v16m0-8h16M22 12v16' stroke='%23ffffff' stroke-width='3' fill='none'/%3E%3C/svg%3E"><link rel="stylesheet" href="styles.css?v=7"><link rel="stylesheet" href="responsive.css?v=7">
 </head>
 <body>
 <header class="topbar">
@@ -12,20 +12,17 @@
 </header>
 <div class="app-body">
  <aside class="sidebar" id="sidebar" aria-label="语法目录">
-  <div class="syllabus-head"><span>语法目录</span><span data-stat="groups">11</span></div>
+  <div class="syllabus-head"><span>语法目录</span><button class="icon-button" data-action="close-panel" data-icon="close" aria-label="收起目录"></button></div>
   <nav id="category-nav" aria-label="主题目录"></nav>
   <div class="sidebar-bottom"><div><strong id="sidebar-count">已掌握 0 / 53</strong><small id="sidebar-sub">已学习 0 个知识点</small></div><button class="icon-button" data-action="progress" aria-label="学习进度" data-icon="target"></button></div>
   <button class="sidebar-reference source-link" data-action="sources" aria-label="教材索引"><span data-icon="book"></span><span>教材索引</span></button>
  </aside>
  <main id="main">
   <section id="map-page" class="page active">
-   <div class="page-heading"><h1>英语语法</h1><div class="heading-stats"><span><b data-stat="lessons">53</b> 个知识点</span><i></i><span><b data-stat="questions">159</b> 道练习</span></div></div>
-   <div class="mobile-category" id="mobile-category"></div>
    <div class="study-workspace">
     <section class="map-card" id="map-card" aria-label="可交互的语法思维导图">
      <div class="map-toolbar"><div class="map-breadcrumb" id="map-breadcrumb"></div><div class="map-toolbar-actions"><button class="resume-lesson" data-action="resume-lesson" aria-label="打开当前知识点讲解"><span data-icon="book"></span><span>继续学习</span></button><button class="icon-button" data-action="map-help" aria-label="导图操作说明" title="操作说明" data-icon="help"></button><button class="icon-button" data-action="view-settings" aria-label="调整导图比例" title="调整导图比例" data-icon="sliders"></button><button class="icon-button" data-action="fullscreen" aria-label="放大导图" title="专注导图" data-icon="expand"></button></div></div>
      <div class="canvas-wrap" id="canvas-wrap"><svg id="mindmap" aria-label="英语语法知识关系图，可拖动及缩放" tabindex="0"><g id="map-transform"></g></svg><button id="minimap-button" class="minimap" aria-label="点击缩略图定位视野"><svg id="minimap" aria-hidden="true"></svg></button><div class="zoom-controls"><button data-action="zoom-out" aria-label="缩小" data-icon="minus"></button><span id="zoom-label">100%</span><button data-action="zoom-in" aria-label="放大" data-icon="plus"></button><i></i><button data-action="fit" aria-label="适应画布" title="适应画布" data-icon="scan"></button></div><div class="view-settings" id="view-settings" hidden><h3>导图设置</h3><label>节点大小 <output id="size-value">100%</output><input id="node-size" type="range" min="90" max="115" step="5" value="100"></label><label>分支间距 <output id="space-value">100%</output><input id="branch-space" type="range" min="85" max="130" step="5" value="100"></label><label class="line-select">连线形式<select id="line-style"><option value="curve">曲线</option><option value="straight">直线</option></select></label><button class="subtle-button" data-action="reset-view">恢复默认</button></div></div>
-     <div class="map-bottom"><div class="legend"><span><i class="dot unstarted"></i>未开始</span><span><i class="dot learning"></i>学习中</span><span><i class="dot mastered"></i>已掌握</span></div><button class="text-button" data-action="overview">返回全景 <span data-icon="arrow-up-right"></span></button></div>
     </section>
     <aside class="lesson-panel" id="lesson-panel" aria-label="知识点学习区" tabindex="-1"></aside>
    </div>
@@ -36,5 +33,5 @@
 <div id="panel-scrim" class="panel-scrim" hidden data-action="close-panel"></div>
 <nav class="bottom-nav" aria-label="手机导航"><button data-route="map" class="active"><span data-icon="branch"></span><span>知识地图</span></button><button data-route="path"><span data-icon="route"></span><span>学习路径</span></button><button data-route="practice"><span data-icon="target"></span><span>练习中心</span></button><button data-action="notebook"><span data-icon="bookmark"></span><span>我的笔记</span></button></nav>
 <div id="modal-root"></div><div id="toast" role="status" aria-live="polite"></div>
-<script src="content.js?v=6"></script><script src="app.js?v=6"></script>
+<script src="content.js?v=7"></script><script src="app.js?v=7"></script>
 </body></html>
