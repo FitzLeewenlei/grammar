@@ -133,6 +133,15 @@
     const trail=prior>=0?state.cardTrail.slice(0,prior+1):branch?[...state.cardTrail,...branch.slice(1)]:A.path(key);
     openCard(key,trail);
   }
+  function cardVideos(key){
+    const resources=window.GRAMMAR_VIDEOS?.forKey(key);
+    if(!Array.isArray(resources))return [];
+    const hosts=new Set(['bilibili.com','www.bilibili.com','m.bilibili.com','b23.tv','douyin.com','www.douyin.com','v.douyin.com','iesdouyin.com','www.iesdouyin.com','youtube.com','www.youtube.com','m.youtube.com','youtu.be']);
+    return resources.filter(video=>{
+      if(!video||typeof video.title!=='string'||!video.title.trim()||typeof video.url!=='string'||!video.platform)return false;
+      try{const url=new URL(video.url);return url.protocol==='https:'&&hosts.has(url.hostname)&&!url.username&&!url.password&&(!url.port||url.port==='443');}catch{return false;}
+    });
+  }
   function renderCard(keepScroll=false){
     const key=state.cardKey,n=A.get(key);if(!n)return;
     const scroll=keepScroll?$('.card-body')?.scrollTop||0:0,storage=A.storageKey(key),l=n.lesson;
@@ -140,6 +149,7 @@
     const horizontalScroll=keepScroll?$$('#knowledge-card .grammar-table-wrap').map(el=>el.scrollLeft):[];
     const source=l?(l.source.includes('英语语法知识体系详解')?l.source:'参考《英语语法知识体系详解》；原课程索引：'+l.source):'';
     const children=n.children.map(k=>A.get(k)),examples=A.examplesFor(key);
+    const videos=cardVideos(key);
     const next=children.find(c=>!learned(c.key)),scopePool=questionPool(key),inPractice=state.page==='practice'&&state.session&&!state.session.done;
     const crumbs=state.cardTrail.slice(0,-1).map((k,i)=>`<button data-card-ancestor="${esc(k)}" data-trail-index="${i}">${esc(A.get(k).title)}</button>`).join('<i>/</i>');
     const usageBlock=s=>typeof s==='string'?`<div class="usage-block"><p>${explainText(s)}</p></div>`:`<div class="usage-block"><h3>${esc(s.h)}</h3><p>${explainText(s.t)}</p></div>`;
@@ -152,13 +162,15 @@
     const classes=n.classification.map(label=>n.classificationLinks?.[label]?`<button class="class-link" data-next-key="${esc(n.classificationLinks[label])}" aria-label="查看${esc(label)}详解">${esc(label)}${icon('arrow')}</button>`:`<span>${esc(label)}</span>`).join('');
     const nextMarkup=children.length?`<section class="card-section" id="card-next"><h2>下一级知识点</h2><div class="next-points">${children.map(c=>`<button class="next-point ${learned(c.key)?'is-lit':''}" data-next-key="${esc(c.key)}"><span>${esc(c.title)}</span>${icon(learned(c.key)?'check':'arrow')}</button>`).join('')}</div></section>`:'';
     const related=!children.length&&l?.related.length?`<section class="card-section"><h2>相关知识点</h2><div class="next-points">${l.related.map(id=>A.get('lesson:'+id)).filter(Boolean).slice(0,4).map(c=>`<button class="next-point" data-open-card="${esc(c.key)}">${esc(c.title)}${icon('arrow')}</button>`).join('')}</div></section>`:'';
+    const videoMarkup=videos.length?`<section class="card-section" id="card-videos"><h2>视频讲解</h2><ul class="video-resources">${videos.map(video=>`<li><a class="video-resource-link" href="${esc(video.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(video.title)}，${esc(video.platform)}，在新标签页打开"><span class="video-resource-content"><span class="video-resource-meta"><span class="video-resource-platform">${esc(video.platform)}</span>${video.creator?`<span>${esc(video.creator)}</span>`:''}${video.duration?`<span>${esc(video.duration)}</span>`:''}</span><strong>${esc(video.title)}</strong>${video.focus?`<span class="video-resource-focus">${esc(video.focus)}</span>`:''}</span><span class="video-resource-arrow" aria-hidden="true">↗</span></a></li>`).join('')}</ul></section>`:'';
     $('#knowledge-card').innerHTML=`<header class="card-header"><div class="card-topline"><div class="card-breadcrumb"><button data-action="card-root">总地图</button>${crumbs?'<i>/</i>'+crumbs:''}</div><div class="card-tools"><button class="icon-button" id="card-toggle-size" data-action="toggle-card-size" aria-label="全屏阅读知识讲解" aria-pressed="false">${icon('maximize')}</button><button class="icon-button" data-action="bookmark" data-active="${data.bookmarks.includes(storage)}" aria-label="${data.bookmarks.includes(storage)?'取消收藏':'收藏知识点'}">${icon('bookmark')}</button><button class="icon-button" data-action="note" aria-label="写学习笔记">${icon('note')}</button><button class="icon-button" data-action="close-card" aria-label="关闭知识卡片">${icon('close')}</button></div></div><h1 id="card-title" tabindex="-1">${esc(n.title)}</h1><p class="card-en">${esc(n.en)}</p></header>
-      <nav class="card-anchors" aria-label="知识卡片内容">${[['definition','是什么'],['classes','分类'],['examples','例句'],['usage','怎么用'],['pitfalls','易错点']].map(([id,title])=>`<button data-jump="${id}" class="${state.activeAnchor===id?'active':''}">${title}</button>`).join('')}</nav>
+      <nav class="card-anchors" aria-label="知识卡片内容">${[['definition','是什么'],['classes','分类'],['examples','例句'],['usage','怎么用'],['pitfalls','易错点'],...(videos.length?[['videos','视频']]:[])].map(([id,title])=>`<button data-jump="${id}" class="${state.activeAnchor===id?'active':''}">${title}</button>`).join('')}</nav>
       <div class="card-body"><section class="card-section" id="card-definition"><h2>${n.id==='nouns'?'名词是什么':'先看懂'}</h2><p>${explainText(n.definition)}</p></section>
       <section class="card-section" id="card-classes"><h2>${n.id==='nouns'?'名词的分类':'分类与结构'}${n.classificationLinks?' <small class="class-hint">点击继续展开</small>':''}</h2><div class="class-tags">${classes}</div>${reference}</section>
       <section class="card-section" id="card-examples"><h2>看例句</h2>${examples.map((e,i)=>`<article class="card-example"><button class="icon-button" data-speak="${i}" aria-label="朗读第${i+1}个例句">${icon('sound')}</button><strong lang="en">${esc(e.en)}</strong><p>${esc(e.zh)}</p><small>${explainText(e.note)}</small></article>`).join('')}</section>
       <section class="card-section" id="card-usage"><h2>怎么用</h2>${useBlocks}${more}${structure}</section>
       <section class="card-section" id="card-pitfalls"><h2>易错点</h2>${errors}</section>${nextMarkup}${related}
+      ${videoMarkup}
       ${scopePool.length?`<section class="card-section" id="card-practice"><h2>小练习</h2><div class="mini-practice"><p>${esc(scopePool[0].q.prompt)}</p><button data-practice-scope="${esc(key)}" data-practice-count="3">练习「${esc(n.title)}」 ${icon('arrow')}</button></div></section>`:''}
       ${l?`<div class="source-note">${esc(source)}</div>`:''}</div>
       <footer class="card-footer"><button class="learn-button ${learned(key)?'is-lit':''}" data-action="mark-learned" aria-pressed="${learned(key)}">${icon('stars')}${learned(key)?'星星已点亮':'已学会，点亮星星'}</button>${inPractice?`<button class="primary-button" data-action="close-card">继续当前练习${icon('arrow')}</button>`:next?`<button class="primary-button" data-next-key="${esc(next.key)}">继续：${esc(next.title)}${icon('arrow')}</button>`:`<button class="primary-button" data-practice-scope="${esc(key)}" data-practice-count="3">进入练习${icon('arrow')}</button>`}</footer>`;

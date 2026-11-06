@@ -4,7 +4,7 @@ import {resolve} from 'node:path';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 const root=fileURLToPath(new URL('../',import.meta.url));
-const scripts=['content.js','content-additions.js','lesson-details-lexis.js','lesson-details-verbs.js','content-detail-nouns.js','content-detail-lexis.js','content-detail-clauses.js','beginner-guide.js','atlas.js','graph.js','nebula-graph.js','games-content.js','progress.js'];
+const scripts=['content.js','content-additions.js','lesson-details-lexis.js','lesson-details-verbs.js','content-detail-nouns.js','content-detail-lexis.js','content-detail-clauses.js','beginner-guide.js','atlas.js','video-resources.js','graph.js','nebula-graph.js','games-content.js','progress.js'];
 const context=vm.createContext({window:{}});
 for(const file of scripts)vm.runInContext(readFileSync(resolve(root,file),'utf8'),context,{filename:file});
 const {GRAMMAR:d,ATLAS:a,GrammarGraph:g,GrammarProgress:p,GRAMMAR_GAMES_DATA:games}=context.window;
@@ -93,6 +93,16 @@ for(const [width,height] of [[320,568],[390,844],[430,932],[820,1180],[1024,768]
  for(const m of a.modules){const focused=g.universeLayout(a,width,height,m.id);assert.equal(focused.stars.length,a.knowledge.filter(n=>a.owner.get(n.key)===m.id).length);assert(focused.nodes.every(n=>Number.isFinite(n.x)&&Number.isFinite(n.y)));}
 }
 const app=readFileSync(resolve(root,'app.js'),'utf8');new vm.Script(app,{filename:'app.js'});new vm.Script(readFileSync(resolve(root,'games.js'),'utf8'),{filename:'games.js'});new vm.Script(readFileSync(resolve(root,'pane-resize.js'),'utf8'),{filename:'pane-resize.js'});
+const videos=context.window.GRAMMAR_VIDEOS,videoIds=new Set(),videoUrls=new Set(),videoCards=new Set();
+for(const video of videos.entries){
+ assert(video.id&&video.title&&video.creator&&video.focus&&video.knowledgeKeys.length);assert(!videoIds.has(video.id)&&!videoUrls.has(video.url));videoIds.add(video.id);videoUrls.add(video.url);
+ const url=new URL(video.url);assert.equal(url.protocol,'https:');assert(!url.username&&!url.password&&!url.port);assert(/^https:\/\/github\.com\//.test(video.sourceFile));
+ if(video.platform==='B站')assert(url.hostname==='www.bilibili.com'&&/^\/video\/BV[0-9A-Za-z]{10}\/?$/.test(url.pathname));
+ else{assert.equal(video.platform,'YouTube');assert(url.hostname==='www.youtube.com'&&url.pathname==='/watch'&&/^[\w-]{11}$/.test(url.searchParams.get('v')));assert(/^\d+:\d{2}(?::\d{2})?$/.test(video.duration));assert(/^[a-f0-9]{40}$/.test(video.sourceRevision));}
+ for(const key of video.knowledgeKeys){assert(a.get(key)&&a.get(key).kind!=='module',`Unknown video target ${key}`);assert(videos.forKey(key).includes(video));videoCards.add(key);}
+}
+for(const n of a.knowledge){const resources=videos.forKey(n.key);assert(resources.length<=2);assert(resources.every(v=>v.knowledgeKeys.includes(n.key)),'Video inherited by unrelated card');}
+assert.equal(videos.entries.length,26);assert.equal(videoCards.size,41);assert.equal(videos.forKey('lesson:noun-abstract').length,0);assert.equal(videos.forKey('module:lexis').length,0);assert.equal(videos.forKey('unknown').length,0);
 const nebula=context.window.GrammarNebula,network=nebula.build(a),networkKeys=new Set(network.nodes.map(n=>n.key));
 assert.equal(network.nodes.length,176);assert.equal(networkKeys.size,176);assert(network.edges.length>300);
 const edgeKeys=new Set(),adjacency=new Map(network.nodes.map(n=>[n.key,[]]));
@@ -113,5 +123,6 @@ console.log(`Passed: 10 modules, 31 topic cards, 135 detailed lessons, ${questio
 console.log(`Passed: ${layouts} non-overlapping map layouts, constellation coverage, legacy progress migration and idempotent backup merge.`);
 console.log(`Passed: 50 unique game levels, 10 progressively introduced word classes, answer checking and game backup merge.`);
 console.log(`Passed: connected nebula with 176 nodes / ${network.edges.length} real relationships, deterministic clusters and all 10 module focus views.`);
+console.log(`Passed: ${videos.entries.length} source-indexed video links matched to ${videoCards.size} cards, valid platform URLs and no inherited recommendations.`);
 console.log('Passed: beginner example length, basic steps, structured corrections,31overview cards and43term explanations.');
 console.log('Passed: JavaScript syntax and portable relative assets.');

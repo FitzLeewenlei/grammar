@@ -1,0 +1,13 @@
+/* Optional external lessons keep the reading card compact. */
+.card-section .video-resources{display:grid;gap:10px;list-style:none;margin:0;padding:0}
+.video-resources>li{margin:0;min-width:0}
+.video-resource-link{display:flex;align-items:center;gap:12px;min-height:44px;padding:13px 14px;border:1px solid var(--line);border-radius:9px;background:#f8fbff;color:var(--ink);text-decoration:none;overflow-wrap:anywhere}
+.video-resource-link:hover{border-color:var(--accent);background:var(--soft)}
+.knowledge-card .video-resource-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.video-resource-content{display:grid;gap:5px;min-width:0;flex:1}
+.video-resource-meta{display:flex;align-items:center;flex-wrap:wrap;gap:5px 9px;color:var(--muted);font-size:11px;line-height:1.6}
+.video-resource-platform{color:var(--accent-dark);font-weight:550}
+.video-resource-link strong{display:block;font-size:14px;font-weight:550;line-height:1.8;color:var(--accent-dark)}
+.video-resource-focus{display:block;color:var(--muted);font-size:12px;line-height:1.8}
+.video-resource-arrow{flex-shrink:0;color:var(--accent-dark);font-size:19px;line-height:1}
+@media(max-width:649px){.video-resource-link{padding:13px;gap:10px}.video-resource-meta{font-size:12px}.video-resource-link strong{font-size:15px}.video-resource-focus{font-size:13px}}
