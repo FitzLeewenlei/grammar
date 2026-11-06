@@ -1,17 +1,17 @@
 /* Curriculum reorganized from the supplied Grammar in Use books. Chinese explanations,
    examples and questions are newly written for this personal learning application. */
 const GROUPS = [
- {id:'parts',title:'词性',en:'Parts of speech',color:'#a08a76',icon:'book',desc:'认识词类、用法与搭配',ids:[]},
- {id:'sentence',title:'句式',en:'Sentence patterns',color:'#628278',icon:'frame',desc:'先找到句子的骨架',ids:[]},
- {id:'tenses',title:'时态与语态',en:'Tenses & voice',color:'#438d76',icon:'clock',desc:'把动作放到时间线上，区分主动与被动',ids:[]},
- {id:'agreement',title:'主谓一致',en:'Subject–verb agreement',color:'#ae827d',icon:'sliders',desc:'根据主语选择谓语形式',ids:[]},
- {id:'adverbial',title:'状语从句',en:'Adverbial clauses',color:'#789b9b',icon:'route',desc:'连接时间、条件、原因和结果',ids:[]},
- {id:'relative',title:'定语从句',en:'Relative clauses',color:'#7f8fac',icon:'link',desc:'用一个句子修饰名词',ids:[]},
- {id:'nominal',title:'名词性从句',en:'Noun clauses',color:'#9388ab',icon:'layers',desc:'让句子充当名词成分',ids:[]},
- {id:'nonfinite',title:'非谓语动词',en:'Infinitives & participles',color:'#839458',icon:'branch',desc:'动词换个身份进入句子',ids:[]},
- {id:'subjunctive',title:'虚拟语气',en:'The subjunctive & unreal situations',color:'#bf9560',icon:'spark',desc:'表达假设、愿望与虚拟建议',ids:[]},
- {id:'inversion',title:'倒装',en:'Inversion',color:'#8f9670',icon:'grid',desc:'分清完全倒装与部分倒装',ids:[]},
- {id:'emphasis',title:'强调',en:'Emphasis & focus',color:'#b78b87',icon:'target',desc:'突出句子中想强调的信息',ids:[]}
+ {id:'parts',title:'词性',en:'Parts of speech',color:'#8b9daa',icon:'book',desc:'认识词类、用法与搭配',ids:[]},
+ {id:'sentence',title:'句式',en:'Sentence patterns',color:'#7c94aa',icon:'frame',desc:'先找到句子的骨架',ids:[]},
+ {id:'tenses',title:'时态与语态',en:'Tenses & voice',color:'#718ba3',icon:'clock',desc:'把动作放到时间线上，区分主动与被动',ids:[]},
+ {id:'agreement',title:'主谓一致',en:'Subject–verb agreement',color:'#9f98a3',icon:'sliders',desc:'根据主语选择谓语形式',ids:[]},
+ {id:'adverbial',title:'状语从句',en:'Adverbial clauses',color:'#879fa8',icon:'route',desc:'连接时间、条件、原因和结果',ids:[]},
+ {id:'relative',title:'定语从句',en:'Relative clauses',color:'#8b9bb1',icon:'link',desc:'用一个句子修饰名词',ids:[]},
+ {id:'nominal',title:'名词性从句',en:'Noun clauses',color:'#a49aac',icon:'layers',desc:'让句子充当名词成分',ids:[]},
+ {id:'nonfinite',title:'非谓语动词',en:'Infinitives & participles',color:'#92a39b',icon:'branch',desc:'动词换个身份进入句子',ids:[]},
+ {id:'subjunctive',title:'虚拟语气',en:'The subjunctive & unreal situations',color:'#b1a28e',icon:'spark',desc:'表达假设、愿望与虚拟建议',ids:[]},
+ {id:'inversion',title:'倒装',en:'Inversion',color:'#7d919f',icon:'grid',desc:'分清完全倒装与部分倒装',ids:[]},
+ {id:'emphasis',title:'强调',en:'Emphasis & focus',color:'#aa929a',icon:'target',desc:'突出句子中想强调的信息',ids:[]}
 ];
 const LESSONS = [];
 function add(g,id,title,en,level,source,formula,take,steps,examples,quiz,related=[]){
