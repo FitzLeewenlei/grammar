@@ -5,7 +5,8 @@
   const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const ICONS={
-    orbit:'<circle cx="7" cy="7" r="2"/><circle cx="17" cy="7" r="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>',
+    sidebar:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16m4-11h4m-4 6h4"/>',
+    collapse:'<path d="m14 6-6 6 6 6"/>',
     game:'<path d="M8 7h8c3 0 5 7 4 10-.8 2-3-1-4-2H8c-1 1-3.2 4-4 2C3 14 5 7 8 7zM7 10v4m-2-2h4M16 11h.01M18 13h.01"/>',
     map:'<circle cx="12" cy="12" r="3"/><circle cx="4" cy="5" r="1.5"/><circle cx="20" cy="5" r="1.5"/><circle cx="4" cy="19" r="1.5"/><circle cx="20" cy="19" r="1.5"/><path d="m6 6 4 4m4 0 4-4M6 18l4-4m4 0 4 4"/>',
     exercise:'<path d="M5 3h14v18H5zM8 8h8M8 12h4m-4 4h7"/>',
@@ -21,7 +22,10 @@
   const STORAGE='grammar-atlas-progress-v1';
   let data=P.fresh(),storageWarned=false;
   try{data=P.normalize(JSON.parse(localStorage.getItem(STORAGE)||'null'));}catch{}
-  const state={page:'map',context:'root',contextTrail:[],cardKey:null,cardTrail:[],activeAnchor:'definition',menu:false,universeFocus:null,modal:null,notebookTab:'bookmarks',session:null,choice:null,answer:'',feedback:null,practiceModule:'root',practicePoint:'all'};
+  const desktopNav=matchMedia('(min-width:1100px)'),SIDEBAR_STORAGE='grammar-atlas-sidebar';
+  let desktopSidebarOpen=true;
+  try{desktopSidebarOpen=localStorage.getItem(SIDEBAR_STORAGE)!=='closed';}catch{}
+  const state={page:'map',context:'root',contextTrail:[],cardKey:null,cardTrail:[],activeAnchor:'definition',sidebarOpen:desktopNav.matches&&desktopSidebarOpen,universeFocus:null,modal:null,notebookTab:'bookmarks',session:null,choice:null,answer:'',feedback:null,practiceModule:'root',practicePoint:'all'};
   const graphs={map:{layout:null,camera:{x:0,y:0,scale:1}},progress:{layout:null,camera:{x:0,y:0,scale:1}}};
   let previousModalFocus=null,toastTimer=null,suppressGraphClickUntil=0;
   const learned=key=>P.learned(data,key);
@@ -29,7 +33,7 @@
   const litCount=keys=>keys.filter(learned).length;
   const allKnowledgeKeys=A.knowledge.map(n=>n.key);
   function toast(message){$('#toast').textContent=message;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),2500);}
-  function save(){try{localStorage.setItem(STORAGE,JSON.stringify(data));}catch{if(!storageWarned){storageWarned=true;toast('当前浏览器无法保存记录，可从圆钮菜单导出备份。');}}}
+  function save(){try{localStorage.setItem(STORAGE,JSON.stringify(data));}catch{if(!storageWarned){storageWarned=true;toast('当前浏览器无法保存记录，可从侧边栏导出备份。');}}}
   function snapshot(){return {page:state.page,context:state.context,contextTrail:state.contextTrail,cardKey:state.cardKey,cardTrail:state.cardTrail,universeFocus:state.universeFocus,gameRoute:Games.route};}
   function currentHash(){
     if(state.page==='progress')return '#progress'+(state.universeFocus?'/'+state.universeFocus:'');
@@ -47,36 +51,49 @@
     document.body.dataset.page=state.page;
     document.body.classList.toggle('card-open',!!state.cardKey);
     document.body.classList.toggle('modal-open',!!state.modal);
+    document.body.classList.toggle('sidebar-open',state.sidebarOpen);
     $$('.page').forEach(el=>el.classList.toggle('active',el.id===state.page+'-page'));
     $('#knowledge-card').hidden=!state.cardKey;
-    const modalCard=!!state.cardKey&&matchMedia('(max-width:1099px)').matches;
+    const modalCard=!!state.cardKey&&!desktopNav.matches,drawerOpen=state.sidebarOpen&&!desktopNav.matches;
     $('#card-scrim').hidden=!modalCard;
-    $('#app').inert=!!state.modal||modalCard;
+    $('#app').inert=!!state.modal||modalCard||drawerOpen;
     $('#knowledge-card').inert=!!state.modal;
     if(state.cardKey){$('#knowledge-card').setAttribute('role',modalCard?'dialog':'complementary');if(modalCard)$('#knowledge-card').setAttribute('aria-modal','true');else $('#knowledge-card').removeAttribute('aria-modal');}
-    $('#orbit-menu').hidden=!state.menu;
-    $('#nav-orb').setAttribute('aria-expanded',String(state.menu));
-    $('#nav-orb').setAttribute('aria-label',state.menu?'关闭导航':'打开导航');
-    $('#nav-orb').innerHTML=icon(state.menu?'close':'orbit');
-    $$('#orbit-menu [data-route]').forEach(el=>{el.classList.toggle('active',el.dataset.route===state.page);el.setAttribute('aria-current',el.dataset.route===state.page?'page':'false');});
+    $('#sidebar').hidden=!state.sidebarOpen;
+    $('#sidebar').inert=!!state.modal||modalCard;
+    $('#sidebar').setAttribute('role',drawerOpen?'dialog':'complementary');
+    if(drawerOpen)$('#sidebar').setAttribute('aria-modal','true');else $('#sidebar').removeAttribute('aria-modal');
+    $('#sidebar-scrim').hidden=!drawerOpen;
+    $('#sidebar-toggle').inert=!!state.modal||modalCard||drawerOpen;
+    $('#sidebar-toggle').setAttribute('aria-expanded',String(state.sidebarOpen));
+    $('#sidebar-collapse').setAttribute('aria-expanded',String(state.sidebarOpen));
+    $$('#sidebar [data-route]').forEach(el=>{el.classList.toggle('active',el.dataset.route===state.page);el.setAttribute('aria-current',el.dataset.route===state.page?'page':'false');});
     $('#parent-action').hidden=state.page==='map'?state.context==='root':state.page==='progress'?!state.universeFocus:true;
   }
-  function closeNav(){state.menu=false;syncUI();}
-  function toggleNav(){if(state.cardKey)clearCard();state.menu=!state.menu;syncUI();if(state.menu)$('#orbit-menu button')?.focus({preventScroll:true});else $('#nav-orb').focus({preventScroll:true});}
+  function dismissNav(){if(!desktopNav.matches)state.sidebarOpen=false;}
+  function navFocusTarget(){return state.sidebarOpen?$('#sidebar [data-route].active'):$('#sidebar-toggle');}
+  function closeNav(force=false){if(force){setSidebar(false);return;}dismissNav();syncUI();}
+  function setSidebar(open){
+    state.sidebarOpen=open;
+    if(desktopNav.matches){desktopSidebarOpen=open;try{localStorage.setItem(SIDEBAR_STORAGE,open?'open':'closed');}catch{}}
+    syncUI();navFocusTarget()?.focus({preventScroll:true});
+  }
+  function toggleNav(){setSidebar(!state.sidebarOpen);}
   function clearCard(){state.cardKey=null;state.cardTrail=[];state.activeAnchor='definition';syncUI();}
-  function closeCard(record=true){clearCard();renderActiveGraph(true);if(record)recordHistory();$('#nav-orb').focus({preventScroll:true});}
+  function closeCard(record=true){clearCard();renderActiveGraph(true);if(record)recordHistory();navFocusTarget()?.focus({preventScroll:true});}
   function showPage(page){state.page=page;syncUI();if(page!=='games')Games.pause();if(page==='practice')renderPractice();else if(page==='games')Games.render();else renderActiveGraph(true);}
   function navigate(page){
     if(!['map','practice','progress','games'].includes(page))page='map';
-    clearCard();closeModal(false);state.menu=false;state.session=null;state.choice=null;state.answer='';state.feedback=null;
+    clearCard();closeModal(false);dismissNav();state.session=null;state.choice=null;state.answer='';state.feedback=null;
     if(page==='map'){state.context='root';state.contextTrail=[];}
     if(page==='progress')state.universeFocus=null;
     if(page==='games')Games.setRoute('');
     showPage(page);recordHistory();
+    if(!desktopNav.matches){const target=page==='map'?$('#mindmap'):page==='progress'?$('#constellation'):$('#'+page+'-page h1');if(target){target.setAttribute('tabindex','-1');target.focus({preventScroll:true});}}
   }
   function goMap(key='root',trail){
     const n=key==='root'?null:A.get(key);if(key!=='root'&&!n)return;if(n?.kind==='lesson'){openCard(key);return;}
-    clearCard();closeModal(false);state.menu=false;state.context=key;state.contextTrail=key==='root'?[]:(trail||A.path(key));
+    clearCard();closeModal(false);dismissNav();state.context=key;state.contextTrail=key==='root'?[]:(trail||A.path(key));
     showPage('map');recordHistory();
   }
   function goParent(){
@@ -85,7 +102,7 @@
   }
   function openCard(key,trail){
     const n=A.get(key);if(!n)return;if(n.kind==='module'){goMap(key);return;}
-    closeModal(false);state.menu=false;state.cardKey=key;state.cardTrail=trail||A.path(key);state.activeAnchor='definition';
+    closeModal(false);dismissNav();state.cardKey=key;state.cardTrail=trail||A.path(key);state.activeAnchor='definition';
     if(state.page==='games'){Games.pause();state.page='map';}
     if(state.page==='map'){
       state.context=n.kind==='topic'?key:(state.cardTrail.at(-2)||'root');
@@ -165,7 +182,7 @@
   function updateTransform(page){const c=graphs[page].camera;$(page==='map'?'#map-transform':'#universe-transform').setAttribute('transform',`translate(${c.x},${c.y}) scale(${c.scale})`);}
   function fitView(){const page=state.page;if(!graphs[page]?.layout)return;const el=$('#'+page+'-page');graphs[page].camera=G.fit(graphs[page].layout,el.clientWidth,el.clientHeight,true);updateTransform(page);closeNav();}
   function zoom(page,factor,cx,cy){const c=graphs[page].camera,el=$('#'+page+'-page');cx??=el.clientWidth/2;cy??=el.clientHeight/2;const scale=Math.max(.23,Math.min(2.4,c.scale*factor)),ratio=scale/c.scale;c.x=cx-(cx-c.x)*ratio;c.y=cy-(cy-c.y)*ratio;c.scale=scale;updateTransform(page);}
-  function openConstellation(id){if(!A.modules.some(m=>m.id===id))return;clearCard();state.universeFocus=id;state.menu=false;showPage('progress');recordHistory();}
+  function openConstellation(id){if(!A.modules.some(m=>m.id===id))return;clearCard();state.universeFocus=id;dismissNav();showPage('progress');recordHistory();}
   function questionPool(scope='root'){
     const keys=A.lessonKeys(scope),seen=new Set();
     return keys.flatMap(k=>{const l=A.get(k).lesson;return l.quiz.filter(q=>{if(seen.has(q.id))return false;seen.add(q.id);return true;}).map(q=>({lid:l.id,q}));});
@@ -176,7 +193,7 @@
     if(!pool.length){toast(mode==='mistakes'?'暂无需要重练的错题。':'当前范围暂无练习。');return;}
     const mod=scope==='root'?null:moduleOf(scope);state.practiceModule=mod?mod.key:'root';state.practicePoint=A.get(scope)?.kind==='lesson'?scope:'all';
     const returnCard=state.cardKey?{key:state.cardKey,trail:[...state.cardTrail]}:null;
-    clearCard();closeModal(false);state.menu=false;state.choice=null;state.answer='';state.feedback=null;
+    clearCard();closeModal(false);dismissNav();state.choice=null;state.answer='';state.feedback=null;
     state.session={scope,mode,items:shuffled(pool).slice(0,Math.min(count,pool.length)),index:0,results:[],done:false,returnCard};
     showPage('practice');recordHistory();$('#practice-page').scrollTop=0;
   }
@@ -217,11 +234,11 @@
   function chooseAnswer(index){if(!state.session||state.feedback)return;state.choice=index;renderPractice();$(`[data-choice="${index}"]`)?.focus({preventScroll:true});}
   function nextQuestion(){const s=state.session;if(!s||!state.feedback)return;s.index++;s.done=s.index>=s.items.length;state.choice=null;state.answer='';state.feedback=null;renderPractice();$('#practice-page').scrollTop=0;}
   function modal(title,body,cls=''){
-    previousModalFocus=document.activeElement;state.modal=title;state.menu=false;
+    previousModalFocus=document.activeElement;state.modal=title;dismissNav();
     $('#modal-root').innerHTML=`<div class="modal-backdrop"><section class="modal ${cls}" role="dialog" aria-modal="true" aria-label="${esc(title)}"><header class="modal-heading"><h2>${esc(title)}</h2><button class="icon-button" data-action="close-modal" aria-label="关闭弹窗">${icon('close')}</button></header><div class="modal-body">${body}</div></section></div>`;
     syncUI();setTimeout(()=>$('#modal-root input, #modal-root textarea, #modal-root button')?.focus({preventScroll:true}),0);
   }
-  function closeModal(restore=true){if(!state.modal)return;$('#modal-root').innerHTML='';state.modal=null;syncUI();if(restore){const target=previousModalFocus?.isConnected&&previousModalFocus.getClientRects().length?previousModalFocus:state.cardKey?$('#card-title'):$('#nav-orb');target?.focus({preventScroll:true});}}
+  function closeModal(restore=true){if(!state.modal)return;$('#modal-root').innerHTML='';state.modal=null;syncUI();if(restore){const target=previousModalFocus?.isConnected&&previousModalFocus.getClientRects().length?previousModalFocus:state.cardKey?$('#card-title'):navFocusTarget();target?.focus({preventScroll:true});}}
   function showSearch(){modal('搜索知识点','<input id="knowledge-search" class="search-input" type="search" aria-label="搜索知识点" placeholder="名词、过去完成时、that…"><div class="search-results" id="search-results"></div>');renderSearch('');}
   function renderSearch(query){
     const tokens=query.toLowerCase().trim().split(/\s+/).filter(Boolean);
@@ -241,10 +258,10 @@
   async function importProgress(file){
     if(!file)return;try{if(file.size>5e6)throw Error('Large file');const backup=JSON.parse(await file.text());data=P.merge(data,backup);save();if(state.cardKey)renderCard(true);if(state.page==='practice')renderPractice();else if(state.page==='games')Games.render();else renderActiveGraph(false);closeModal();toast('备份已合并，学习星图已更新');}catch{toast('这不是有效的语法漫游进度备份。');}
   }
-  function showHelp(){modal('图谱操作',`<div class="help-item"><strong>逐层探索</strong><p>点击总地图的模块进入子地图，点击知识点打开卡片；卡片中的“下一级知识点”可继续深入，最后进入对应练习。点击地图中心可返回上一级。</p></div><div class="help-item"><strong>点亮星星</strong><p>阅读后点击“已学会，点亮星星”，或答对该知识点全部练习，对应星星就会点亮。学习星图中可展开模块星座，再点击星星继续学习。</p></div><div class="help-item"><strong>移动与缩放</strong><p>拖动空白处平移，滚轮或双指手势缩放。右下角圆钮中的“适应画面”可恢复总览。键盘 + / − 缩放，方向键平移，0 适应画面；Esc 关闭卡片或返回上一级。</p></div><div class="help-item"><strong>词性积木</strong><p>圆钮菜单中进入“游戏”，选择词性积木和关卡。拖拽积木或先点词性再点空格，同类可重复使用；放好后检查答案。50 关从短句逐步进入从句与长句，通关星级自动保存。</p></div><div class="help-item"><strong>搜索与备份</strong><p>Ctrl / ⌘ + K 搜索。收藏、笔记和记录备份都在圆钮菜单中。</p></div><div class="source-note">知识框架参考 Grammar in Use 系列主题；中文讲解与练习为学习用途重新编写，补充内容按常见英语语法归纳。</div>`);}
+  function showHelp(){modal('图谱操作',`<div class="help-item"><strong>逐层探索</strong><p>点击总地图的模块进入子地图，点击知识点打开卡片；卡片中的“下一级知识点”可继续深入，最后进入对应练习。点击地图中心可返回上一级。</p></div><div class="help-item"><strong>点亮星星</strong><p>阅读后点击“已学会，点亮星星”，或答对该知识点全部练习，对应星星就会点亮。学习星图中可展开模块星座，再点击星星继续学习。</p></div><div class="help-item"><strong>移动与缩放</strong><p>拖动空白处平移，滚轮或双指手势缩放。左侧边栏中的“适应画面”可恢复总览。键盘 + / − 缩放，方向键平移，0 适应画面；Esc 关闭卡片或返回上一级。</p></div><div class="help-item"><strong>词性积木</strong><p>侧边栏中进入“游戏”，选择词性积木和关卡。拖拽积木或先点词性再点空格，同类可重复使用；放好后检查答案。50 关从短句逐步进入从句与长句，通关星级自动保存。</p></div><div class="help-item"><strong>搜索与备份</strong><p>Ctrl / ⌘ + K 搜索。收藏、笔记和记录备份都在侧边栏中。</p></div><div class="source-note">知识框架参考 Grammar in Use 系列主题；中文讲解与练习为学习用途重新编写，补充内容按常见英语语法归纳。</div>`);}
   function speakExample(index){const e=A.examplesFor(state.cardKey)[index];if(!e)return;if(!('speechSynthesis'in window)){toast('当前设备未提供语音朗读。');return;}speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(e.en);utterance.lang='en-GB';utterance.rate=.85;const voice=speechSynthesis.getVoices().find(v=>v.lang==='en-GB')||speechSynthesis.getVoices().find(v=>v.lang.startsWith('en'));if(voice)utterance.voice=voice;utterance.onerror=()=>toast('当前设备暂时没有可用英语语音。');speechSynthesis.speak(utterance);}
   const actions={
-    'toggle-nav':toggleNav,'close-card':()=>closeCard(),'close-modal':()=>closeModal(),
+    'toggle-nav':toggleNav,'close-sidebar':()=>closeNav(true),'close-card':()=>closeCard(),'close-modal':()=>closeModal(),
     'parent-map':goParent,'card-root':()=>goMap('root'),'mark-learned':markLearned,
     'progress-root':()=>{state.universeFocus=null;clearCard();showPage('progress');recordHistory();},
     'open-progress':()=>navigate('progress'),search:showSearch,notebook:()=>showNotebook(),backup:showBackup,help:showHelp,fit:fitView,
@@ -273,7 +290,6 @@
     if(e.target===$('#card-scrim')){closeCard();return;}
     if(e.target.classList.contains('modal-backdrop'))closeModal();
   });
-  document.addEventListener('pointerdown',e=>{if(state.menu&&!e.target.closest('#orbit-menu')&&!e.target.closest('#nav-orb')){state.menu=false;syncUI();}});
   document.addEventListener('input',e=>{if(e.target.id==='knowledge-search')renderSearch(e.target.value);if(e.target.id==='quiz-answer'){state.answer=e.target.value;const button=$('[data-action="submit-answer"]');if(button)button.disabled=!state.answer.trim();}});
   document.addEventListener('change',e=>{if(e.target.id==='practice-module'){state.practiceModule=e.target.value;state.practicePoint='all';$('#practice-point').innerHTML=practicePointOptions(state.practiceModule);}if(e.target.id==='import-file')importProgress(e.target.files[0]);});
   function bindCamera(selector,page){
@@ -300,15 +316,15 @@
   function trapFocus(e,root,extra=[]){const items=[...root.querySelectorAll('button:not(:disabled),input:not([hidden]),select,textarea,[tabindex="0"]'),...extra].filter(el=>el.getClientRects().length&&!el.closest('[hidden]'));if(!items.length)return;const first=items[0],last=items.at(-1);if(!root.contains(document.activeElement)&&!extra.includes(document.activeElement)){e.preventDefault();first.focus();}else if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}
   document.addEventListener('keydown',e=>{
     if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();showSearch();return;}
-    if(e.key==='Escape'){e.preventDefault();if(state.modal)closeModal();else if(state.cardKey)closeCard();else if(state.menu){closeNav();$('#nav-orb').focus();}else if(state.page==='progress'&&state.universeFocus)goParent();else if(state.page==='map'&&state.context!=='root')goParent();else if(state.page==='games'&&Games.route)Games.back();return;}
-    if(e.key==='Tab'){if(state.modal)trapFocus(e,$('#modal-root'));else if(state.cardKey&&matchMedia('(max-width:1099px)').matches)trapFocus(e,$('#knowledge-card'));else if(state.menu)trapFocus(e,$('#orbit-menu'),[$('#nav-orb')]);}
+    if(e.key==='Escape'){e.preventDefault();if(state.modal)closeModal();else if(state.cardKey)closeCard();else if(state.sidebarOpen&&(!desktopNav.matches||e.target.closest('#sidebar')))closeNav(true);else if(state.page==='progress'&&state.universeFocus)goParent();else if(state.page==='map'&&state.context!=='root')goParent();else if(state.page==='games'&&Games.route)Games.back();return;}
+    if(e.key==='Tab'){if(state.modal)trapFocus(e,$('#modal-root'));else if(state.cardKey&&!desktopNav.matches)trapFocus(e,$('#knowledge-card'));else if(state.sidebarOpen&&!desktopNav.matches)trapFocus(e,$('#sidebar'));}
     if(e.target.id==='quiz-answer'&&e.key==='Enter'){e.preventDefault();submitAnswer();return;}
     if(e.target.closest('.quiz-options')&&['ArrowDown','ArrowUp','ArrowLeft','ArrowRight'].includes(e.key)&&!state.feedback){e.preventDefault();const count=$$('[data-choice]').length,d=['ArrowDown','ArrowRight'].includes(e.key)?1:-1;chooseAnswer(((state.choice??0)+d+count)%count);return;}
     if(e.target.matches('.graph-canvas')){if(['+','=','-','0','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))e.preventDefault();const page=state.page;if(!graphs[page])return;if(e.key==='+'||e.key==='=')zoom(page,1.15);if(e.key==='-')zoom(page,1/1.15);if(e.key==='0')fitView();const c=graphs[page].camera;if(e.key==='ArrowUp')c.y+=45;if(e.key==='ArrowDown')c.y-=45;if(e.key==='ArrowLeft')c.x+=45;if(e.key==='ArrowRight')c.x-=45;updateTransform(page);}
   });
   function restoreView(view){
     if(!view||!['map','practice','progress','games'].includes(view.page))return false;
-    clearCard();closeModal(false);state.menu=false;state.page=view.page;
+    clearCard();closeModal(false);dismissNav();state.page=view.page;
     state.context=view.context==='root'||A.get(view.context)?.kind==='module'||A.get(view.context)?.kind==='topic'?view.context:'root';
     state.contextTrail=Array.isArray(view.contextTrail)&&view.contextTrail.every(k=>A.get(k))?view.contextTrail:A.path(state.context);
     state.cardKey=A.get(view.cardKey)?.kind!=='module'&&A.get(view.cardKey)?view.cardKey:null;
@@ -331,6 +347,7 @@
   let resizeTimer;
   const observer=new ResizeObserver(()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{syncUI();renderActiveGraph(true);},80);});
   observer.observe($('#map-page'));observer.observe($('#progress-page'));
+  desktopNav.addEventListener('change',()=>{const focused=document.activeElement?.closest('#sidebar');state.sidebarOpen=desktopNav.matches&&desktopSidebarOpen;syncUI();if(focused&&!state.sidebarOpen)$('#sidebar-toggle').focus({preventScroll:true});renderActiveGraph(true);});
   window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{syncUI();renderActiveGraph(true);},100);});
   window.addEventListener('pagehide',()=>{save();if('speechSynthesis'in window)speechSynthesis.cancel();});
   Games.init({root:$('#games-page'),getProgress:()=>data.games.drag,saveProgress:save,onRoute:()=>recordHistory(),toast});

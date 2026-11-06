@@ -7,9 +7,9 @@
   <meta name="description" content="从 English Grammar 总图谱逐层探索十个模块，阅读知识卡片、点亮学习星图，完成语法练习和50关词性积木游戏。">
   <title>English Grammar · 语法图谱</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%235c7891'/%3E%3Ccircle cx='20' cy='20' r='4' fill='white'/%3E%3Cpath d='M20 16V8m4 12h8m-12 4v8m-4-12H8' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=9">
-  <link rel="stylesheet" href="responsive.css?v=9">
-  <link rel="stylesheet" href="games.css?v=9">
+  <link rel="stylesheet" href="styles.css?v=10">
+  <link rel="stylesheet" href="responsive.css?v=10">
+  <link rel="stylesheet" href="games.css?v=10">
 </head>
 <body data-page="map">
   <main id="app">
@@ -29,29 +29,35 @@
   </main>
   <div id="card-scrim" class="card-scrim" hidden data-action="close-card"></div>
   <aside id="knowledge-card" class="knowledge-card" hidden tabindex="-1" aria-label="知识详情卡片"></aside>
-  <nav id="orbit-menu" class="orbit-menu" aria-label="页面导航" hidden>
-    <button data-route="map"><span data-icon="map"></span><span>总地图<small>English Grammar</small></span></button>
-    <button data-route="practice"><span data-icon="exercise"></span><span>练习中心<small>按知识点巩固</small></span></button>
-    <button data-route="progress"><span data-icon="stars"></span><span>学习星图<small>查看已点亮的知识</small></span></button>
-    <button data-route="games"><span data-icon="game"></span><span>游戏<small>词性积木 · 50 关</small></span></button>
-    <button id="parent-action" data-action="parent-map" hidden><span data-icon="back"></span><span>返回上一级</span></button>
-    <div class="orbit-tools">
-      <button data-action="search" aria-label="搜索知识点" title="搜索知识点" data-icon="search"></button>
-      <button data-action="notebook" aria-label="收藏与笔记" title="收藏与笔记" data-icon="bookmark"></button>
-      <button data-action="backup" aria-label="学习记录备份" title="学习记录备份" data-icon="backup"></button>
-      <button data-action="fit" aria-label="适应画面" title="适应画面" data-icon="fit"></button>
-      <button data-action="help" aria-label="操作说明" title="操作说明" data-icon="help"></button>
+  <button id="sidebar-scrim" class="sidebar-scrim" data-action="close-sidebar" tabindex="-1" aria-hidden="true" hidden></button>
+  <aside id="sidebar" class="sidebar" aria-label="页面导航" hidden>
+    <header class="sidebar-header"><span>Grammar</span><button id="sidebar-collapse" class="icon-button" data-action="toggle-nav" aria-label="收起侧边栏" aria-controls="sidebar" aria-expanded="true"><span data-icon="collapse"></span></button></header>
+    <div class="sidebar-scroll">
+      <nav class="sidebar-nav" aria-label="学习页面">
+        <button data-route="map"><span data-icon="map"></span><span>总地图</span></button>
+        <button data-route="practice"><span data-icon="exercise"></span><span>练习中心</span></button>
+        <button data-route="progress"><span data-icon="stars"></span><span>学习星图</span></button>
+        <button data-route="games"><span data-icon="game"></span><span>游戏</span></button>
+      </nav>
+      <button id="parent-action" class="sidebar-parent" data-action="parent-map" hidden><span data-icon="back"></span><span>返回上一级</span></button>
+      <div class="sidebar-tools">
+        <button data-action="search"><span data-icon="search"></span><span>搜索知识点</span></button>
+        <button data-action="notebook"><span data-icon="bookmark"></span><span>收藏与笔记</span></button>
+        <button data-action="backup"><span data-icon="backup"></span><span>学习记录备份</span></button>
+        <button data-action="fit"><span data-icon="fit"></span><span>适应画面</span></button>
+        <button data-action="help"><span data-icon="help"></span><span>操作说明</span></button>
+      </div>
     </div>
-  </nav>
-  <button id="nav-orb" class="nav-orb" data-action="toggle-nav" aria-label="打开导航" aria-expanded="false" aria-controls="orbit-menu"><span data-icon="orbit"></span></button>
+  </aside>
+  <button id="sidebar-toggle" class="sidebar-toggle" data-action="toggle-nav" aria-label="展开侧边栏" aria-expanded="false" aria-controls="sidebar"><span data-icon="sidebar"></span></button>
   <div id="modal-root"></div>
   <div id="toast" role="status" aria-live="polite"></div>
-  <script src="content.js?v=9"></script>
-  <script src="atlas.js?v=9"></script>
-  <script src="graph.js?v=9"></script>
-  <script src="games-content.js?v=9"></script>
-  <script src="progress.js?v=9"></script>
-  <script src="games.js?v=9"></script>
-  <script src="app.js?v=9"></script>
+  <script src="content.js?v=10"></script>
+  <script src="atlas.js?v=10"></script>
+  <script src="graph.js?v=10"></script>
+  <script src="games-content.js?v=10"></script>
+  <script src="progress.js?v=10"></script>
+  <script src="games.js?v=10"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>
