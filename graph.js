@@ -46,7 +46,14 @@
       members.forEach((n,i)=>nodes.push({...n,type:'star',x:width*(i%2?.74:.26),y:172+Math.floor(i/2)*94+(i%2?18:0),w:Math.min(170,width*.46),h:70}));
     }else{
       let start=0;
-      for(const [radius,capacity] of [[170,7],[310,13],[450,30]]){
+      const rings=[[170,7],[310,13],[450,30]];
+      let covered=rings.reduce((sum,ring)=>sum+ring[1],0),outerRadius=450;
+      while(covered<members.length){
+        outerRadius+=180;
+        const capacity=Math.max(1,Math.floor(Math.PI*2*outerRadius/176));
+        rings.push([outerRadius,capacity]);covered+=capacity;
+      }
+      for(const [radius,capacity] of rings){
         const count=Math.min(capacity,members.length-start);
         for(let j=0;j<count;j++){const n=members[start+j],a=-Math.PI/2+j*Math.PI*2/count;nodes.push({...n,type:'star',x:600+Math.cos(a)*radius,y:470+Math.sin(a)*radius,w:148,h:68});}
         start+=count;if(start>=members.length)break;

@@ -111,7 +111,11 @@
     ['现在完成进行','过去完成进行','将来完成进行'],
     ['结构为 have / had / will have + been + doing。','优先判断时间参照点，再判断是否要突出过程；表达次数或完成成果时常选完成式。'],
     ['完成进行时不保证动作仍在继续；状态含义的动词通常用完成式而非完成进行式。'],['perf-cont','past-perfect-continuous','future-perfect-continuous']);
-  const extraChildren={nouns:['noun-phrase'],articles:['determiners'],adjectives:['word-formation'],verbs:['verb-forms','modal-perfect'],adverbial:['place-manner-clauses','comparison-clauses']};
+  topic('noun-semantic','lexis','具体与抽象','Concrete & abstract meaning','具体与抽象按名词所表达的意义区分；它不同于专有与普通的命名分类，也不能直接决定名词可数性。',
+    ['具体名词','抽象名词'],
+    ['具体名词指有形或可感知的对象，如 stone、tree；抽象名词表达性质、状态、活动或关系，如 patience、friendship。分类边界取决于词义和采用的分析方式。','不要把“看不见”简单等同于抽象，也不要把“抽象”简单等同于不可数。an experience 表一次经历，experience 也可指经验。'],
+    [{title:'抽象意义与可数性分开检查',wrong:'She gave me two advices.',right:'She gave me two pieces of advice.',text:'advice 在普通建议意义下通常不可数，需要单位表达；但 idea、suggestion 等表示抽象内容的名词可以按项计数。'}],['noun-concrete','noun-abstract']);
+  const extraChildren={nouns:['noun-phrase'],articles:['determiners'],adjectives:['word-formation'],verbs:['verb-forms','modal-perfect','verb-transitive','verb-linking'],adverbial:['place-manner-clauses','comparison-clauses']};
   for(const [id,ids] of Object.entries(extraChildren))topics.find(t=>t.id===id).children.push(...ids.map(lesson));
   topics.find(t=>t.id==='simple-tenses').referenceTable={caption:'四种时间参照与四种体貌的教学对照',headers:['参照时间','一般','进行','完成','完成进行'],rows:[
     ['现在','do / does','am/is/are doing','have/has done','have/has been doing'],
@@ -150,6 +154,32 @@
     definition:l.steps[0].t,classification:classification[l.id]||l.steps.map(s=>s.h),usage:l.steps.slice(1),
     pitfalls:l.quiz.map(q=>({title:q.prompt,text:q.why})),examples:l.examples,...window.LESSON_DETAILS?.[l.id]
   }));
+  const subdivisions={
+    'noun-types':['noun-proper','noun-common',topicKey('noun-semantic')],
+    'noun-common':['noun-individual','noun-collective','noun-material','noun-abstract'],
+    countable:['noun-countable-specific','noun-uncountable-specific','noun-countability-shifts'],
+    'noun-plurals':['noun-plural-regular','noun-plural-irregular'],
+    possession:['noun-possessive-forms','noun-joint-possessive'],
+    pronouns:['pronoun-personal','pronoun-possessive','pronoun-reflexive','pronoun-indefinite','pronoun-demonstrative'],
+    articles:['article-indefinite','article-definite','article-zero'],
+    adjadv:['adjective-functions'],'degree-order':['adverb-types'],
+    prepositions:['preposition-time','preposition-place'],
+    'conjunction-types':['conjunction-coordinate','conjunction-subordinate'],
+    'time-connectors':['clause-adverbial-time'],contrast:['clause-adverbial-reason','clause-adverbial-concession'],
+    'purpose-result':['clause-adverbial-purpose','clause-adverbial-result'],
+    'relative-pronouns':['relative-subject','relative-object','relative-preposition'],
+    objects:['nominal-that','nominal-what','nominal-whether'],
+    unreal:['conditional-present','conditional-past','conditional-mixed']
+  };
+  for(const [id,ids] of Object.entries(subdivisions)){
+    const n=nodes.get(lesson(id));n.children=ids.map(k=>k.startsWith('topic:')?k:lesson(k));
+    n.classification=n.children.map(k=>nodes.get(k).title);
+    n.classificationLinks=Object.fromEntries(n.children.map(k=>[nodes.get(k).title,k]));
+  }
+  const nounTopic=nodes.get(topicKey('nouns'));
+  nounTopic.classificationLinks=Object.fromEntries(nounTopic.classification.map((label,i)=>[label,[lesson('noun-types'),topicKey('noun-semantic'),lesson('noun-common'),lesson('countable')][i]]));
+  const semanticTopic=nodes.get(topicKey('noun-semantic'));
+  semanticTopic.classificationLinks={'具体名词':lesson('noun-concrete'),'抽象名词':lesson('noun-abstract')};
   for(const t of topics){
     const childNodes=t.children.map(k=>nodes.get(k));
     t.usage=[...t.usage,...childNodes.slice(0,6).map(n=>({h:n.title,t:n.usage[0]?.t||n.usage[0]}))];
@@ -173,8 +203,13 @@
     return [...result];
   }
   function path(key){const out=[];while(nodes.has(key)){out.unshift(key);key=parent.get(key);}return out;}
+  function route(from,to){
+    const queue=[[from]],seen=new Set();
+    while(queue.length){const p=queue.shift(),key=p.at(-1);if(key===to)return p;if(seen.has(key))continue;seen.add(key);for(const child of nodes.get(key)?.children||[])queue.push([...p,child]);}
+    return null;
+  }
   function examplesFor(key){const n=nodes.get(key);if(n.examples?.length)return n.examples;return descendants(key,'lesson').flatMap(k=>nodes.get(k).examples).slice(0,2);}
-  window.ATLAS={modules,topics,nodes,knowledge,parent,owner,get:key=>nodes.get(key),path,descendants,examplesFor,
+  window.ATLAS={modules,topics,nodes,knowledge,parent,owner,get:key=>nodes.get(key),path,route,descendants,examplesFor,
     lessonKeys:key=>descendants(key,'lesson'),storageKey:key=>nodes.get(key)?.kind==='lesson'?nodes.get(key).id:key,
     fromStorage:key=>nodes.has(key)?key:nodes.has(lesson(key))?lesson(key):null};
 })();

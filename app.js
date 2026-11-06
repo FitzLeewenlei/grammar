@@ -97,7 +97,7 @@
     if(!desktopNav.matches){const target=page==='map'?$('#mindmap'):page==='progress'?$('#constellation'):$('#'+page+'-page h1');if(target){target.setAttribute('tabindex','-1');target.focus({preventScroll:true});}}
   }
   function goMap(key='root',trail){
-    const n=key==='root'?null:A.get(key);if(key!=='root'&&!n)return;if(n?.kind==='lesson'){openCard(key);return;}
+    const n=key==='root'?null:A.get(key);if(key!=='root'&&!n)return;if(n?.kind==='lesson'&&!n.children.length){openCard(key,trail);return;}
     clearCard();closeModal(false);dismissNav();state.context=key;state.contextTrail=key==='root'?[]:(trail||A.path(key));
     showPage('map');recordHistory();
   }
@@ -110,14 +110,18 @@
     closeModal(false);dismissNav();state.cardKey=key;state.cardTrail=trail||A.path(key);state.activeAnchor='definition';
     if(state.page==='games'){Games.pause();state.page='map';}
     if(state.page==='map'){
-      state.context=n.kind==='topic'?key:(state.cardTrail.at(-2)||'root');
-      state.contextTrail=n.kind==='topic'?state.cardTrail:[...state.cardTrail.slice(0,-1)];
+      state.context=n.children.length?key:(state.cardTrail.at(-2)||'root');
+      state.contextTrail=n.children.length?state.cardTrail:[...state.cardTrail.slice(0,-1)];
     }
     if(n.kind==='lesson')data.last=n.id;data.lastCard=key;save();
     syncUI();renderCard();renderActiveGraph(true);recordHistory();
     setTimeout(()=>$('#card-title')?.focus({preventScroll:true}),0);
   }
-  function nextCard(key){const trail=state.cardTrail.includes(key)?A.path(key):[...state.cardTrail,key];openCard(key,trail);}
+  function nextCard(key){
+    const prior=state.cardTrail.indexOf(key),branch=A.route(state.cardKey,key);
+    const trail=prior>=0?state.cardTrail.slice(0,prior+1):branch?[...state.cardTrail,...branch.slice(1)]:A.path(key);
+    openCard(key,trail);
+  }
   function renderCard(keepScroll=false){
     const key=state.cardKey,n=A.get(key);if(!n)return;
     const scroll=keepScroll?$('.card-body')?.scrollTop||0:0,storage=A.storageKey(key),l=n.lesson;
@@ -128,12 +132,13 @@
     const useBlocks=n.usage.map(s=>typeof s==='string'?`<div class="usage-block"><p>${esc(s)}</p></div>`:`<div class="usage-block"><h3>${esc(s.h)}</h3><p>${esc(s.t)}</p></div>`).join('');
     const errors=n.pitfalls.map(p=>typeof p==='string'?`<div class="pitfall"><p>${esc(p)}</p></div>`:`<div class="pitfall"><strong>${esc(p.title)}</strong>${p.wrong&&p.right?`<div class="correction-pair"><p class="correction-wrong"><span>原句</span><span lang="en">${esc(p.wrong)}</span></p><p class="correction-right"><span>改写</span><span lang="en">${esc(p.right)}</span></p></div>`:''}<p>${esc(p.text)}</p></div>`).join('');
     const table=n.referenceTable,reference=table?`<details class="grammar-reference"><summary>时态结构对照 · 16种教学组合</summary><div class="grammar-table-wrap" tabindex="0" role="region" aria-label="时态结构对照，可横向滚动"><table><caption>${esc(table.caption)}</caption><thead><tr>${table.headers.map(h=>`<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${table.rows.map(row=>`<tr>${row.map((cell,i)=>i?`<td lang="en">${esc(cell)}</td>`:`<th scope="row">${esc(cell)}</th>`).join('')}</tr>`).join('')}</tbody></table></div><p>${esc(table.note)}</p></details>`:'';
+    const classes=n.classification.map(label=>n.classificationLinks?.[label]?`<button class="class-link" data-next-key="${esc(n.classificationLinks[label])}" aria-label="查看${esc(label)}详解">${esc(label)}${icon('arrow')}</button>`:`<span>${esc(label)}</span>`).join('');
     const nextMarkup=children.length?`<section class="card-section" id="card-next"><h2>下一级知识点</h2><div class="next-points">${children.map(c=>`<button class="next-point ${learned(c.key)?'is-lit':''}" data-next-key="${esc(c.key)}"><span>${esc(c.title)}</span>${icon(learned(c.key)?'check':'arrow')}</button>`).join('')}</div></section>`:'';
     const related=!children.length&&l?.related.length?`<section class="card-section"><h2>相关知识点</h2><div class="next-points">${l.related.map(id=>A.get('lesson:'+id)).filter(Boolean).slice(0,4).map(c=>`<button class="next-point" data-open-card="${esc(c.key)}">${esc(c.title)}${icon('arrow')}</button>`).join('')}</div></section>`:'';
     $('#knowledge-card').innerHTML=`<header class="card-header"><div class="card-topline"><div class="card-breadcrumb"><button data-action="card-root">总地图</button>${crumbs?'<i>/</i>'+crumbs:''}</div><div class="card-tools"><button class="icon-button" id="card-toggle-size" data-action="toggle-card-size" aria-label="全屏阅读知识讲解" aria-pressed="false">${icon('maximize')}</button><button class="icon-button" data-action="bookmark" data-active="${data.bookmarks.includes(storage)}" aria-label="${data.bookmarks.includes(storage)?'取消收藏':'收藏知识点'}">${icon('bookmark')}</button><button class="icon-button" data-action="note" aria-label="写学习笔记">${icon('note')}</button><button class="icon-button" data-action="close-card" aria-label="关闭知识卡片">${icon('close')}</button></div></div><h1 id="card-title" tabindex="-1">${esc(n.title)}</h1><p class="card-en">${esc(n.en)}</p></header>
       <nav class="card-anchors" aria-label="知识卡片内容">${[['definition','定义'],['classes','分类'],['examples','例句'],['usage','用法'],['pitfalls','易错点']].map(([id,title])=>`<button data-jump="${id}" class="${state.activeAnchor===id?'active':''}">${title}</button>`).join('')}</nav>
       <div class="card-body"><section class="card-section" id="card-definition"><h2>${n.id==='nouns'?'名词是什么':'定义'}</h2><p>${esc(n.definition)}</p>${l?`<div class="formula-box">${esc(l.formula)}</div>`:''}</section>
-      <section class="card-section" id="card-classes"><h2>${n.id==='nouns'?'名词的分类':'分类与结构'}</h2><div class="class-tags">${n.classification.map(c=>`<span>${esc(c)}</span>`).join('')}</div>${reference}</section>
+      <section class="card-section" id="card-classes"><h2>${n.id==='nouns'?'名词的分类':'分类与结构'}${n.classificationLinks?' <small class="class-hint">点击继续展开</small>':''}</h2><div class="class-tags">${classes}</div>${reference}</section>
       <section class="card-section" id="card-examples"><h2>例句</h2>${examples.map((e,i)=>`<article class="card-example"><button class="icon-button" data-speak="${i}" aria-label="朗读第${i+1}个例句">${icon('sound')}</button><strong>${esc(e.en)}</strong><p>${esc(e.zh)}</p><small>${esc(e.note)}</small></article>`).join('')}</section>
       <section class="card-section" id="card-usage"><h2>${n.id==='nouns'?'用法与常见考点':'用法'}</h2>${useBlocks}</section>
       <section class="card-section" id="card-pitfalls"><h2>易错点</h2>${errors}</section>${nextMarkup}${related}
@@ -333,10 +338,11 @@
   function restoreView(view){
     if(!view||!['map','practice','progress','games'].includes(view.page))return false;
     clearCard();closeModal(false);dismissNav();state.page=view.page;
-    state.context=view.context==='root'||A.get(view.context)?.kind==='module'||A.get(view.context)?.kind==='topic'?view.context:'root';
+    state.context=view.context==='root'||A.get(view.context)?.children.length?view.context:'root';
     state.contextTrail=Array.isArray(view.contextTrail)&&view.contextTrail.every(k=>A.get(k))?view.contextTrail:A.path(state.context);
     state.cardKey=A.get(view.cardKey)?.kind!=='module'&&A.get(view.cardKey)?view.cardKey:null;
     state.cardTrail=state.cardKey&&Array.isArray(view.cardTrail)&&view.cardTrail.every(k=>A.get(k))?view.cardTrail:state.cardKey?A.path(state.cardKey):[];
+    if(state.page==='map'&&state.cardKey){const n=A.get(state.cardKey);state.context=n.children.length?n.key:(state.cardTrail.at(-2)||'root');state.contextTrail=n.children.length?[...state.cardTrail]:state.cardTrail.slice(0,-1);}
     state.universeFocus=A.modules.some(m=>m.id===view.universeFocus)?view.universeFocus:null;
     state.session=null;Games.pause();if(state.page==='games')Games.setRoute(view.gameRoute||'');syncUI();if(state.cardKey)renderCard();if(state.page==='practice')renderPractice();else if(state.page==='games')Games.render();else renderActiveGraph(true);return true;
   }
@@ -353,7 +359,7 @@
       choices=n.children.map(k=>A.get(k));
     }
     const last=A.get(trail.at(-1));
-    restoreView({page:'map',context:last?.kind==='lesson'?(trail.at(-2)||'root'):(last?.key||'root'),contextTrail:last?.kind==='lesson'?trail.slice(0,-1):trail,cardKey:last&&last.kind!=='module'?last.key:null,cardTrail:trail});
+    restoreView({page:'map',context:last?.children.length?last.key:(trail.at(-2)||'root'),contextTrail:last?.children.length?trail:trail.slice(0,-1),cardKey:last&&last.kind!=='module'?last.key:null,cardTrail:trail});
   }
   window.addEventListener('popstate',e=>{if(e.state?.app==='grammar-atlas-v3')restoreView(e.state.view);else restoreHash();});
   window.addEventListener('hashchange',()=>{if(history.state?.app!=='grammar-atlas-v3')restoreHash();});
