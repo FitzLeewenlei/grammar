@@ -4,7 +4,7 @@ import {resolve} from 'node:path';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 const root=fileURLToPath(new URL('../',import.meta.url));
-const scripts=['content.js','content-additions.js','lesson-details-lexis.js','lesson-details-verbs.js','content-detail-nouns.js','content-detail-lexis.js','content-detail-clauses.js','beginner-guide.js','atlas.js','graph.js','games-content.js','progress.js'];
+const scripts=['content.js','content-additions.js','lesson-details-lexis.js','lesson-details-verbs.js','content-detail-nouns.js','content-detail-lexis.js','content-detail-clauses.js','beginner-guide.js','atlas.js','graph.js','nebula-graph.js','games-content.js','progress.js'];
 const context=vm.createContext({window:{}});
 for(const file of scripts)vm.runInContext(readFileSync(resolve(root,file),'utf8'),context,{filename:file});
 const {GRAMMAR:d,ATLAS:a,GrammarGraph:g,GrammarProgress:p,GRAMMAR_GAMES_DATA:games}=context.window;
@@ -93,11 +93,25 @@ for(const [width,height] of [[320,568],[390,844],[430,932],[820,1180],[1024,768]
  for(const m of a.modules){const focused=g.universeLayout(a,width,height,m.id);assert.equal(focused.stars.length,a.knowledge.filter(n=>a.owner.get(n.key)===m.id).length);assert(focused.nodes.every(n=>Number.isFinite(n.x)&&Number.isFinite(n.y)));}
 }
 const app=readFileSync(resolve(root,'app.js'),'utf8');new vm.Script(app,{filename:'app.js'});new vm.Script(readFileSync(resolve(root,'games.js'),'utf8'),{filename:'games.js'});new vm.Script(readFileSync(resolve(root,'pane-resize.js'),'utf8'),{filename:'pane-resize.js'});
+const nebula=context.window.GrammarNebula,network=nebula.build(a),networkKeys=new Set(network.nodes.map(n=>n.key));
+assert.equal(network.nodes.length,176);assert.equal(networkKeys.size,176);assert(network.edges.length>300);
+const edgeKeys=new Set(),adjacency=new Map(network.nodes.map(n=>[n.key,[]]));
+for(const edge of network.edges){assert(networkKeys.has(edge.source)&&networkKeys.has(edge.target));assert.notEqual(edge.source,edge.target);const key=[edge.source,edge.target].sort().join('|');assert(!edgeKeys.has(key));edgeKeys.add(key);adjacency.get(edge.source).push(edge.target);adjacency.get(edge.target).push(edge.source);if(edge.kind==='hierarchy')assert(a.get(edge.source).children.includes(edge.target)||a.get(edge.target).children.includes(edge.source));}
+const connected=new Set(),queue=[network.nodes[0].key];while(queue.length){const k=queue.pop();if(connected.has(k))continue;connected.add(k);queue.push(...adjacency.get(k));}assert.equal(connected.size,176);
+for(const focus of [null,...a.modules.map(m=>m.id)]){
+ const layout=nebula.layout(a,1280,960,focus),keys=new Set(layout.nodes.map(n=>n.key));assert.equal(layout.mode,'nebula');
+ for(const n of layout.nodes)assert(Number.isFinite(n.x)&&Number.isFinite(n.y)&&n.r>0&&keys.has(n.key));
+ for(const edge of layout.edges)assert(keys.has(edge.source)&&keys.has(edge.target)&&edge.a.key===edge.source&&edge.b.key===edge.target);
+ for(const n of a.knowledge.filter(n=>!focus||a.owner.get(n.key)===focus))assert(keys.has(n.key),`Missing nebula point ${n.key}`);
+ const repeat=nebula.layout(a,1280,960,focus);assert.equal(JSON.stringify(layout.nodes.map(n=>[n.key,n.x,n.y])),JSON.stringify(repeat.nodes.map(n=>[n.key,n.x,n.y])));
+ for(const [w,h] of [[320,568],[390,240],[820,1180],[1536,1000]]){const camera=g.fit(layout,w,h);assert(camera.scale>0&&Number.isFinite(camera.x)&&Number.isFinite(camera.y));}
+}
 const html=readFileSync(resolve(root,'index.html'),'utf8');
 for(const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)){const ref=match[1];if(/^(?:data:|https?:)/.test(ref))continue;assert(!ref.startsWith('/'));assert(existsSync(resolve(root,ref.split('?')[0])),`Missing asset ${ref}`);}
 assert(!/(?:libfile_|appgprj_|art_v2_|chatgpt\.com\/library)/.test(app+html),'Hosting-specific reference found');
 console.log(`Passed: 10 modules, 31 topic cards, 135 detailed lessons, ${questions} unique questions, 166 progress stars.`);
 console.log(`Passed: ${layouts} non-overlapping map layouts, constellation coverage, legacy progress migration and idempotent backup merge.`);
 console.log(`Passed: 50 unique game levels, 10 progressively introduced word classes, answer checking and game backup merge.`);
+console.log(`Passed: connected nebula with 176 nodes / ${network.edges.length} real relationships, deterministic clusters and all 10 module focus views.`);
 console.log('Passed: beginner example length, basic steps, structured corrections,31overview cards and43term explanations.');
 console.log('Passed: JavaScript syntax and portable relative assets.');

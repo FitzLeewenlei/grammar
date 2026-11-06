@@ -74,9 +74,9 @@
   }
   function fit(layout,width,height,all=false){
     const b=layout.bounds;
-    const top=56,bottom=24;
-    let scale=Math.min(1.16,(width-24)/Math.max(1,b.w),(height-top-bottom)/Math.max(1,b.h));
-    scale=Math.max(height<360?.08:.25,scale);
+    const nebula=layout.mode==='nebula',top=nebula?90:56,bottom=nebula?78:24;
+    let scale=Math.min(1.16,(width-(nebula?48:24))/Math.max(1,b.w),(height-top-bottom)/Math.max(1,b.h));
+    scale=Math.max(layout.mode==='nebula'?.04:height<360?.08:.25,scale);
     if(layout.preferTop&&!all){scale=Math.min(1,(width-18)/b.w);return {scale,x:width/2-(b.x+b.w/2)*scale,y:20-b.y*scale};}
     return {scale,x:width/2-(b.x+b.w/2)*scale,y:top+(height-top-bottom)/2-(b.y+b.h/2)*scale};
   }

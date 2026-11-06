@@ -1,6 +1,6 @@
 'use strict';
 (() => {
-  const A=window.ATLAS,G=window.GrammarGraph,P=window.GrammarProgress,Games=window.GrammarGames,Pane=window.GrammarPane;
+  const A=window.ATLAS,G=window.GrammarGraph,P=window.GrammarProgress,Games=window.GrammarGames,Pane=window.GrammarPane,N=window.GrammarNebula;
   const lessons=window.GRAMMAR.lessons,byId=new Map(lessons.map(l=>[l.id,l]));
   const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -35,8 +35,11 @@
   const desktopNav=matchMedia('(min-width:1100px)'),SIDEBAR_STORAGE='grammar-atlas-sidebar';
   let desktopSidebarOpen=true;
   try{desktopSidebarOpen=localStorage.getItem(SIDEBAR_STORAGE)!=='closed';}catch{}
-  const state={page:'map',context:'root',contextTrail:[],cardKey:null,cardTrail:[],activeAnchor:'definition',sidebarOpen:desktopNav.matches&&desktopSidebarOpen,universeFocus:null,modal:null,notebookTab:'bookmarks',session:null,choice:null,answer:'',feedback:null,practiceModule:'root',practicePoint:'all'};
+  const state={page:'map',context:'root',contextTrail:[],cardKey:null,cardTrail:[],activeAnchor:'definition',sidebarOpen:desktopNav.matches&&desktopSidebarOpen,universeFocus:null,modal:null,notebookTab:'bookmarks',session:null,choice:null,answer:'',feedback:null,practiceModule:'root',practicePoint:'all',nebulaLabels:false};
   const graphs={map:{layout:null,camera:{x:0,y:0,scale:1}},progress:{layout:null,camera:{x:0,y:0,scale:1}}};
+  const transformFrames={map:0,progress:0};
+  const nebulaLayouts=new Map();
+  let nebulaHovered=null,nebulaDragged=null,lastNebulaScale=null;
   let previousModalFocus=null,toastTimer=null,suppressGraphClickUntil=0;
   const learned=key=>P.learned(data,key);
   const moduleOf=key=>A.modules.find(m=>m.id===A.owner.get(key));
@@ -178,36 +181,107 @@
   function foreign(n,html){return `<foreignObject x="${n.x-n.w/2}" y="${n.y-n.h/2}" width="${n.w}" height="${n.h}"><div xmlns="http://www.w3.org/1999/xhtml" style="width:100%;height:100%">${html}</div></foreignObject>`;}
   function renderMap(reset=true){
     const el=$('#map-page'),w=el.clientWidth,h=el.clientHeight;if(!w||!h)return;
+    graphs.map.cancelGesture?.();
     const layout=G.mapLayout(A,state.context,w,h);graphs.map.layout=layout;
     $('#mindmap').setAttribute('aria-label',state.context==='root'?'English Grammar 总语法图谱':A.get(state.context).title+'子地图');
     $('#map-transform').innerHTML=layout.edges.map(e=>`<path class="map-edge" d="${G.edgePath(e)}" stroke="${e.color}"/>`).join('')+layout.nodes.map(n=>foreign(n,graphNode(n))).join('');
     if(reset)graphs.map.camera=G.fit(layout,w,h);
     updateTransform('map');
   }
+  const nebulaPalette={lexis:'#81c4ff',syntax:'#8fbcff',tenses:'#66d5ee',voice:'#8ebed8',clauses:'#b3a8ff',nonfinite:'#74d4c1',agreement:'#c5b0ef',inversion:'#8fc9ed',subjunctive:'#dabd88',writing:'#d3a1bd'};
+  const nebulaEdgePath=e=>`M${e.a.x},${e.a.y} L${e.b.x},${e.b.y}`;
   function renderUniverse(reset=true){
     const el=$('#progress-page'),w=el.clientWidth,h=el.clientHeight;if(!w||!h)return;
-    const layout=G.universeLayout(A,w,h,state.universeFocus);graphs.progress.layout=layout;
-    const count=litCount(allKnowledgeKeys);
-    const edges=layout.edges.map(e=>`<path class="constellation-edge" d="${G.edgePath(e)}" stroke="${e.color}"/>`).join('');
-    const starDots=layout.mode==='universe'?layout.stars.map(s=>`${learned(s.key)?`<circle class="star-halo" cx="${s.x}" cy="${s.y}" r="6"/>`:''}<circle class="star-point ${learned(s.key)?'is-lit':''}" data-knowledge="${esc(s.key)}" data-lit="${learned(s.key)}" cx="${s.x}" cy="${s.y}" r="${learned(s.key)?3.1:2.2}"><title>${esc(A.get(s.key).title)} · ${learned(s.key)?'已点亮':'待学习'}</title></circle>`).join(''):'';
+    graphs.progress.cancelGesture?.();
+    const cacheKey=state.universeFocus||'all';
+    if(!nebulaLayouts.has(cacheKey))nebulaLayouts.set(cacheKey,N.layout(A,1280,960,state.universeFocus));
+    const layout=nebulaLayouts.get(cacheKey),aspect=Math.max(.28,Math.min(3.5,(h-170)/Math.max(220,w-60)));
+    const previousAspect=layout.viewportAspect??(960-100)/(1280-32);
+    if(Math.abs(aspect-previousAspect)>.001){for(const n of layout.nodes)n.y*=aspect/previousAspect;layout.viewportAspect=aspect;const b=G.bounds(layout.nodes);layout.bounds={x:b.x-30,y:b.y-30,w:b.w+60,h:b.h+60};}
+    layout.viewportWidth=w;layout.viewportHeight=h;graphs.progress.layout=layout;
+    layout.byKey=new Map(layout.nodes.map(n=>[n.key,n]));
+    const sparse=w<650&&h<500,important=new Set(layout.nodes.filter(n=>n.kind!=='module').sort((a,b)=>b.degree-a.degree).slice(0,w<650||h<450?0:14).map(n=>n.key));
+    const hubLabels=new Set(layout.nodes.filter(n=>n.kind==='module').sort((a,b)=>Number(b.id===state.universeFocus)-Number(a.id===state.universeFocus)||b.degree-a.degree).slice(0,sparse?3:10).map(n=>n.key));
+    const edges=layout.edges.map((e,i)=>`<path class="nebula-edge ${e.kind==='related'?'is-related':''} ${learned(e.source)&&learned(e.target)?'is-lit':''}" data-edge-index="${i}" data-edge-from="${esc(e.source)}" data-edge-to="${esc(e.target)}" style="--edge-color:${nebulaPalette[e.a.module]||'#76a7cc'}" d="${nebulaEdgePath(e)}"/>`).join('');
     const nodes=layout.nodes.map(n=>{
-      if(n.type==='star')return foreign(n,`<button class="knowledge-star ${learned(n.key)?'is-lit':''}" data-star-node="${esc(n.key)}" data-lit="${learned(n.key)}" aria-label="${esc(n.title)}，${learned(n.key)?'已点亮':'待学习'}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS.stars}</svg><span>${esc(n.title)}</span></button>`);
-      if(n.type==='center'){
-        const focus=state.universeFocus,keys=focus?A.knowledge.filter(k=>A.owner.get(k.key)===focus).map(k=>k.key):allKnowledgeKeys;
-        return foreign(n,`<button class="universe-node universe-root" data-action="progress-root"><strong>${esc(focus?A.modules.find(m=>m.id===focus).title:'Grammar Universe')}</strong><small>已点亮 ${litCount(keys)} / ${keys.length}</small></button>`);
-      }
-      const keys=A.knowledge.filter(k=>A.owner.get(k.key)===n.id).map(k=>k.key);
-      return foreign(n,`<button class="universe-node" data-progress-module="${n.id}" aria-label="打开${esc(n.title)}星座"><strong>${esc(n.title)}</strong><small>${litCount(keys)} / ${keys.length}</small></button>`);
+      const hub=n.kind==='module',lit=learned(n.key),label=n.title.length>12?n.title.slice(0,11)+'…':n.title;
+      const keys=hub?A.knowledge.filter(k=>A.owner.get(k.key)===n.id).map(k=>k.key):[];
+      const selected=state.cardKey===n.key;
+      return `<g class="nebula-node ${hub?'is-hub':''} ${important.has(n.key)?'is-important':''} ${(hub?!hubLabels.has(n.key):!important.has(n.key))?'hide-label':''} ${n.context?'is-context':''} ${lit?'is-lit':''} ${selected?'is-selected':''}" data-nebula-key="${esc(n.key)}" ${hub?`data-progress-module="${n.id}"`:`data-star-node="${esc(n.key)}" data-knowledge="${esc(n.key)}" data-lit="${lit}"`} role="button" tabindex="0" aria-label="${esc(n.title)}，${hub?'查看这个模块的星群':lit?'已学会，查看讲解':'待学习，查看讲解'}" style="--node-color:${nebulaPalette[n.module]||'#82bfff'}" transform="translate(${n.x},${n.y})"><circle class="nebula-halo"/><circle class="nebula-core"/><circle class="nebula-hit"/><text class="nebula-label">${esc(hub?n.title:label)}</text>${hub?`<text class="nebula-subtitle">${litCount(keys)} / ${keys.length}</text>`:''}</g>`;
     }).join('');
-    $('#universe-transform').innerHTML=edges+starDots+nodes;
-    $('#star-caption').innerHTML=state.universeFocus?`<button data-action="progress-root">${icon('back')}全部星座</button><strong>${esc(A.modules.find(m=>m.id===state.universeFocus).title)}星座</strong>`:`<strong>学习星图</strong><span>已点亮 ${count} / ${allKnowledgeKeys.length} 个知识点</span>`;
+    $('#universe-transform').innerHTML=edges+nodes;
+    $('#nebula-backdrop').innerHTML=Array.from({length:110},(_,i)=>`<circle cx="${((i*137.508+17)%997)/997*w}" cy="${((i*i*31.19+43)%991)/991*h}" r="${i%7===0?1:.55}" fill="#abcdea" opacity="${i%7===0?.3:.13}"/>`).join('');
+    const focus=state.universeFocus,owned=focus?A.knowledge.filter(k=>A.owner.get(k.key)===focus).map(k=>k.key):allKnowledgeKeys;
+    $('#star-caption').innerHTML=`${focus?`<button data-action="progress-root">${icon('back')}全部星云</button>`:''}<strong>${esc(focus?A.modules.find(m=>m.id===focus).title+'星群':'知识星云')}</strong><span>已学会 ${litCount(owned)} / ${owned.length}</span>`;
+    $('.nebula-label-toggle').setAttribute('aria-pressed',String(state.nebulaLabels));
     if(reset)graphs.progress.camera=G.fit(layout,w,h);
-    updateTransform('progress');
+    lastNebulaScale=null;nebulaHovered=null;$('#nebula-tooltip').hidden=true;
+    updateTransform('progress');highlightNebula();
+  }
+  function updateNebulaScale(){
+    const layout=graphs.progress.layout,c=graphs.progress.camera;if(!layout)return;
+    $('#progress-page').classList.toggle('show-labels',state.nebulaLabels||c.scale>=1.15);
+    if(lastNebulaScale===c.scale)return;lastNebulaScale=c.scale;
+    $$('#universe-transform .nebula-node').forEach(el=>{
+      const n=layout.byKey.get(el.dataset.nebulaKey),hub=n.kind==='module',lit=learned(n.key);
+      const r=Math.max(n.r,(hub?5:lit?2.4:1.4)/c.scale);
+      el.querySelector('.nebula-core').setAttribute('r',r);
+      el.querySelector('.nebula-halo').setAttribute('r',r*(lit?3.4:hub?3:2.5));
+      el.querySelector('.nebula-hit').setAttribute('r',Math.max(r+5,7/c.scale));
+      const label=el.querySelector('.nebula-label');label.style.fontSize=`${(hub?15:11)/c.scale}px`;label.setAttribute('x',0);label.setAttribute('y',(r+(hub?22:15)/c.scale));
+      const sub=el.querySelector('.nebula-subtitle');if(sub){sub.style.fontSize=`${9/c.scale}px`;sub.setAttribute('y',r+36/c.scale);}
+    });
+    placeNebulaLabels();
+  }
+  function placeNebulaLabels(){
+    const layout=graphs.progress.layout,c=graphs.progress.camera,w=layout.viewportWidth,h=layout.viewportHeight,placed=[];
+    const elements=$$('#universe-transform .nebula-node').sort((a,b)=>Number(b.classList.contains('is-hub'))-Number(a.classList.contains('is-hub')));
+    for(const el of elements){
+      if(el.classList.contains('hide-label')||!el.classList.contains('is-hub')&&!el.classList.contains('is-important'))continue;
+      const n=layout.byKey.get(el.dataset.nebulaKey),hub=n.kind==='module',font=hub?15:11,label=el.querySelector('.nebula-label'),sub=el.querySelector('.nebula-subtitle');
+      const x=c.x+n.x*c.scale,y=c.y+n.y*c.scale,r=Number(el.querySelector('.nebula-core').getAttribute('r'))*c.scale;
+      const width=Array.from(label.textContent).reduce((s,char)=>s+(char.charCodeAt(0)>255?font:font*.57),0)+12,height=hub&&w>=650?34:font+8;
+      const candidates=[[x,y+r+8],[x,y-r-height-8],[x-width/2-r-8,y-height/2],[x+width/2+r+8,y-height/2],[x,y+r+28]];
+      let chosen,overlap=true;
+      for(const [cx,top] of candidates){
+        const left=x>=0&&x<=w?Math.max(8,Math.min(w-width-8,cx-width/2)):cx-width/2;
+        const rect={left,top,right:left+width,bottom:top+height};chosen??=rect;
+        if(top<70||rect.bottom>h-65||placed.some(p=>rect.left<p.right+5&&rect.right>p.left-5&&rect.top<p.bottom+5&&rect.bottom>p.top-5))continue;
+        chosen=rect;overlap=false;break;
+      }
+      el.classList.toggle('label-collision',overlap&&!hub);placed.push(chosen);
+      const lx=(chosen.left+width/2-x)/c.scale,ly=(chosen.top+font-y)/c.scale;label.setAttribute('x',lx);label.setAttribute('y',ly);
+      if(sub){sub.setAttribute('x',lx);sub.setAttribute('y',ly+14/c.scale);}
+    }
+  }
+  function highlightNebula(key=nebulaHovered){
+    const layout=graphs.progress.layout;if(!layout)return;
+    const candidate=key||nebulaDragged||state.cardKey,active=layout.byKey.has(candidate)?candidate:null,neighbors=new Set(active?[active]:[]);
+    layout.edges.forEach(e=>{if(e.source===active)neighbors.add(e.target);if(e.target===active)neighbors.add(e.source);});
+    $$('#universe-transform .nebula-node').forEach(el=>{el.classList.toggle('is-active',!!active&&neighbors.has(el.dataset.nebulaKey));el.classList.toggle('is-muted',!!active&&!neighbors.has(el.dataset.nebulaKey));});
+    $$('#universe-transform .nebula-edge').forEach(el=>{const incident=el.dataset.edgeFrom===active||el.dataset.edgeTo===active;el.classList.toggle('is-active',incident);el.classList.toggle('is-muted',!!active&&!incident);});
+  }
+  function showNebulaTooltip(key,event){
+    const n=graphs.progress.layout?.byKey.get(key),tip=$('#nebula-tooltip');if(!n)return;
+    const node=A.get(key),hub=n.kind==='module';
+    tip.innerHTML=`<strong>${esc(n.title)}</strong><small>${hub?'点击查看这个模块':learned(key)?'已学会 · 点击查看讲解':'待学习 · 点击查看讲解'}${n.context?' · 跨模块关联':''}</small>${!hub?`<p>${esc(node.definition.slice(0,54))}${node.definition.length>54?'…':''}</p>`:''}`;
+    tip.hidden=false;const page=$('#progress-page').getBoundingClientRect();
+    const r=$$('[data-nebula-key]').find(el=>el.dataset.nebulaKey===key)?.querySelector('.nebula-core').getBoundingClientRect();
+    const x=event?.clientX??(r?r.x+r.width/2:page.left+page.width/2),y=event?.clientY??(r?r.y+r.height/2:page.top+page.height/2);
+    tip.style.left=Math.max(12,Math.min(page.width-tip.offsetWidth-12,x-page.left+14))+'px';
+    tip.style.top=Math.max(12,Math.min(page.height-tip.offsetHeight-12,y-page.top+16))+'px';
+  }
+  function moveNebulaNode(key,x,y){
+    const layout=graphs.progress.layout,n=layout?.byKey.get(key);if(!n)return;n.x=x;n.y=y;
+    const el=$$('[data-nebula-key]').find(el=>el.dataset.nebulaKey===key);el?.setAttribute('transform',`translate(${x},${y})`);
+    layout.edges.forEach((edge,i)=>{if(edge.source===key||edge.target===key)$(`#universe-transform [data-edge-index="${i}"]`)?.setAttribute('d',nebulaEdgePath(edge));});
+    const b=G.bounds(layout.nodes);layout.bounds={x:b.x-30,y:b.y-30,w:b.w+60,h:b.h+60};
   }
   function renderActiveGraph(reset=true){if(state.page==='map')renderMap(reset);else if(state.page==='progress')renderUniverse(reset);}
-  function updateTransform(page){const c=graphs[page].camera;$(page==='map'?'#map-transform':'#universe-transform').setAttribute('transform',`translate(${c.x},${c.y}) scale(${c.scale})`);}
+  function scheduleTransform(page){if(!transformFrames[page])transformFrames[page]=requestAnimationFrame(()=>{transformFrames[page]=0;updateTransform(page);});}
+  function updateTransform(page){if(transformFrames[page]){cancelAnimationFrame(transformFrames[page]);transformFrames[page]=0;}const c=graphs[page].camera;$(page==='map'?'#map-transform':'#universe-transform').setAttribute('transform',`translate(${c.x},${c.y}) scale(${c.scale})`);if(page==='progress')updateNebulaScale();}
   function fitView(){const page=state.page;if(!graphs[page]?.layout)return;const el=$('#'+page+'-page');graphs[page].camera=G.fit(graphs[page].layout,el.clientWidth,el.clientHeight,true);updateTransform(page);closeNav();}
-  function zoom(page,factor,cx,cy){const c=graphs[page].camera,el=$('#'+page+'-page');cx??=el.clientWidth/2;cy??=el.clientHeight/2;const scale=Math.max(.23,Math.min(2.4,c.scale*factor)),ratio=scale/c.scale;c.x=cx-(cx-c.x)*ratio;c.y=cy-(cy-c.y)*ratio;c.scale=scale;updateTransform(page);}
+  function zoom(page,factor,cx,cy,dx=0,dy=0){const c=graphs[page].camera,el=$('#'+page+'-page');cx??=el.clientWidth/2;cy??=el.clientHeight/2;const scale=Math.max(page==='progress'?.06:.23,Math.min(page==='progress'?4:2.4,c.scale*factor)),ratio=scale/c.scale;c.x=cx-(cx-c.x)*ratio+dx;c.y=cy-(cy-c.y)*ratio+dy;c.scale=scale;scheduleTransform(page);}
   function openConstellation(id){if(!A.modules.some(m=>m.id===id))return;clearCard();state.universeFocus=id;dismissNav();showPage('progress');recordHistory();}
   function questionPool(scope='root'){
     const keys=A.lessonKeys(scope),seen=new Set();
@@ -241,7 +315,7 @@
     const s=state.session;if(!s)return;
     if(s.done){
       const correct=s.results.filter(r=>r.ok).length;
-      $('#practice-page').innerHTML=`<div class="session-card"><div class="result-heading"><h1>练习完成</h1><p>答对 ${correct} / ${s.items.length} 题 · ${Math.round(correct/s.items.length*100)}%</p></div><div class="session-actions">${s.returnCard?'<button class="primary-button" data-action="return-to-card">返回知识卡片</button>':''}<button class="${s.returnCard?'secondary':'primary'}-button" data-action="end-session">返回练习中心</button><button class="secondary-button" data-action="open-progress">查看学习星图${icon('stars')}</button></div>${s.results.filter(r=>!r.ok).map(r=>{const l=byId.get(r.lid),q=l.quiz.find(q=>q.id===r.qid);return `<article class="review-item"><strong>${esc(l.title)}</strong><p>${esc(q.prompt)}</p><small>你的答案：${esc(r.answer)} · 参考答案：${esc(answerText(q))}</small><p>${esc(q.why)}</p><button class="text-button" data-open-card="lesson:${l.id}">查看知识卡片${icon('arrow')}</button></article>`;}).join('')}</div>`;return;
+      $('#practice-page').innerHTML=`<div class="session-card"><div class="result-heading"><h1>练习完成</h1><p>答对 ${correct} / ${s.items.length} 题 · ${Math.round(correct/s.items.length*100)}%</p></div><div class="session-actions">${s.returnCard?'<button class="primary-button" data-action="return-to-card">返回知识卡片</button>':''}<button class="${s.returnCard?'secondary':'primary'}-button" data-action="end-session">返回练习中心</button><button class="secondary-button" data-action="open-progress">查看知识星云${icon('stars')}</button></div>${s.results.filter(r=>!r.ok).map(r=>{const l=byId.get(r.lid),q=l.quiz.find(q=>q.id===r.qid);return `<article class="review-item"><strong>${esc(l.title)}</strong><p>${esc(q.prompt)}</p><small>你的答案：${esc(r.answer)} · 参考答案：${esc(answerText(q))}</small><p>${esc(q.why)}</p><button class="text-button" data-open-card="lesson:${l.id}">查看知识卡片${icon('arrow')}</button></article>`;}).join('')}</div>`;return;
     }
     const {lid,q}=s.items[s.index],l=byId.get(lid);
     $('#practice-page').innerHTML=`<article class="session-card"><div class="session-heading"><span>${s.mode==='mistakes'?'错题重练':esc(A.get(s.scope)?.title||'综合练习')}</span><button data-action="end-session">结束练习</button></div><div class="session-progress"><i style="width:${s.index/s.items.length*100}%"></i></div><div class="quiz-meta"><span>${esc(l.title)}</span><span>${s.index+1} / ${s.items.length}</span></div>${questionMarkup(q)}<button class="text-button" data-open-card="lesson:${lid}" style="margin-top:18px">查看本题知识卡片${icon('arrow')}</button></article>`;
@@ -283,16 +357,16 @@
   function showBackup(){modal('学习记录备份',`<p>记录保存在当前浏览器。导出后可在其他设备导入；旧版语法漫游备份也可使用。</p><div class="modal-actions"><button class="secondary-button" data-action="export-progress">${icon('download')}导出备份</button><button class="secondary-button" data-action="import-progress">${icon('upload')}导入备份</button></div><input id="import-file" type="file" accept="application/json,.json" hidden><div class="source-note">导入会合并已学习、答题、错题、收藏和笔记。相同知识点的笔记优先保留当前内容；重复导入不会叠加答题次数。</div>`);}
   function exportProgress(){const blob=new Blob([JSON.stringify({app:'grammar-atlas',exportedAt:new Date().toISOString(),progress:data},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='grammar-atlas-progress.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('备份已导出');}
   async function importProgress(file){
-    if(!file)return;try{if(file.size>5e6)throw Error('Large file');const backup=JSON.parse(await file.text());data=P.merge(data,backup);save();if(state.cardKey)renderCard(true);if(state.page==='practice')renderPractice();else if(state.page==='games')Games.render();else renderActiveGraph(false);closeModal();toast('备份已合并，学习星图已更新');}catch{toast('这不是有效的语法漫游进度备份。');}
+    if(!file)return;try{if(file.size>5e6)throw Error('Large file');const backup=JSON.parse(await file.text());data=P.merge(data,backup);save();if(state.cardKey)renderCard(true);if(state.page==='practice')renderPractice();else if(state.page==='games')Games.render();else renderActiveGraph(false);closeModal();toast('备份已合并，知识星云已更新');}catch{toast('这不是有效的语法漫游进度备份。');}
   }
-  function showHelp(){modal('图谱操作',`<div class="help-item"><strong>第一次学语法</strong><p>先读“先看懂”和简单例句，再看“怎么用”。带点线的术语可以点开看解释；“再了解一点”和结构写法可以以后再看。</p></div><div class="help-item"><strong>逐层探索</strong><p>点击总地图的模块进入子地图，点击知识点打开卡片；卡片中的“下一级知识点”可继续深入，最后进入对应练习。点击地图中心可返回上一级。</p></div><div class="help-item"><strong>点亮星星</strong><p>阅读后点击“已学会，点亮星星”，或答对该知识点全部练习，对应星星就会点亮。学习星图中可展开模块星座，再点击星星继续学习。</p></div><div class="help-item"><strong>调整阅读空间</strong><p>拖动图谱与讲解之间的蓝色分隔手柄：电脑和平板左右调整，手机上下调整。双击恢复默认；也可用方向键微调。卡片顶部的展开按钮可全屏阅读，再次点击返回分屏。</p></div><div class="help-item"><strong>移动与缩放</strong><p>拖动空白处平移，滚轮或双指手势缩放。左侧边栏中的“适应画面”可恢复总览。键盘 + / − 缩放，方向键平移，0 适应画面；Esc 关闭卡片或返回上一级。</p></div><div class="help-item"><strong>词性积木</strong><p>侧边栏中进入“游戏”，选择词性积木和关卡。拖拽积木或先点词性再点空格，同类可重复使用；放好后检查答案。50 关从短句逐步进入从句与长句，通关星级自动保存。</p></div><div class="help-item"><strong>搜索与备份</strong><p>Ctrl / ⌘ + K 搜索。收藏、笔记和记录备份都在侧边栏中。</p></div><div class="source-note">知识框架参考《英语语法知识体系详解》，并结合原课程索引补充整理。</div>`);}
+  function showHelp(){modal('图谱操作',`<div class="help-item"><strong>第一次学语法</strong><p>先读“先看懂”和简单例句，再看“怎么用”。带点线的术语可以点开看解释；“再了解一点”和结构写法可以以后再看。</p></div><div class="help-item"><strong>逐层探索</strong><p>点击总地图的模块进入子地图，点击知识点打开卡片；卡片中的“下一级知识点”可继续深入，最后进入对应练习。点击地图中心可返回上一级。</p></div><div class="help-item"><strong>点亮星星</strong><p>阅读后点击“已学会，点亮星星”，或答对该知识点全部练习，对应星星就会点亮。知识星云按上下级和关联关系连线；点击模块查看星群，点击知识星点打开讲解。拖动星点可调整位置，Aa 可切换名称显示。</p></div><div class="help-item"><strong>调整阅读空间</strong><p>拖动图谱与讲解之间的蓝色分隔手柄：电脑和平板左右调整，手机上下调整。双击恢复默认；也可用方向键微调。卡片顶部的展开按钮可全屏阅读，再次点击返回分屏。</p></div><div class="help-item"><strong>移动与缩放</strong><p>拖动空白处平移，滚轮或双指手势缩放。左侧边栏中的“适应画面”可恢复总览。键盘 + / − 缩放，方向键平移，0 适应画面；Esc 关闭卡片或返回上一级。</p></div><div class="help-item"><strong>词性积木</strong><p>侧边栏中进入“游戏”，选择词性积木和关卡。拖拽积木或先点词性再点空格，同类可重复使用；放好后检查答案。50 关从短句逐步进入从句与长句，通关星级自动保存。</p></div><div class="help-item"><strong>搜索与备份</strong><p>Ctrl / ⌘ + K 搜索。收藏、笔记和记录备份都在侧边栏中。</p></div><div class="source-note">知识框架参考《英语语法知识体系详解》，并结合原课程索引补充整理。</div>`);}
   function speakExample(index){const e=A.examplesFor(state.cardKey)[index];if(!e)return;if(!('speechSynthesis'in window)){toast('当前设备未提供语音朗读。');return;}speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(e.en);utterance.lang='en-GB';utterance.rate=.85;const voice=speechSynthesis.getVoices().find(v=>v.lang==='en-GB')||speechSynthesis.getVoices().find(v=>v.lang.startsWith('en'));if(voice)utterance.voice=voice;utterance.onerror=()=>toast('当前设备暂时没有可用英语语音。');speechSynthesis.speak(utterance);}
   const actions={
     'toggle-nav':toggleNav,'close-sidebar':()=>closeNav(true),'close-card':()=>closeCard(),'close-modal':()=>closeModal(),
     'toggle-card-size':()=>{Pane.toggleExpanded();syncUI();renderActiveGraph(true);$('#card-toggle-size')?.focus({preventScroll:true});},
     'parent-map':goParent,'card-root':()=>goMap('root'),'mark-learned':markLearned,
     'progress-root':()=>{state.universeFocus=null;clearCard();showPage('progress');recordHistory();},
-    'open-progress':()=>navigate('progress'),search:showSearch,notebook:()=>showNotebook(),backup:showBackup,help:showHelp,fit:fitView,
+    'open-progress':()=>navigate('progress'),'nebula-zoom-in':()=>zoom('progress',1.3),'nebula-zoom-out':()=>zoom('progress',1/1.3),'nebula-labels':()=>{state.nebulaLabels=!state.nebulaLabels;$('.nebula-label-toggle').setAttribute('aria-pressed',String(state.nebulaLabels));updateNebulaScale();},search:showSearch,notebook:()=>showNotebook(),backup:showBackup,help:showHelp,fit:fitView,
     bookmark:toggleBookmark,note:showNote,'save-note':saveNote,'export-progress':exportProgress,'import-progress':()=>$('#import-file').click(),
     'start-practice':()=>{const mod=$('#practice-module').value,point=$('#practice-point').value,count=Number($('#practice-count').value);beginPractice(point==='all'?mod:point,count);},
     'review-mistakes':()=>beginPractice('root',20,'mistakes'),'submit-answer':submitAnswer,'next-question':nextQuestion,
@@ -322,32 +396,47 @@
   document.addEventListener('input',e=>{if(e.target.id==='knowledge-search')renderSearch(e.target.value);if(e.target.id==='quiz-answer'){state.answer=e.target.value;const button=$('[data-action="submit-answer"]');if(button)button.disabled=!state.answer.trim();}});
   document.addEventListener('change',e=>{if(e.target.id==='practice-module'){state.practiceModule=e.target.value;state.practicePoint='all';$('#practice-point').innerHTML=practicePointOptions(state.practiceModule);}if(e.target.id==='import-file')importProgress(e.target.files[0]);});
   function bindCamera(selector,page){
-    const svg=$(selector),pointers=new Map();let drag=null,pinch=null,gesture=null;
+    const svg=$(selector),pointers=new Map();let drag=null,pinch=null,gesture=null,nodeDrag=null;
     svg.addEventListener('wheel',e=>{e.preventDefault();if(state.page!==page)return;const r=svg.getBoundingClientRect();zoom(page,Math.exp(-e.deltaY*.0014),e.clientX-r.left,e.clientY-r.top);},{passive:false});
     svg.addEventListener('pointerdown',e=>{
       if(e.pointerType==='mouse'&&(e.button!==0||e.target.closest('button')))return;
       pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});gesture??={x:e.clientX,y:e.clientY};
-      if(!e.target.closest('button'))svg.setPointerCapture(e.pointerId);
-      if(pointers.size===1){drag={x:e.clientX,y:e.clientY,px:graphs[page].camera.x,py:graphs[page].camera.y};svg.classList.add('dragging');}
-      if(pointers.size===2){const a=[...pointers.values()];pinch={distance:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)};drag=null;suppressGraphClickUntil=Date.now()+300;}
+      const vertex=page==='progress'?e.target.closest('[data-nebula-key]'):null;
+      if(!e.target.closest('button')&&!vertex)svg.setPointerCapture(e.pointerId);
+      if(pointers.size===1){
+        if(vertex){const n=graphs.progress.layout?.byKey.get(vertex.dataset.nebulaKey);if(n)nodeDrag={id:e.pointerId,key:n.key,x:e.clientX,y:e.clientY,px:n.x,py:n.y,el:vertex};drag=null;}
+        else{drag={x:e.clientX,y:e.clientY,px:graphs[page].camera.x,py:graphs[page].camera.y};svg.classList.add('dragging');}
+      }
+      if(pointers.size>=2){gesture.moved=true;nodeDrag?.el.classList.remove('dragging');nodeDrag=null;nebulaDragged=null;drag=null;suppressGraphClickUntil=Date.now()+300;if(page==='progress')highlightNebula();}
+      if(pointers.size===2){const a=[...pointers.values()];pinch={distance:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2};}
     });
     svg.addEventListener('pointermove',e=>{
       if(!pointers.has(e.pointerId))return;
-      if(gesture&&Math.hypot(e.clientX-gesture.x,e.clientY-gesture.y)>8){suppressGraphClickUntil=Date.now()+300;try{svg.setPointerCapture(e.pointerId);}catch{}}
+      if(gesture&&Math.hypot(e.clientX-gesture.x,e.clientY-gesture.y)>8){gesture.moved=true;suppressGraphClickUntil=Date.now()+300;try{svg.setPointerCapture(e.pointerId);}catch{}}
       pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
-      if(pointers.size===2&&pinch){const a=[...pointers.values()],distance=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),r=svg.getBoundingClientRect();if(pinch.distance>1)zoom(page,distance/pinch.distance,(a[0].x+a[1].x)/2-r.left,(a[0].y+a[1].y)/2-r.top);pinch.distance=distance;}
-      else if(drag){graphs[page].camera.x=drag.px+e.clientX-drag.x;graphs[page].camera.y=drag.py+e.clientY-drag.y;updateTransform(page);}
+      if(pointers.size===2&&pinch){const a=[...pointers.values()],distance=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),r=svg.getBoundingClientRect();const x=(a[0].x+a[1].x)/2,y=(a[0].y+a[1].y)/2;if(pinch.distance>1)zoom(page,distance/pinch.distance,pinch.x-r.left,pinch.y-r.top,x-pinch.x,y-pinch.y);pinch={distance,x,y};}
+      else if(nodeDrag){if(Math.hypot(e.clientX-nodeDrag.x,e.clientY-nodeDrag.y)>8){if(nebulaDragged!==nodeDrag.key){nebulaDragged=nodeDrag.key;highlightNebula(nodeDrag.key);}nodeDrag.el.classList.add('dragging');$('#nebula-tooltip').hidden=true;moveNebulaNode(nodeDrag.key,nodeDrag.px+(e.clientX-nodeDrag.x)/graphs.progress.camera.scale,nodeDrag.py+(e.clientY-nodeDrag.y)/graphs.progress.camera.scale);}}
+      else if(drag){graphs[page].camera.x=drag.px+e.clientX-drag.x;graphs[page].camera.y=drag.py+e.clientY-drag.y;scheduleTransform(page);}
     });
-    const end=e=>{pointers.delete(e.pointerId);pinch=null;if(pointers.size===1){const a=[...pointers.values()][0];drag={x:a.x,y:a.y,px:graphs[page].camera.x,py:graphs[page].camera.y};}else drag=null;if(!pointers.size){gesture=null;svg.classList.remove('dragging');}};
-    svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);svg.addEventListener('lostpointercapture',e=>{if(pointers.has(e.pointerId))end(e);});
+    const end=e=>{if(!pointers.has(e.pointerId))return;if(gesture?.moved)suppressGraphClickUntil=Date.now()+300;pointers.delete(e.pointerId);pinch=null;if(nodeDrag?.id===e.pointerId){if(e.type==='pointercancel')moveNebulaNode(nodeDrag.key,nodeDrag.px,nodeDrag.py);nodeDrag.el.classList.remove('dragging');nodeDrag=null;nebulaDragged=null;highlightNebula();}if(pointers.size===1){const a=[...pointers.values()][0];drag={x:a.x,y:a.y,px:graphs[page].camera.x,py:graphs[page].camera.y};}else drag=null;if(pointers.size===2){const a=[...pointers.values()];pinch={distance:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2};}if(!pointers.size){gesture=null;svg.classList.remove('dragging');}};
+    svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);svg.addEventListener('lostpointercapture',e=>{if(e.target===svg&&pointers.has(e.pointerId))end(e);});
+    window.addEventListener('pointerup',end);window.addEventListener('pointercancel',end);
+    function cancelGesture(){const pending=nodeDrag,ids=[...pointers.keys()];pointers.clear();nodeDrag=null;drag=null;pinch=null;gesture=null;if(pending){moveNebulaNode(pending.key,pending.px,pending.py);pending.el.classList.remove('dragging');}for(const id of ids){try{if(svg.hasPointerCapture(id))svg.releasePointerCapture(id);}catch{}}svg.classList.remove('dragging');if(page==='progress'){nebulaDragged=null;nebulaHovered=null;$('#nebula-tooltip').hidden=true;}}
+    graphs[page].cancelGesture=cancelGesture;
+    window.addEventListener('blur',()=>{cancelGesture();if(page==='progress')highlightNebula();});
   }
   bindCamera('#mindmap','map');bindCamera('#constellation','progress');
+  $('#constellation').addEventListener('pointerover',e=>{const node=e.target.closest('[data-nebula-key]');if(!node)return;const key=node.dataset.nebulaKey;if(nebulaHovered!==key){nebulaHovered=key;highlightNebula();}showNebulaTooltip(key,e);});
+  $('#constellation').addEventListener('pointerout',e=>{const node=e.target.closest('[data-nebula-key]');if(node&&!node.contains(e.relatedTarget)){nebulaHovered=null;$('#nebula-tooltip').hidden=true;highlightNebula();}});
+  $('#constellation').addEventListener('focusin',e=>{const node=e.target.closest('[data-nebula-key]');if(node){nebulaHovered=node.dataset.nebulaKey;highlightNebula();showNebulaTooltip(nebulaHovered);}});
+  $('#constellation').addEventListener('focusout',()=>{nebulaHovered=null;$('#nebula-tooltip').hidden=true;highlightNebula();});
   function trapFocus(e,root,extra=[]){const items=[...root.querySelectorAll('button:not(:disabled),input:not([hidden]),select,textarea,[tabindex="0"]'),...extra].filter(el=>el.getClientRects().length&&!el.closest('[hidden]'));if(!items.length)return;const first=items[0],last=items.at(-1);if(!root.contains(document.activeElement)&&!extra.includes(document.activeElement)){e.preventDefault();first.focus();}else if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}
   document.addEventListener('keydown',e=>{
     if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();showSearch();return;}
     if(e.key==='Escape'){e.preventDefault();if(state.modal)closeModal();else if(state.cardKey)closeCard();else if(state.sidebarOpen&&(!desktopNav.matches||e.target.closest('#sidebar')))closeNav(true);else if(state.page==='progress'&&state.universeFocus)goParent();else if(state.page==='map'&&state.context!=='root')goParent();else if(state.page==='games'&&Games.route)Games.back();return;}
     if(e.key==='Tab'){if(state.modal)trapFocus(e,$('#modal-root'));else if(state.cardKey&&Pane.expanded)trapFocus(e,$('#knowledge-card'));else if(state.sidebarOpen&&!desktopNav.matches)trapFocus(e,$('#sidebar'));}
     if(e.target.id==='quiz-answer'&&e.key==='Enter'){e.preventDefault();submitAnswer();return;}
+    const nebulaNode=e.target.closest('[data-nebula-key]');if(nebulaNode&&['Enter',' '].includes(e.key)){e.preventDefault();nebulaNode.dataset.starNode?openCard(nebulaNode.dataset.starNode):openConstellation(nebulaNode.dataset.progressModule);return;}
     if(e.target.closest('.quiz-options')&&['ArrowDown','ArrowUp','ArrowLeft','ArrowRight'].includes(e.key)&&!state.feedback){e.preventDefault();const count=$$('[data-choice]').length,d=['ArrowDown','ArrowRight'].includes(e.key)?1:-1;chooseAnswer(((state.choice??0)+d+count)%count);return;}
     if(e.target.matches('.graph-canvas')){if(['+','=','-','0','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))e.preventDefault();const page=state.page;if(!graphs[page])return;if(e.key==='+'||e.key==='=')zoom(page,1.15);if(e.key==='-')zoom(page,1/1.15);if(e.key==='0')fitView();const c=graphs[page].camera;if(e.key==='ArrowUp')c.y+=45;if(e.key==='ArrowDown')c.y-=45;if(e.key==='ArrowLeft')c.x+=45;if(e.key==='ArrowRight')c.x-=45;updateTransform(page);}
   });

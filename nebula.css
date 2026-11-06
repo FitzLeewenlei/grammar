@@ -1,0 +1,76 @@
+/* The learning map is a network of stars, not a second outline tree. */
+.nebula-page{background:#070e19;color:#e9f3ff;isolation:isolate}
+.nebula-page .universe-haze{background:radial-gradient(ellipse at 37% 43%,#2d6d9d24 0,transparent 49%),radial-gradient(ellipse at 72% 29%,#5c498c1c 0,transparent 39%),radial-gradient(ellipse at 62% 77%,#256c791b 0,transparent 47%),linear-gradient(145deg,#091322,#070d17 66%);background-size:auto;overflow:hidden}
+.nebula-page .universe-haze::before,.nebula-page .universe-haze::after{content:"";position:absolute;inset:0;pointer-events:none}
+.nebula-page .universe-haze::before{background:radial-gradient(circle,#b7d9ff9c .55px,transparent .95px);background-size:113px 97px;background-position:19px 38px;opacity:.42}
+.nebula-page .universe-haze::after{background:radial-gradient(circle,#dbecff8c .6px,transparent 1.15px);background-size:173px 149px;background-position:76px 13px;opacity:.28}
+.nebula-page .graph-canvas{position:relative;z-index:1;outline-offset:-4px}
+
+/* The relationship lines stay quiet until a neighboring star is explored. */
+.nebula-edge{fill:none;stroke:var(--edge-color,#6196bc);stroke-width:.65;stroke-linecap:round;opacity:.24;vector-effect:non-scaling-stroke;pointer-events:none;transition:opacity .18s,stroke .18s}
+.nebula-edge.is-related{stroke:var(--edge-color,#78b7c5);stroke-width:.55;opacity:.12}
+.nebula-edge.is-lit{stroke:#c3ac77;opacity:.36}
+.nebula-edge.is-active{stroke:#b0dcff;stroke-width:1.15;opacity:.88}
+.nebula-edge.is-muted{opacity:.035}
+.nebula-edge.is-lit.is-active{stroke:#ffe8a9;opacity:.94}
+
+/* All shapes are real knowledge nodes; the hit circle is larger than the dot. */
+.nebula-node{--node-color:#85bdf0;cursor:pointer;outline:none;transition:opacity .18s}
+.nebula-node .nebula-hit{fill:transparent;stroke:transparent;pointer-events:all}
+.nebula-halo{fill:var(--node-color);opacity:.1;filter:blur(3px);pointer-events:none;transition:opacity .18s}
+.nebula-core{fill:var(--node-color);stroke:#d6edff;stroke-width:.55;opacity:.78;filter:drop-shadow(0 0 3px #73b8f357);vector-effect:non-scaling-stroke;pointer-events:none;transition:fill .18s,opacity .18s,filter .18s}
+.nebula-node.is-important .nebula-core{fill:#b1d8ff;stroke:#e4f5ff;opacity:.95;filter:drop-shadow(0 0 5px #88c6ff80)}
+.nebula-node.is-important .nebula-halo{opacity:.16}
+.nebula-node[data-progress-module] .nebula-core,.nebula-node.is-hub .nebula-core{fill:#e4f2ff;stroke:#f7fcff;stroke-width:1;opacity:1;filter:drop-shadow(0 0 5px #79c0ffbd) drop-shadow(0 0 13px #68a9ec52)}
+.nebula-node[data-progress-module] .nebula-halo,.nebula-node.is-hub .nebula-halo{opacity:.17;filter:blur(5px)}
+.nebula-node.is-lit .nebula-core{fill:#fff0b7;stroke:#fff9de;opacity:1;filter:drop-shadow(0 0 4px #ffd67abb) drop-shadow(0 0 10px #d5a94a70)}
+.nebula-node.is-lit .nebula-halo{fill:#edc976;opacity:.28;filter:blur(4px)}
+.nebula-node.is-active .nebula-core,.nebula-node:hover .nebula-core,.nebula-node:focus-visible .nebula-core{stroke:#fff;stroke-width:1.35;opacity:1;filter:drop-shadow(0 0 6px #b8e5ffe0)}
+.nebula-node.is-selected .nebula-core{stroke:#fff;stroke-width:2;opacity:1;filter:drop-shadow(0 0 7px #d5efffff)}
+.nebula-node.is-lit.is-active .nebula-core,.nebula-node.is-lit:hover .nebula-core,.nebula-node.is-lit:focus-visible .nebula-core,.nebula-node.is-lit.is-selected .nebula-core{filter:drop-shadow(0 0 5px #fff1b9) drop-shadow(0 0 13px #eac169a6)}
+.nebula-node:focus-visible .nebula-halo{stroke:#d8efff;stroke-width:1.4;opacity:.6;filter:none;vector-effect:non-scaling-stroke}
+.nebula-node.is-muted{opacity:.19}
+.nebula-node.is-context{opacity:.42}
+.nebula-node.is-context.is-muted{opacity:.12}
+.nebula-node.is-context.is-active,.nebula-node.is-context:hover,.nebula-node.is-context:focus-visible{opacity:1}
+.nebula-page.dragging .nebula-node,.nebula-node.dragging{cursor:grabbing}
+.nebula-node.dragging .nebula-core{stroke:#fff;stroke-width:1.8;opacity:1}
+
+/* Root chooses which labels need to be shown at the current zoom. */
+.nebula-label,.nebula-subtitle{font-family:var(--font);text-anchor:middle;pointer-events:none;paint-order:stroke;stroke:#070e19df;stroke-width:3.5px;stroke-linejoin:round;fill:#c0d3e8;transition:opacity .15s;user-select:none}
+.nebula-label{font-size:11px;font-weight:450;opacity:.78}
+.nebula-subtitle{font-size:9px;font-weight:400;fill:#a8c0d8;opacity:.8;stroke-width:3px}
+.nebula-node.is-important .nebula-label{font-size:12px;fill:#e0efff;opacity:.95}
+.nebula-node[data-progress-module] .nebula-label,.nebula-node.is-hub .nebula-label{font-size:16px;font-weight:550;fill:#f2f8ff;opacity:1;letter-spacing:.2px}
+.nebula-node.is-lit .nebula-label{fill:#f4e4b9}
+.nebula-node.hide-label .nebula-label,.nebula-node.hide-label .nebula-subtitle{opacity:0}
+.nebula-node.label-collision .nebula-label{opacity:0}
+.nebula-page.show-labels .nebula-node .nebula-label,.nebula-node.is-active .nebula-label,.nebula-node.is-selected .nebula-label,.nebula-node:hover .nebula-label,.nebula-node:focus-visible .nebula-label{opacity:1;fill:#f7fbff}
+.nebula-node.is-lit.is-active .nebula-label,.nebula-node.is-lit.is-selected .nebula-label,.nebula-node.is-lit:hover .nebula-label,.nebula-node.is-lit:focus-visible .nebula-label{fill:#fff0bc}
+.nebula-node.is-selected .nebula-subtitle,.nebula-node:hover .nebula-subtitle,.nebula-node:focus-visible .nebula-subtitle{opacity:1}
+
+/* Small status and navigation overlays leave the canvas itself open. */
+.star-caption.nebula-caption{z-index:3;max-width:min(320px,calc(100% - 100px));color:#b6cce3;font-size:11px;line-height:1.8;text-shadow:0 1px 9px #070e19;pointer-events:none}
+.nebula-caption>strong{font-size:16px;font-weight:500;color:#f0f7ff;letter-spacing:.2px}
+.nebula-caption>span{display:block;color:#b6cce3;font-size:11px}
+.nebula-caption button{min-height:32px;font-size:12px;color:#c6dcf0;gap:5px;padding:0 0 4px;pointer-events:auto}
+.nebula-caption button:hover{color:#fff}
+.nebula-controls{position:absolute;right:max(18px,env(safe-area-inset-right,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));z-index:4;display:flex;align-items:center;gap:2px;padding:4px;border:1px solid #3e5772;border-radius:12px;background:#102037e8;box-shadow:0 8px 28px #02070e4d;backdrop-filter:blur(14px)}
+.nebula-controls button{display:grid;place-items:center;width:44px;height:44px;min-height:44px;padding:0;border-radius:8px;color:#d4e7fa;font-size:22px;line-height:1}
+.nebula-controls button:hover{background:#244262;color:#fff}.nebula-controls button:active{background:#315475}.nebula-controls button:focus-visible{outline:2px solid #a0d0ff;outline-offset:-2px}
+.nebula-controls svg{width:18px;height:18px}.nebula-scale{min-width:40px;padding:0 5px;font-size:11px;color:#c5d9ed;text-align:center}
+.nebula-label-toggle{position:absolute;right:max(18px,env(safe-area-inset-right,0px));top:max(18px,env(safe-area-inset-top,0px));z-index:4;width:44px;min-height:44px;border:1px solid #3e5772;border-radius:10px;background:#102037e8;color:#d4e7fa;font-size:14px}.nebula-label-toggle:hover,.nebula-label-toggle[aria-pressed=true]{background:#284d72;color:#fff}.nebula-label-toggle:focus-visible{outline-color:#a0d0ff}
+.nebula-legend{position:absolute;left:max(24px,env(safe-area-inset-left,0px));bottom:max(24px,env(safe-area-inset-bottom,0px));z-index:3;display:flex;align-items:center;gap:16px;max-width:calc(100% - 200px);color:#bad0e5;font-size:11px;line-height:1.7;pointer-events:none;text-shadow:0 1px 8px #070e19}
+.nebula-legend>span{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}.nebula-legend i{display:inline-block;flex-shrink:0;width:6px;height:6px;border-radius:50%;background:#77add9;box-shadow:0 0 6px #6aa7d44d}.nebula-legend .is-lit i,.nebula-legend i.is-lit{background:#ffdf92;box-shadow:0 0 8px #d7af5ba6}
+.nebula-tooltip{position:absolute;z-index:6;max-width:min(270px,calc(100% - 24px));padding:11px 14px;border:1px solid #45607b;border-radius:10px;background:#112238f5;box-shadow:0 8px 32px #02081270;color:#edf6ff;font-size:12px;line-height:1.8;pointer-events:none;backdrop-filter:blur(14px)}
+.nebula-tooltip strong{display:block;font-size:14px;font-weight:550;color:#f4f9ff}.nebula-tooltip p{margin-top:3px;color:#c6d9ec;font-size:12px}.nebula-tooltip small{display:block;margin-top:3px;color:#b8cde2;font-size:11px}.nebula-tooltip[aria-hidden=true]{visibility:hidden}
+
+@media(max-width:649px){
+ .star-caption.nebula-caption{top:max(16px,env(safe-area-inset-top,0px));left:calc(18px + var(--nav-inset));max-width:calc(100% - 100px);font-size:10px}.nebula-caption>strong{font-size:15px}.nebula-caption>span{font-size:10px}.nebula-caption button{font-size:11px;min-height:29px}
+ .nebula-node[data-progress-module] .nebula-label,.nebula-node.is-hub .nebula-label{font-size:15px}.nebula-label{font-size:11px}.nebula-subtitle{font-size:9px}
+ .nebula-subtitle{display:none}
+ .nebula-controls{right:max(13px,env(safe-area-inset-right,0px));bottom:max(13px,env(safe-area-inset-bottom,0px));padding:3px;border-radius:11px}.nebula-controls button{width:42px;height:44px}.nebula-legend{left:max(16px,env(safe-area-inset-left,0px));bottom:max(21px,env(safe-area-inset-bottom,0px));max-width:calc(100% - 170px);gap:5px 12px;flex-wrap:wrap;font-size:10px}
+ .nebula-tooltip{padding:10px 12px;font-size:12px}.nebula-tooltip strong{font-size:13px}
+}
+@media(max-height:420px){.nebula-caption>strong{font-size:14px}.nebula-caption>span{font-size:10px}.nebula-controls{bottom:10px}.nebula-legend{bottom:17px}}
+@media(prefers-reduced-motion:reduce){.nebula-edge,.nebula-node,.nebula-core,.nebula-halo,.nebula-label,.nebula-subtitle{transition:none}}

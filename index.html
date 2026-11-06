@@ -4,27 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f7f9fc">
-  <meta name="description" content="从 English Grammar 总图谱逐层探索十个模块，阅读知识卡片、点亮学习星图，完成语法练习和50关词性积木游戏。">
+  <meta name="description" content="从 English Grammar 总图谱逐层探索十个模块，阅读知识卡片、点亮知识星云，完成语法练习和50关词性积木游戏。">
   <title>English Grammar · 语法图谱</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%235c7891'/%3E%3Ccircle cx='20' cy='20' r='4' fill='white'/%3E%3Cpath d='M20 16V8m4 12h8m-12 4v8m-4-12H8' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=14">
-  <link rel="stylesheet" href="responsive.css?v=14">
-  <link rel="stylesheet" href="games.css?v=14">
-  <link rel="stylesheet" href="pane-resize.css?v=14">
-  <link rel="stylesheet" href="beginner-guide.css?v=14">
+  <link rel="stylesheet" href="styles.css?v=15">
+  <link rel="stylesheet" href="responsive.css?v=15">
+  <link rel="stylesheet" href="games.css?v=15">
+  <link rel="stylesheet" href="pane-resize.css?v=15">
+  <link rel="stylesheet" href="beginner-guide.css?v=15">
+  <link rel="stylesheet" href="nebula.css?v=15">
 </head>
 <body data-page="map">
   <main id="app">
     <section id="map-page" class="page active" aria-label="英语语法总图谱">
       <svg id="mindmap" class="graph-canvas" aria-label="可逐层探索的语法图谱" tabindex="0"><g id="map-transform"></g></svg>
     </section>
-    <section id="progress-page" class="page universe-page" aria-label="学习星图">
+    <section id="progress-page" class="page universe-page nebula-page" aria-label="知识星云">
       <div class="universe-haze" aria-hidden="true"></div>
-      <svg id="constellation" class="graph-canvas" aria-label="已学知识点会点亮的语法星图" tabindex="0">
+      <svg id="constellation" class="graph-canvas" aria-label="可拖动、缩放和点亮的知识星云关系图" tabindex="0">
         <defs><filter id="star-glow" x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="2.3"/></filter></defs>
-        <g id="universe-transform"></g>
+        <g id="nebula-backdrop" aria-hidden="true" pointer-events="none"></g><g id="universe-transform"></g>
       </svg>
-      <div id="star-caption" class="star-caption"></div>
+      <div id="star-caption" class="star-caption nebula-caption"></div>
+      <button class="nebula-label-toggle" data-action="nebula-labels" aria-label="显示全部知识点名称" aria-pressed="false" title="显示全部知识点名称">Aa</button>
+      <div class="nebula-controls" aria-label="星云缩放"><button data-action="nebula-zoom-out" aria-label="缩小星云" title="缩小">−</button><button data-action="fit" aria-label="星云适应画面" title="适应画面"><span data-icon="fit"></span></button><button data-action="nebula-zoom-in" aria-label="放大星云" title="放大">+</button></div>
+      <div class="nebula-legend"><span><i></i>待学习</span><span class="is-lit"><i></i>已学会</span></div>
+      <div id="nebula-tooltip" class="nebula-tooltip" role="tooltip" hidden></div>
     </section>
     <section id="practice-page" class="page practice-page" aria-label="练习中心"></section>
     <section id="games-page" class="page games-page" aria-label="语法游戏"></section>
@@ -39,7 +44,7 @@
       <nav class="sidebar-nav" aria-label="学习页面">
         <button data-route="map"><span data-icon="map"></span><span>总地图</span></button>
         <button data-route="practice"><span data-icon="exercise"></span><span>练习中心</span></button>
-        <button data-route="progress"><span data-icon="stars"></span><span>学习星图</span></button>
+        <button data-route="progress"><span data-icon="stars"></span><span>知识星云</span></button>
         <button data-route="games"><span data-icon="game"></span><span>游戏</span></button>
       </nav>
       <button id="parent-action" class="sidebar-parent" data-action="parent-map" hidden><span data-icon="back"></span><span>返回上一级</span></button>
@@ -55,20 +60,21 @@
   <button id="sidebar-toggle" class="sidebar-toggle" data-action="toggle-nav" aria-label="展开侧边栏" aria-expanded="false" aria-controls="sidebar"><span data-icon="sidebar"></span></button>
   <div id="modal-root"></div>
   <div id="toast" role="status" aria-live="polite"></div>
-  <script src="content.js?v=14"></script>
-  <script src="content-additions.js?v=14"></script>
-  <script src="lesson-details-lexis.js?v=14"></script>
-  <script src="lesson-details-verbs.js?v=14"></script>
-  <script src="content-detail-nouns.js?v=14"></script>
-  <script src="content-detail-lexis.js?v=14"></script>
-  <script src="content-detail-clauses.js?v=14"></script>
-  <script src="beginner-guide.js?v=14"></script>
-  <script src="atlas.js?v=14"></script>
-  <script src="graph.js?v=14"></script>
-  <script src="games-content.js?v=14"></script>
-  <script src="progress.js?v=14"></script>
-  <script src="games.js?v=14"></script>
-  <script src="pane-resize.js?v=14"></script>
-  <script src="app.js?v=14"></script>
+  <script src="content.js?v=15"></script>
+  <script src="content-additions.js?v=15"></script>
+  <script src="lesson-details-lexis.js?v=15"></script>
+  <script src="lesson-details-verbs.js?v=15"></script>
+  <script src="content-detail-nouns.js?v=15"></script>
+  <script src="content-detail-lexis.js?v=15"></script>
+  <script src="content-detail-clauses.js?v=15"></script>
+  <script src="beginner-guide.js?v=15"></script>
+  <script src="atlas.js?v=15"></script>
+  <script src="graph.js?v=15"></script>
+  <script src="games-content.js?v=15"></script>
+  <script src="nebula-graph.js?v=15"></script>
+  <script src="progress.js?v=15"></script>
+  <script src="games.js?v=15"></script>
+  <script src="pane-resize.js?v=15"></script>
+  <script src="app.js?v=15"></script>
 </body>
 </html>
