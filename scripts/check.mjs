@@ -4,7 +4,7 @@ import {resolve} from 'node:path';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 const root=fileURLToPath(new URL('../',import.meta.url));
-const scripts=['content.js','content-additions.js','lesson-details-lexis.js','lesson-details-verbs.js','content-detail-nouns.js','content-detail-lexis.js','content-detail-clauses.js','beginner-guide.js','atlas.js','video-resources.js','graph.js','nebula-graph.js','games-content.js','progress.js'];
+const scripts=['content.js','content-additions.js','lesson-details-lexis.js','lesson-details-verbs.js','content-detail-nouns.js','content-detail-lexis.js','content-detail-clauses.js','beginner-guide.js','atlas.js','video-resources.js','animation-content-nouns.js','animation-content-lexis.js','animation-content-syntax.js','animation-content-verbs.js','animation-content-clauses.js','graph.js','nebula-graph.js','games-content.js','progress.js'];
 const context=vm.createContext({window:{}});
 for(const file of scripts)vm.runInContext(readFileSync(resolve(root,file),'utf8'),context,{filename:file});
 const {GRAMMAR:d,ATLAS:a,GrammarGraph:g,GrammarProgress:p,GRAMMAR_GAMES_DATA:games}=context.window;
@@ -103,6 +103,24 @@ for(const video of videos.entries){
 }
 for(const n of a.knowledge){const resources=videos.forKey(n.key);assert(resources.length<=2);assert(resources.every(v=>v.knowledgeKeys.includes(n.key)),'Video inherited by unrelated card');}
 assert.equal(videos.entries.length,26);assert.equal(videoCards.size,41);assert.equal(videos.forKey('lesson:noun-abstract').length,0);assert.equal(videos.forKey('module:lexis').length,0);assert.equal(videos.forKey('unknown').length,0);
+const animations=context.window.GRAMMAR_ANIMATION_DATA,animationKeys=new Set(),animationTones=new Set(['subject','verb','object','modifier','linker','time','neutral']);let animationSteps=0,timelineSteps=0;
+for(const story of animations){
+ assert(a.get(story.key)&&a.get(story.key).kind!=='module');assert(!animationKeys.has(story.key),`Duplicate animation ${story.key}`);animationKeys.add(story.key);assert(story.title&&story.steps.length>=3&&story.steps.length<=5);
+ let previous='';
+ for(const [i,step] of story.steps.entries()){
+  animationSteps++;assert(step.caption?.length>=15&&step.caption.length<=65,`Caption length ${story.key}/${i+1}`);assert(step.lanes.length>=1&&step.lanes.length<=3);
+  const tokenIds=new Set(),laneIds=new Set();let wordCount=0;
+  for(const lane of step.lanes){assert(lane.id&&!laneIds.has(lane.id));laneIds.add(lane.id);assert(lane.label&&lane.label.length<=14);let laneWords=0;
+   for(const token of lane.tokens){assert(token.id&&token.text&&!tokenIds.has(token.id),`Duplicate token ${story.key}/${i+1}/${token.id}`);tokenIds.add(token.id);assert(animationTones.has(token.tone||'neutral'));assert(!token.status||['focus','error','muted'].includes(token.status));assert(!/[<>]/.test(token.text));laneWords+=(token.text.match(/[a-z]+(?:['’-][a-z]+)*/gi)||[]).length;}
+   assert(laneWords<=12,`Long example ${story.key}/${i+1}`);wordCount+=laneWords;
+  }
+  assert(tokenIds.size>0&&wordCount<=24);for(const link of step.connectors||[])assert(tokenIds.has(link.from)&&tokenIds.has(link.to)&&link.label,`Broken connector ${story.key}/${i+1}`);
+  if(step.timeline){timelineSteps++;assert(step.timeline.now>=0&&step.timeline.now<=100);const eventIds=new Set();assert(step.timeline.events.length<=3);for(const event of step.timeline.events){assert(event.id&&!eventIds.has(event.id));eventIds.add(event.id);assert(event.label&&event.start>=0&&event.start<=100);assert(event.end==null||event.end>=event.start&&event.end<=100);assert(['point','span','ongoing'].includes(event.kind||'point'));}}
+  const signature=JSON.stringify({lanes:step.lanes,timeline:step.timeline,connectors:step.connectors});assert(signature!==previous,`Caption-only step ${story.key}/${i+1}`);previous=signature;
+ }
+}
+for(const n of a.knowledge)assert(animationKeys.has(n.key),`Missing animation ${n.key}`);
+new vm.Script(readFileSync(resolve(root,'grammar-animations.js'),'utf8'),{filename:'grammar-animations.js'});
 const nebula=context.window.GrammarNebula,network=nebula.build(a),networkKeys=new Set(network.nodes.map(n=>n.key));
 assert.equal(network.nodes.length,176);assert.equal(networkKeys.size,176);assert(network.edges.length>300);
 const edgeKeys=new Set(),adjacency=new Map(network.nodes.map(n=>[n.key,[]]));
@@ -124,5 +142,6 @@ console.log(`Passed: ${layouts} non-overlapping map layouts, constellation cover
 console.log(`Passed: 50 unique game levels, 10 progressively introduced word classes, answer checking and game backup merge.`);
 console.log(`Passed: connected nebula with 176 nodes / ${network.edges.length} real relationships, deterministic clusters and all 10 module focus views.`);
 console.log(`Passed: ${videos.entries.length} source-indexed video links matched to ${videoCards.size} cards, valid platform URLs and no inherited recommendations.`);
+console.log(`Passed: ${animationKeys.size} original animation storyboards / ${animationSteps} steps, ${timelineSteps} timeline scenes, simple examples and valid motion targets.`);
 console.log('Passed: beginner example length, basic steps, structured corrections,31overview cards and43term explanations.');
 console.log('Passed: JavaScript syntax and portable relative assets.');

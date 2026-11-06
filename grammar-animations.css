@@ -1,0 +1,89 @@
+/* A small, controllable lesson stage. Motion is driven by the player, never CSS loops. */
+.grammar-animation{container-name:grammar-animation;container-type:inline-size;min-width:0;max-width:100%;padding:14px;border:1px solid #adc7e7;border-radius:11px;background:#f5f9ff;color:var(--ink);overflow:clip}
+.ga-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:3px;min-width:0}
+.grammar-animation .ga-title{min-width:0;margin:0;font-size:14px;font-weight:600;line-height:1.75;color:#204f8c;overflow-wrap:anywhere}
+.ga-counter{flex-shrink:0;min-width:38px;padding-top:2px;text-align:right;font-size:11px;line-height:1.8;color:#4b6380;font-variant-numeric:tabular-nums}
+.ga-expand{display:none;align-items:center;justify-content:center;flex:0 0 auto;min-width:48px;min-height:40px;max-width:100%;padding:7px 9px;border:1px solid #93b4dc;border-radius:7px;background:#fff;color:#204f8c;font-size:12px;font-weight:550;line-height:1.5;white-space:nowrap}
+.ga-expand:hover{border-color:#2d63a9;background:#e8f1fd}
+.card-fullscreen .grammar-animation .ga-expand{display:none}
+.ga-stage{position:relative;min-width:0;margin-top:11px;padding:10px;border:1px solid #d1dfef;border-radius:9px;background:#fff;isolation:isolate}
+.ga-stage.has-connectors{padding-bottom:44px}
+.ga-lanes{position:relative;z-index:1;display:grid;gap:8px;min-width:0}
+.ga-lane{min-width:0;padding:7px 8px;border:1px solid #c8d9ed;border-radius:8px;background:#fbfdff}
+.ga-lane-label{margin-bottom:4px;color:#476582;font-size:11px;font-weight:550;line-height:1.6;overflow-wrap:anywhere}
+.ga-tokens{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:7px;min-width:0;min-height:34px}
+.ga-tokens:empty{min-height:14px}
+.ga-token{--ga-token-bg:#f0f4f8;--ga-token-ink:#304a66;--ga-token-border:#a9bed3;position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:0 1 auto;min-width:35px;max-width:100%;padding:7px 9px;border:1px solid var(--ga-token-border);border-radius:7px;background:var(--ga-token-bg);color:var(--ga-token-ink);text-align:center;transform-origin:center;transition:background-color .2s,border-color .2s,box-shadow .2s;will-change:auto}
+.ga-token[data-tone=subject]{--ga-token-bg:#e9f2ff;--ga-token-ink:#215689;--ga-token-border:#90b3dc}
+.ga-token[data-tone=verb]{--ga-token-bg:#f0ebf8;--ga-token-ink:#594177;--ga-token-border:#b4a0cf}
+.ga-token[data-tone=object]{--ga-token-bg:#e9f4ee;--ga-token-ink:#285e50;--ga-token-border:#91bcaa}
+.ga-token[data-tone=modifier]{--ga-token-bg:#fbf3df;--ga-token-ink:#71581d;--ga-token-border:#cbb87d}
+.ga-token[data-tone=linker]{--ga-token-bg:#edf0fa;--ga-token-ink:#465c87;--ga-token-border:#a1b3d6}
+.ga-token[data-tone=time]{--ga-token-bg:#e7f3f9;--ga-token-ink:#235c76;--ga-token-border:#91bbd0}
+.ga-token-text{display:block;max-width:100%;font-size:16px;font-weight:550;line-height:1.4;overflow-wrap:anywhere;word-break:normal}
+.ga-changed-text{padding:0 1px;border-radius:2px;background:#d6e7ff;color:#204f8c;text-decoration:underline;text-decoration-color:#4277b8;text-underline-offset:3px;font-weight:650}
+.ga-token-role{display:block;max-width:100%;font-size:10px;font-weight:400;line-height:1.5;overflow-wrap:anywhere}
+.ga-token-role:empty,.ga-lane-label:empty{display:none}
+.ga-token[data-status=focus]{border-color:#2d63a9;box-shadow:0 0 0 2px #2d63a926}
+.ga-token[data-status=error]{--ga-token-bg:#fff0f2;--ga-token-ink:#8b3346;--ga-token-border:#b87585;border-style:dashed}
+.ga-token[data-status=muted]{--ga-token-bg:#f3f6f9;--ga-token-ink:#566b80;--ga-token-border:#afbfce;border-style:dashed;box-shadow:none}
+.ga-ghost{position:absolute;z-index:3;margin:0;pointer-events:none}
+.ga-connectors{position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:visible;pointer-events:none}
+.ga-connector-line{fill:none;stroke:#4173af;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.ga-connector-label{fill:#285a96;font-family:var(--font);font-size:10px;font-weight:500;text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round}
+.ga-connectors marker path{fill:none;stroke:#4173af}
+.ga-timeline{position:relative;min-width:0;min-height:calc(54px + var(--ga-event-count,1)*28px);margin-top:13px;padding-top:6px;color:#45617e}
+.ga-timeline-title,.ga-timeline-label{font-size:11px;line-height:1.6;color:#476582;margin-bottom:10px}
+.ga-stage.has-connectors .ga-timeline{margin-top:38px}
+.ga-stage.has-connectors:has(.ga-timeline:not([hidden])){padding-bottom:10px}
+.ga-track{position:absolute;top:24px;left:0;right:0;height:2px;background:#9db9da;border-radius:2px}
+.ga-track::after{content:"";position:absolute;right:-1px;top:-3px;width:7px;height:7px;border-top:2px solid #7e9fc7;border-right:2px solid #7e9fc7;transform:rotate(45deg)}
+.ga-now{position:absolute;top:8px;bottom:22px;z-index:1;display:block;width:1px;border-left:1px dashed #4076b8;font-size:10px;line-height:1.1;white-space:nowrap;color:#24568d;text-indent:4px}
+.ga-axis-start,.ga-axis-end{position:absolute;bottom:0;font-size:10px;line-height:1.6;color:#4b6380}
+.ga-axis-start{left:0}.ga-axis-end{right:0}
+.ga-event{position:absolute;top:34px;z-index:2;min-width:6px;height:6px;border:1px solid #2b64a8;border-radius:6px;background:#84afd9;transition:left .55s ease,width .55s ease,background-color .2s}
+.ga-event[data-kind=point]{width:8px!important;height:8px;border-radius:50%;background:#2d63a9;transform:translateX(-50%)}
+.ga-event[data-kind=ongoing]{border-right-style:dashed;background:linear-gradient(90deg,#699ed2 0,#a7c6e6 65%,#eaf2fb 100%)}
+.ga-event-label{position:absolute;left:50%;top:9px;display:block;width:max-content;max-width:110px;color:#335b83;font-size:10px;line-height:1.5;text-align:center;white-space:normal;overflow-wrap:anywhere;transform:translateX(-50%)}
+.grammar-animation .ga-caption{min-height:2em;margin:10px 0 0;font-size:14px;line-height:1.85;color:#244767;overflow-wrap:anywhere}
+.grammar-animation .ga-translation{min-height:1.7em;margin:5px 0 0;font-size:12px;line-height:1.8;color:#4b6380;overflow-wrap:anywhere}
+.ga-controls{position:sticky;top:0;z-index:5;display:flex;align-items:center;flex-wrap:wrap;gap:7px;min-width:0;margin-top:0;padding:7px 0 8px;border-bottom:1px solid #d5e2f3;background:#f5f9ff;box-shadow:0 7px 10px -10px #31567f66}
+.ga-controls button{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:40px;min-width:40px;max-width:100%;padding:8px 10px;border:1px solid #a8c2e2;border-radius:7px;background:#fff;color:#285a96;font-size:12px;line-height:1.5;white-space:nowrap}
+.ga-controls button:hover:not(:disabled){border-color:#2d63a9;background:#e8f1fd}
+.ga-controls [data-ga-action=play]{flex:1 1 60px;min-width:64px;border-color:#2d63a9;background:#2d63a9;color:#fff;font-weight:550}
+.ga-controls [data-ga-action=play]:hover:not(:disabled),.grammar-animation[data-playing=true] [data-ga-action=play]{background:#204f8c;border-color:#204f8c;color:#fff}
+.ga-controls button:disabled{color:#6d8197;background:#f1f5f9;border-color:#c5d3e2;opacity:1;cursor:default}
+.ga-controls button svg{width:16px;height:16px}
+.ga-controls label{display:inline-flex;align-items:center;gap:5px;max-width:100%;font-size:11px;line-height:1.5;color:#4b6380}
+.ga-speed-label{min-width:0}
+.ga-controls .ga-speed{width:67px;min-height:40px;max-width:100%;padding:7px 5px;border:1px solid #a8c2e2;border-radius:7px;background:#fff;color:#285a96;font-size:12px;line-height:1.5}
+.ga-seek{display:flex;align-items:center;gap:10px;min-width:0;margin-top:11px}
+.ga-seek label{flex-shrink:0;font-size:10px;line-height:1.6;color:#4b6380}
+.ga-scrubber{display:block;flex:1;min-width:0;width:100%;height:26px;margin:0;padding:0;border:0;border-radius:0;background:transparent;accent-color:#2d63a9;cursor:pointer;touch-action:pan-y}
+.ga-step-dots{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin-top:5px}
+.ga-step-dots button{position:relative;display:grid;place-items:center;width:40px;height:40px;padding:0;border-radius:6px;font-size:0;line-height:1;color:#516f90}
+.ga-step-dots button::before{content:"";position:absolute;width:6px;height:6px;border:1px solid #8facca;border-radius:50%;background:#fff}
+.ga-step-dots button[aria-current=step]::before,.ga-step-dots button[aria-current=true]::before{width:8px;height:8px;border-color:#2d63a9;background:#2d63a9}
+.ga-step-dots button:hover{background:#e4eefb}
+.ga-status{display:block;min-height:1.6em;margin-top:3px;font-size:10px;line-height:1.6;color:#4b6380;text-align:center}
+.grammar-animation button:focus-visible,.grammar-animation select:focus-visible,.grammar-animation input:focus-visible{outline:2px solid #245a9b;outline-offset:2px}
+@container grammar-animation (max-width:320px){
+ .ga-heading{gap:8px}.grammar-animation .ga-title{font-size:13px}.ga-counter{font-size:10px}
+ .ga-stage{padding:9px}.ga-stage.has-connectors{padding-bottom:41px}.ga-lane{padding:6px 7px}.ga-lane-label{font-size:10px;margin-bottom:4px}.ga-tokens{gap:6px}
+ .ga-token{padding:6px 8px;gap:2px;min-width:30px}.ga-token-text{font-size:15px}.ga-token-role{font-size:10px}
+ .grammar-animation .ga-caption{font-size:13px;min-height:2em}.grammar-animation .ga-translation{font-size:12px}.ga-controls{gap:6px}.ga-controls button{padding:8px;font-size:11px}.ga-controls .ga-speed{width:60px;font-size:11px}
+ .ga-event-label{max-width:85px}.ga-step-dots{margin-top:3px}
+}
+@container grammar-animation (max-width:420px){
+ .ga-heading{gap:8px}.ga-expand{display:inline-flex}
+ .ga-controls [data-ga-action=prev],.ga-controls [data-ga-action=next],.ga-controls [data-ga-action=replay]{flex:0 0 40px;width:40px;min-width:40px;padding:0;gap:0;font-size:0}
+ .ga-controls [data-ga-action=prev]::before{content:"‹";font-size:23px;line-height:1}
+ .ga-controls [data-ga-action=next]::before{content:"›";font-size:23px;line-height:1}
+ .ga-controls [data-ga-action=replay]::before{content:"↻";font-size:20px;line-height:1}
+ .ga-controls [data-ga-action=play]{flex:1 1 58px;min-width:58px;padding:8px 5px;font-size:12px}
+ .ga-controls .ga-speed-label{gap:0;font-size:0}
+ .ga-controls .ga-speed{width:58px;padding-left:4px;padding-right:4px}
+}
+@media(max-width:649px){.grammar-animation{padding:12px}.ga-token-text{font-size:16px}.ga-token-role{font-size:11px}.ga-controls button{min-height:42px}.ga-controls .ga-speed{min-height:42px}.ga-seek{margin-top:10px}.ga-scrubber{height:30px}}
+@media(prefers-reduced-motion:reduce){.grammar-animation *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+.grammar-animation.ga-reduced-motion *{transition:none!important;animation:none!important}

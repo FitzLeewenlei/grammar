@@ -1,6 +1,6 @@
 'use strict';
 (() => {
-  const A=window.ATLAS,G=window.GrammarGraph,P=window.GrammarProgress,Games=window.GrammarGames,Pane=window.GrammarPane,N=window.GrammarNebula;
+  const A=window.ATLAS,G=window.GrammarGraph,P=window.GrammarProgress,Games=window.GrammarGames,Pane=window.GrammarPane,N=window.GrammarNebula,Animations=window.GrammarAnimations;
   const lessons=window.GRAMMAR.lessons,byId=new Map(lessons.map(l=>[l.id,l]));
   const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -68,6 +68,7 @@
     $$('.page').forEach(el=>el.classList.toggle('active',el.id===state.page+'-page'));
     $('#knowledge-card').hidden=!state.cardKey;
     const modalCard=!!state.cardKey&&Pane.expanded,drawerOpen=state.sidebarOpen&&!desktopNav.matches;
+    if(!state.cardKey||state.modal||drawerOpen)Animations?.pause();
     Pane.sync(!!state.cardKey,!!state.modal||drawerOpen);
     $('#card-scrim').hidden=!modalCard;
     $('#app').inert=!!state.modal||modalCard||drawerOpen;
@@ -95,7 +96,7 @@
     syncUI();navFocusTarget()?.focus({preventScroll:true});
   }
   function toggleNav(){setSidebar(!state.sidebarOpen);}
-  function clearCard(){state.cardKey=null;state.cardTrail=[];state.activeAnchor='definition';syncUI();}
+  function clearCard(){Animations?.unmount();state.cardKey=null;state.cardTrail=[];state.activeAnchor='definition';syncUI();}
   function closeCard(record=true){clearCard();renderActiveGraph(true);if(record)recordHistory();navFocusTarget()?.focus({preventScroll:true});}
   function showPage(page){state.page=page;syncUI();if(page!=='games')Games.pause();if(page==='practice')renderPractice();else if(page==='games')Games.render();else renderActiveGraph(true);}
   function navigate(page){
@@ -144,12 +145,13 @@
   }
   function renderCard(keepScroll=false){
     const key=state.cardKey,n=A.get(key);if(!n)return;
+    const animationState=keepScroll?Animations?.snapshot():null;Animations?.unmount();
     const scroll=keepScroll?$('.card-body')?.scrollTop||0:0,storage=A.storageKey(key),l=n.lesson;
     const openDetails=keepScroll?$$('#knowledge-card details').map((el,i)=>el.open?i:-1).filter(i=>i>=0):[];
     const horizontalScroll=keepScroll?$$('#knowledge-card .grammar-table-wrap').map(el=>el.scrollLeft):[];
     const source=l?(l.source.includes('英语语法知识体系详解')?l.source:'参考《英语语法知识体系详解》；原课程索引：'+l.source):'';
     const children=n.children.map(k=>A.get(k)),examples=A.examplesFor(key);
-    const videos=cardVideos(key);
+    const videos=cardVideos(key),animation=Animations?.has(key);
     const next=children.find(c=>!learned(c.key)),scopePool=questionPool(key),inPractice=state.page==='practice'&&state.session&&!state.session.done;
     const crumbs=state.cardTrail.slice(0,-1).map((k,i)=>`<button data-card-ancestor="${esc(k)}" data-trail-index="${i}">${esc(A.get(k).title)}</button>`).join('<i>/</i>');
     const usageBlock=s=>typeof s==='string'?`<div class="usage-block"><p>${explainText(s)}</p></div>`:`<div class="usage-block"><h3>${esc(s.h)}</h3><p>${explainText(s.t)}</p></div>`;
@@ -164,16 +166,18 @@
     const related=!children.length&&l?.related.length?`<section class="card-section"><h2>相关知识点</h2><div class="next-points">${l.related.map(id=>A.get('lesson:'+id)).filter(Boolean).slice(0,4).map(c=>`<button class="next-point" data-open-card="${esc(c.key)}">${esc(c.title)}${icon('arrow')}</button>`).join('')}</div></section>`:'';
     const videoMarkup=videos.length?`<section class="card-section" id="card-videos"><h2>视频讲解</h2><ul class="video-resources">${videos.map(video=>`<li><a class="video-resource-link" href="${esc(video.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(video.title)}，${esc(video.platform)}，在新标签页打开"><span class="video-resource-content"><span class="video-resource-meta"><span class="video-resource-platform">${esc(video.platform)}</span>${video.creator?`<span>${esc(video.creator)}</span>`:''}${video.duration?`<span>${esc(video.duration)}</span>`:''}</span><strong>${esc(video.title)}</strong>${video.focus?`<span class="video-resource-focus">${esc(video.focus)}</span>`:''}</span><span class="video-resource-arrow" aria-hidden="true">↗</span></a></li>`).join('')}</ul></section>`:'';
     $('#knowledge-card').innerHTML=`<header class="card-header"><div class="card-topline"><div class="card-breadcrumb"><button data-action="card-root">总地图</button>${crumbs?'<i>/</i>'+crumbs:''}</div><div class="card-tools"><button class="icon-button" id="card-toggle-size" data-action="toggle-card-size" aria-label="全屏阅读知识讲解" aria-pressed="false">${icon('maximize')}</button><button class="icon-button" data-action="bookmark" data-active="${data.bookmarks.includes(storage)}" aria-label="${data.bookmarks.includes(storage)?'取消收藏':'收藏知识点'}">${icon('bookmark')}</button><button class="icon-button" data-action="note" aria-label="写学习笔记">${icon('note')}</button><button class="icon-button" data-action="close-card" aria-label="关闭知识卡片">${icon('close')}</button></div></div><h1 id="card-title" tabindex="-1">${esc(n.title)}</h1><p class="card-en">${esc(n.en)}</p></header>
-      <nav class="card-anchors" aria-label="知识卡片内容">${[['definition','是什么'],['classes','分类'],['examples','例句'],['usage','怎么用'],['pitfalls','易错点'],...(videos.length?[['videos','视频']]:[])].map(([id,title])=>`<button data-jump="${id}" class="${state.activeAnchor===id?'active':''}">${title}</button>`).join('')}</nav>
+      <nav class="card-anchors" aria-label="知识卡片内容">${[['definition','是什么'],['classes','分类'],['examples','例句'],...(animation?[['animation','动画']]:[]),['usage','怎么用'],['pitfalls','易错点'],...(videos.length?[['videos','视频']]:[])].map(([id,title])=>`<button data-jump="${id}" class="${state.activeAnchor===id?'active':''}">${title}</button>`).join('')}</nav>
       <div class="card-body"><section class="card-section" id="card-definition"><h2>${n.id==='nouns'?'名词是什么':'先看懂'}</h2><p>${explainText(n.definition)}</p></section>
       <section class="card-section" id="card-classes"><h2>${n.id==='nouns'?'名词的分类':'分类与结构'}${n.classificationLinks?' <small class="class-hint">点击继续展开</small>':''}</h2><div class="class-tags">${classes}</div>${reference}</section>
       <section class="card-section" id="card-examples"><h2>看例句</h2>${examples.map((e,i)=>`<article class="card-example"><button class="icon-button" data-speak="${i}" aria-label="朗读第${i+1}个例句">${icon('sound')}</button><strong lang="en">${esc(e.en)}</strong><p>${esc(e.zh)}</p><small>${explainText(e.note)}</small></article>`).join('')}</section>
+      ${animation?'<section class="card-section" id="card-animation"><h2>动画讲解</h2><div class="grammar-animation"></div></section>':''}
       <section class="card-section" id="card-usage"><h2>怎么用</h2>${useBlocks}${more}${structure}</section>
       <section class="card-section" id="card-pitfalls"><h2>易错点</h2>${errors}</section>${nextMarkup}${related}
       ${videoMarkup}
       ${scopePool.length?`<section class="card-section" id="card-practice"><h2>小练习</h2><div class="mini-practice"><p>${esc(scopePool[0].q.prompt)}</p><button data-practice-scope="${esc(key)}" data-practice-count="3">练习「${esc(n.title)}」 ${icon('arrow')}</button></div></section>`:''}
       ${l?`<div class="source-note">${esc(source)}</div>`:''}</div>
       <footer class="card-footer"><button class="learn-button ${learned(key)?'is-lit':''}" data-action="mark-learned" aria-pressed="${learned(key)}">${icon('stars')}${learned(key)?'星星已点亮':'已学会，点亮星星'}</button>${inPractice?`<button class="primary-button" data-action="close-card">继续当前练习${icon('arrow')}</button>`:next?`<button class="primary-button" data-next-key="${esc(next.key)}">继续：${esc(next.title)}${icon('arrow')}</button>`:`<button class="primary-button" data-practice-scope="${esc(key)}" data-practice-count="3">进入练习${icon('arrow')}</button>`}</footer>`;
+    if(animation)Animations.mount($('#card-animation .grammar-animation'),key,animationState);
     syncUI();if(keepScroll){const details=$$('#knowledge-card details');openDetails.forEach(i=>{if(details[i])details[i].open=true;});$$('#knowledge-card .grammar-table-wrap').forEach((el,i)=>el.scrollLeft=horizontalScroll[i]||0);$('.card-body').scrollTop=scroll;}
   }
   function markLearned(){
@@ -371,11 +375,12 @@
   async function importProgress(file){
     if(!file)return;try{if(file.size>5e6)throw Error('Large file');const backup=JSON.parse(await file.text());data=P.merge(data,backup);save();if(state.cardKey)renderCard(true);if(state.page==='practice')renderPractice();else if(state.page==='games')Games.render();else renderActiveGraph(false);closeModal();toast('备份已合并，知识星云已更新');}catch{toast('这不是有效的语法漫游进度备份。');}
   }
-  function showHelp(){modal('图谱操作',`<div class="help-item"><strong>第一次学语法</strong><p>先读“先看懂”和简单例句，再看“怎么用”。带点线的术语可以点开看解释；“再了解一点”和结构写法可以以后再看。</p></div><div class="help-item"><strong>逐层探索</strong><p>点击总地图的模块进入子地图，点击知识点打开卡片；卡片中的“下一级知识点”可继续深入，最后进入对应练习。点击地图中心可返回上一级。</p></div><div class="help-item"><strong>点亮星星</strong><p>阅读后点击“已学会，点亮星星”，或答对该知识点全部练习，对应星星就会点亮。知识星云按上下级和关联关系连线；点击模块查看星群，点击知识星点打开讲解。拖动星点可调整位置，Aa 可切换名称显示。</p></div><div class="help-item"><strong>调整阅读空间</strong><p>拖动图谱与讲解之间的蓝色分隔手柄：电脑和平板左右调整，手机上下调整。双击恢复默认；也可用方向键微调。卡片顶部的展开按钮可全屏阅读，再次点击返回分屏。</p></div><div class="help-item"><strong>移动与缩放</strong><p>拖动空白处平移，滚轮或双指手势缩放。左侧边栏中的“适应画面”可恢复总览。键盘 + / − 缩放，方向键平移，0 适应画面；Esc 关闭卡片或返回上一级。</p></div><div class="help-item"><strong>词性积木</strong><p>侧边栏中进入“游戏”，选择词性积木和关卡。拖拽积木或先点词性再点空格，同类可重复使用；放好后检查答案。50 关从短句逐步进入从句与长句，通关星级自动保存。</p></div><div class="help-item"><strong>搜索与备份</strong><p>Ctrl / ⌘ + K 搜索。收藏、笔记和记录备份都在侧边栏中。</p></div><div class="source-note">知识框架参考《英语语法知识体系详解》，并结合原课程索引补充整理。</div>`);}
+  function showHelp(){modal('图谱操作',`<div class="help-item"><strong>第一次学语法</strong><p>先读“先看懂”和简单例句，再看“怎么用”。带点线的术语可以点开看解释；“再了解一点”和结构写法可以以后再看。</p></div><div class="help-item"><strong>逐层探索</strong><p>点击总地图的模块进入子地图，点击知识点打开卡片；卡片中的“下一级知识点”可继续深入，最后进入对应练习。点击地图中心可返回上一级。</p></div><div class="help-item"><strong>动画讲解</strong><p>卡片中的“动画”可播放词块变化和时间关系，也可逐步查看、拖动步骤条和调整速度。暂停后可继续；“重播”从头开始。小屏幕可点动画旁的“全屏”，再用卡片右上角返回分屏。动画不会自动标记已学。</p></div><div class="help-item"><strong>点亮星星</strong><p>阅读后点击“已学会，点亮星星”，或答对该知识点全部练习，对应星星就会点亮。知识星云按上下级和关联关系连线；点击模块查看星群，点击知识星点打开讲解。拖动星点可调整位置，Aa 可切换名称显示。</p></div><div class="help-item"><strong>调整阅读空间</strong><p>拖动图谱与讲解之间的蓝色分隔手柄：电脑和平板左右调整，手机上下调整。双击恢复默认；也可用方向键微调。卡片顶部的展开按钮可全屏阅读，再次点击返回分屏。</p></div><div class="help-item"><strong>移动与缩放</strong><p>拖动空白处平移，滚轮或双指手势缩放。左侧边栏中的“适应画面”可恢复总览。键盘 + / − 缩放，方向键平移，0 适应画面；Esc 关闭卡片或返回上一级。</p></div><div class="help-item"><strong>词性积木</strong><p>侧边栏中进入“游戏”，选择词性积木和关卡。拖拽积木或先点词性再点空格，同类可重复使用；放好后检查答案。50 关从短句逐步进入从句与长句，通关星级自动保存。</p></div><div class="help-item"><strong>搜索与备份</strong><p>Ctrl / ⌘ + K 搜索。收藏、笔记和记录备份都在侧边栏中。</p></div><div class="source-note">知识框架参考《英语语法知识体系详解》，并结合原课程索引补充整理。</div>`);}
   function speakExample(index){const e=A.examplesFor(state.cardKey)[index];if(!e)return;if(!('speechSynthesis'in window)){toast('当前设备未提供语音朗读。');return;}speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(e.en);utterance.lang='en-GB';utterance.rate=.85;const voice=speechSynthesis.getVoices().find(v=>v.lang==='en-GB')||speechSynthesis.getVoices().find(v=>v.lang.startsWith('en'));if(voice)utterance.voice=voice;utterance.onerror=()=>toast('当前设备暂时没有可用英语语音。');speechSynthesis.speak(utterance);}
   const actions={
     'toggle-nav':toggleNav,'close-sidebar':()=>closeNav(true),'close-card':()=>closeCard(),'close-modal':()=>closeModal(),
     'toggle-card-size':()=>{Pane.toggleExpanded();syncUI();renderActiveGraph(true);$('#card-toggle-size')?.focus({preventScroll:true});},
+    'animation-expand':()=>{Animations?.pause();if(!Pane.expanded)Pane.toggleExpanded();syncUI();renderActiveGraph(true);requestAnimationFrame(()=>{$('#card-animation')?.scrollIntoView({block:'start'});$('#card-toggle-size')?.focus({preventScroll:true});});},
     'parent-map':goParent,'card-root':()=>goMap('root'),'mark-learned':markLearned,
     'progress-root':()=>{state.universeFocus=null;clearCard();showPage('progress');recordHistory();},
     'open-progress':()=>navigate('progress'),'nebula-zoom-in':()=>zoom('progress',1.3),'nebula-zoom-out':()=>zoom('progress',1/1.3),'nebula-labels':()=>{state.nebulaLabels=!state.nebulaLabels;$('.nebula-label-toggle').setAttribute('aria-pressed',String(state.nebulaLabels));updateNebulaScale();},search:showSearch,notebook:()=>showNotebook(),backup:showBackup,help:showHelp,fit:fitView,
